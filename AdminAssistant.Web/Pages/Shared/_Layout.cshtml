@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AdminAssistant.Web</title>
+    <title>@ViewData["Title"] - Administration Assistant</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -13,44 +13,135 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+    <!-- Stylesheets -->
+
+    <link href="~/css/ionicons.css" rel="stylesheet">
+    <link href="~/css/layerslider.css" rel="stylesheet">
+    <link href="~/css/styles.css" rel="stylesheet">
+    <link href="~/css/responsive.css" rel="stylesheet">
 </head>
 <body>
+    @*<header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-page="/Index">AdminAssistant.Web</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>*@
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">AdminAssistant.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+
+        <div class="top-menu">
+
+            <ul class="left-area welcome-area">
+                <li class="hello-blog">Hello nice people, welcome to my blog</li>
+                <li><a href="mailto:contact@juliblog.com">contact@juliblog.com</a></li>
+            </ul><!-- left-area -->
+
+
+            <div class="right-area">
+
+                <div class="src-area">
+                    <form action="post">
+                        <input class="src-input" type="text" placeholder="Search">
+                        <button class="src-btn" type="submit"><i class="ion-ios-search-strong"></i></button>
+                    </form>
+                </div><!-- src-area -->
+
+                <ul class="social-icons">
+                    <li><a href="#"><i class="ion-social-facebook-outline"></i></a></li>
+                    <li><a href="#"><i class="ion-social-twitter-outline"></i></a></li>
+                    <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
+                    <li><a href="#"><i class="ion-social-vimeo-outline"></i></a></li>
+                    <li><a href="#"><i class="ion-social-pinterest-outline"></i></a></li>
+                </ul><!-- right-area -->
+
+            </div><!-- right-area -->
+
+        </div><!-- top-menu -->
+
+        <div class="middle-menu center-text"><a href="#" class="logo"><img src="images/logo.png" alt="Logo Image"></a></div>
+
+        <div class="bottom-area">
+
+            <div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
+
+            <ul class="main-menu visible-on-click" id="main-menu">
+                <li class="drop-down">
+                    <a href="#!">HOME<i class="ion-ios-arrow-down"></i></a>
+
+                    <ul class="drop-down-menu">
+                        <li><a href="#">FEATURED</a></li>
+                        <li><a href="#">ABOUT</a></li>
+                        <li class="drop-down">
+                            <a href="#!">CATEGORIES<i class="ion-ios-arrow-right"></i></a>
+                            <ul class="drop-down-menu drop-down-inner">
+                                <li><a href="#">FEATURED</a></li>
+                                <li><a href="#">ABOUT</a></li>
+                                <li><a href="#">CATEGORIES</a></li>
+                            </ul>
                         </li>
                     </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+                </li>
+                <li><a href="#">FEATURED</a></li>
+                <li><a href="#">ABOUT</a></li>
+                <li><a href="#">CATEGORIES</a></li>
+                <li><a href="#">CONTACT</a></li>
+            </ul><!-- main-menu -->
+
+        </div><!-- conatiner -->
+    </header>
+    <partial name="_CookieConsentPartial" />
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+    <footer>
         <div class="container">
-            &copy; 2019 - AdminAssistant.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="footer-section">
+                        <p class="copyright">Juli &copy; 2018. All rights reserved. | This template is made with <i class="ion-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+                    </div><!-- footer-section -->
+                </div><!-- col-lg-4 col-md-6 -->
+
+                <div class="col-sm-6">
+                    <div class="footer-section">
+                        <ul class="social-icons">
+                            <li><a href="#"><i class="ion-social-facebook-outline"></i></a></li>
+                            <li><a href="#"><i class="ion-social-twitter-outline"></i></a></li>
+                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
+                            <li><a href="#"><i class="ion-social-vimeo-outline"></i></a></li>
+                            <li><a href="#"><i class="ion-social-pinterest-outline"></i></a></li>
+                        </ul>
+                    </div><!-- footer-section -->
+                </div><!-- col-lg-4 col-md-6 -->
+
+            </div><!-- row -->
+        </div><!-- container -->
     </footer>
 
     <environment include="Development">
@@ -72,6 +163,10 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/js/tether.min.js"></script>
+    <script src="~/js/layerslider.js"></script>
+    <script src="~/js/scripts.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

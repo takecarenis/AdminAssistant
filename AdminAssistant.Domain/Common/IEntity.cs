@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AdminAssist.Domain.Common
+namespace AdminAssistant.Domain
 {
     public interface IEntity
     {

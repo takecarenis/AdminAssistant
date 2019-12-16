@@ -1,9 +1,8 @@
-﻿using AdminAssist.Domain.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AdminAssist.Domain
+namespace AdminAssistant.Domain
 {
     public class NewsletterHistory : IEntity
     {

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var currentUrl = @Context.Request.Path; 
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,6 +29,7 @@
     <link href="~/css/layerslider.css" rel="stylesheet">
     <link href="~/css/styles.css" rel="stylesheet">
     <link href="~/css/responsive.css" rel="stylesheet">
+    <link href="~/css/main.css" rel="stylesheet" />
 </head>
 <body style="height: auto">
     @*<header>
@@ -50,7 +55,9 @@
             </nav>
         </header>*@
 
-    <header>
+    @if (!currentUrl.ToString().Contains("Admin"))
+    {
+        <header style="position: initial">
 
         <div class="top-menu">
 
@@ -115,6 +122,7 @@
 
         </div><!-- conatiner -->
     </header>
+    }
     <partial name="_CookieConsentPartial" />
     <main role="main" class="pb-3" style="margin-top: -40px;">
         @RenderBody()

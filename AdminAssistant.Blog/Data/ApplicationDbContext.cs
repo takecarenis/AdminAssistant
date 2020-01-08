@@ -17,6 +17,7 @@ namespace AdminAssistant.Blog.Data
 
         DbSet<Newsletter> Newsletter { get; set; }
         DbSet<NewsletterHistory> NewsletterHistory { get; set; }
+        DbSet<Post> Post { get; set; }
         DbSet<Category> Category { get; set; }
         DbSet<Tag> Tag { get; set; }
         DbSet<PostTag> PostTag { get; set; }

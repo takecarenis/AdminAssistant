@@ -1,13 +1,23 @@
-﻿<section class="blog-area">
+﻿@using AdminAssistant.Blog.Models.DomainModel
+@model PostViewModel
+
+
+<section class="blog-area">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-12">
                 <div class="blog-posts">
                     <div class="single-post">
-                        <div class="image-wrapper"><img src="~/img/posts/post13122019.jpg" alt="Blog Image"></div>
+                    @if (!string.IsNullOrEmpty(Model.PictureUrl))
+                    {
+                        <div class="image-wrapper"><img src="@Model.PictureUrl" alt="Blog Image"></div>
+                    }
                         <div class="icons">
                             <div class="left-area">
-                                <a class="btn caegory-btn" href="#"><b>TRAVEL</b></a>
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <a class="btn caegory-btn" href="#"><b>@category.Name</b></a>
+                                }
                             </div>
                             <ul class="right-area social-icons">
                                 <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
@@ -15,50 +25,17 @@
                                 <li><a href="#"><i class="ion-android-textsms"></i>06</a></li>
                             </ul>
                         </div>
-                        <p class="date"><em>Monday, October 13, 2017</em></p>
-                        <h3 class="title"><a href="#"><b class="light-color">This is post about travel, adventure and fun</b></a></h3>
+                        <p class="date"><em>@Model.Date</em></p>
+                        <h3 class="title"><a href="#"><b class="light-color">@Model.Title</b></a></h3>
                         <p class="desc">
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-                            consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
-                            dolore magnam aliquam quaerat voluptatem.
-                        </p>
-
-                        <p class="desc">
-                            Eerror sit voluptatem accusantium doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-                            consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-                            dolore magnam aliquam quaerat voluptatem.
-                        </p>
-
-                        <h5 class="quoto">
-                            <em>
-                                <i class="ion-quote"></i>Eerror sit voluptatem accusantium doloremque
-                                laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                                architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-                                consectetur, adipisci velit
-                            </em>
-                        </h5>
-
-                        <div class="image-wrapper"><img src="images/blog-2-1000x600.jpg" alt="Blog Image"></div>
-
-                        <p class="desc">
-                            Eerror sit voluptatem accusantium doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-                            consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-                            dolore magnam aliquam quaerat voluptatem.
+                           @Model.Body
                         </p>
 
                         <ul>
-                            <li><a class="btn" href="#">design</a></li>
-                            <li><a class="btn" href="#">fashion</a></li>
+                            @foreach (var tag in Model.Tags)
+                            {
+                                <li><a class="btn" href="#">@tag.Name</a></li>
+                            }
                         </ul>
 
                     </div><!-- single-post -->

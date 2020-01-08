@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminAssistant.Web", "AdminAssistant.Web\AdminAssistant.Web.csproj", "{801FFBA0-DF39-498E-93F8-2F798973125B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminAssistant.Domain", "AdminAssistant.Domain\AdminAssistant.Domain.csproj", "{5769629C-C3BB-499E-9DC3-EFBFD83DF0E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminAssistant.Domain", "AdminAssistant.Domain\AdminAssistant.Domain.csproj", "{5769629C-C3BB-499E-9DC3-EFBFD83DF0E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminAssistant.Common", "AdminAssistant.Common\AdminAssistant.Common.csproj", "{D4C4FBAE-4934-408F-8877-70C667F09571}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminAssistant.Common", "AdminAssistant.Common\AdminAssistant.Common.csproj", "{D4C4FBAE-4934-408F-8877-70C667F09571}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminAssistant.Infrastructure", "AdminAssistant.Infrastructure\AdminAssistant.Infrastructure.csproj", "{057E2807-67D1-4D7B-B536-C798A75F3D2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminAssistant.Infrastructure", "AdminAssistant.Infrastructure\AdminAssistant.Infrastructure.csproj", "{057E2807-67D1-4D7B-B536-C798A75F3D2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminAssistant.Persistence", "AdminAssistant.Persistence\AdminAssistant.Persistence.csproj", "{67EEED82-FAAD-480A-8359-63D4F43B7AE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminAssistant.Persistence", "AdminAssistant.Persistence\AdminAssistant.Persistence.csproj", "{67EEED82-FAAD-480A-8359-63D4F43B7AE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminAssistant.Blog", "AdminAssistant.Blog\AdminAssistant.Blog.csproj", "{8092709C-BDFF-487A-9F18-72D89AD29389}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{801FFBA0-DF39-498E-93F8-2F798973125B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{801FFBA0-DF39-498E-93F8-2F798973125B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{801FFBA0-DF39-498E-93F8-2F798973125B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{801FFBA0-DF39-498E-93F8-2F798973125B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5769629C-C3BB-499E-9DC3-EFBFD83DF0E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5769629C-C3BB-499E-9DC3-EFBFD83DF0E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5769629C-C3BB-499E-9DC3-EFBFD83DF0E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{67EEED82-FAAD-480A-8359-63D4F43B7AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67EEED82-FAAD-480A-8359-63D4F43B7AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67EEED82-FAAD-480A-8359-63D4F43B7AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8092709C-BDFF-487A-9F18-72D89AD29389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8092709C-BDFF-487A-9F18-72D89AD29389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8092709C-BDFF-487A-9F18-72D89AD29389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8092709C-BDFF-487A-9F18-72D89AD29389}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

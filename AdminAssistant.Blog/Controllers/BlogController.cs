@@ -2,18 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AdminAssistant.Blog.Models;
 using AdminAssistant.Blog.Models.DomainModel;
+using AdminAssistant.Blog.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminAssistant.Blog.Controllers
 {
     public class BlogController : Controller
     {
+        IPostService _postService;
+
+        public BlogController(IPostService postService)
+        {
+            _postService = postService;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            List<PostViewModel> posts = _postService.GetFiltered(new FilterModel { Take = 3 });
+
+            return View(posts);
         }
-        
+
         public IActionResult Post(int? id)
         {
             CategoryViewModel category = new CategoryViewModel() { Id = 1, Name = "Politika" };

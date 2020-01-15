@@ -1,4 +1,5 @@
 ﻿using AdminAssistant.Blog.Data;
+using AdminAssistant.Blog.Models;
 using AdminAssistant.Blog.Models.DomainModel;
 using AdminAssistant.Blog.Services.Interfaces;
 using AdminAssistant.Domain.Blog;
@@ -20,47 +21,53 @@ namespace AdminAssistant.Blog.Services.Implementations
         {
             Post newPost = new Post
             {
-                Body = "This is body................",
+                Body = post.Body,
                 Date = DateTime.Now,
-                PictureUrl = "This is url",
-                PostedBy = "Stefan Djokic",
-                Title = "This is Title"
+                PictureUrl = post.PictureUrl,
+                PostedBy = post.PostedBy,
+                Title = post.Title
             };
-
-            CategoryViewModel category1 = new CategoryViewModel { Id = 1, Name = "Category" };
-            CategoryViewModel category2 = new CategoryViewModel { Id = 2, Name = "Category2" };
-            post.Categories = new List<CategoryViewModel>
-            {  category1, category2
-            };
-
 
             _dbContext.Post.Add(newPost);
             _dbContext.SaveChanges();
 
             foreach(var category in post.Categories)
             {
-                Category categoryFromTable = _dbContext.Category.FirstOrDefault(x => x.Id == category.Id);
-
-                PostCategory postCategory = new PostCategory
+                Category categoryFromDb = _dbContext.Category.FirstOrDefault(x => x.Id == category.Id);
+                _dbContext.PostCategory.Add(new PostCategory
                 {
-                    Category = categoryFromTable,
-                    CategoryId = categoryFromTable.Id,
                     Post = newPost,
-                    PostId = newPost.Id
-                };
+                    Category = categoryFromDb,
+                    PostId = newPost.Id,
+                    CategoryId = categoryFromDb.Id
+                });
 
-                _dbContext.PostCategory.Add(postCategory);
                 _dbContext.SaveChanges();
             }
 
-            return new PostViewModel();
+            return new PostViewModel { Id = newPost.Id };
         }
 
         public PostViewModel DeletePost(int id)
         {
-            //List<PostCategory>   
+            List<PostCategory> postCategories = _dbContext.PostCategory.Where(x => x.PostId == id).ToList();
 
-            return new PostViewModel();
+            _dbContext.PostCategory.RemoveRange(postCategories);
+            _dbContext.SaveChanges();
+
+            Post post = _dbContext.Post.FirstOrDefault(x => x.Id == id);
+
+            PostViewModel deletedPost = new PostViewModel();
+
+            if(post!=null)
+            {
+                deletedPost.Id = post.Id;
+
+                _dbContext.Post.Remove(post);
+                _dbContext.SaveChanges();
+            }
+
+            return deletedPost;
         }
 
         public List<PostViewModel> GetAllPosts()
@@ -81,6 +88,28 @@ namespace AdminAssistant.Blog.Services.Implementations
                         Name = p.Category.Name
                     }).ToList()
                 }).ToList();
+
+            return posts;
+        }
+
+        public List<PostViewModel> GetFiltered(FilterModel filter)
+        {
+            List<PostViewModel> posts = _dbContext.Post
+                .Include(x => x.PostCategories)
+                .Select(x => new PostViewModel
+                {
+                    Id = x.Id,
+                    Body = x.Body,
+                    Date = x.Date,
+                    PictureUrl = x.PictureUrl,
+                    PostedBy = x.PostedBy,
+                    Title = x.Title,
+                    Categories = x.PostCategories.Select(p => new CategoryViewModel
+                    {
+                        Id = p.CategoryId,
+                        Name = p.Category.Name
+                    }).ToList()
+                }).Skip(filter.Skip).Take(filter.Take).ToList();
 
             return posts;
         }

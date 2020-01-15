@@ -15,12 +15,12 @@ namespace AdminAssistant.Blog.Data
         {
         }
 
-        DbSet<Newsletter> Newsletter { get; set; }
-        DbSet<NewsletterHistory> NewsletterHistory { get; set; }
-        DbSet<Post> Post { get; set; }
-        DbSet<Category> Category { get; set; }
-        DbSet<Tag> Tag { get; set; }
-        DbSet<PostTag> PostTag { get; set; }
-        DbSet<PostCategory> PostCategory { get; set; }
+        public DbSet<Newsletter> Newsletter { get; set; }
+        public DbSet<NewsletterHistory> NewsletterHistory { get; set; }
+        public DbSet<Post> Post { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Tag> Tag { get; set; }
+        public DbSet<PostTag> PostTag { get; set; }
+        public DbSet<PostCategory> PostCategory { get; set; }
     }
 }

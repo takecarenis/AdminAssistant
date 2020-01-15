@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AdminAssistant.Blog.Models.DomainModel;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace AdminAssistant.Blog.Controllers
 {
@@ -11,7 +14,23 @@ namespace AdminAssistant.Blog.Controllers
 
         public ActionResult Posts()
         {
-            return View();
+            PostViewModel post1 = new PostViewModel
+            {
+                Title = "This is first post!",
+                Date = DateTime.Now,
+                PictureUrl = "/img/posts/post13122019.jpg"
+            };
+
+            PostViewModel post2 = new PostViewModel
+            {
+                Title = "This is second post!",
+                Date = DateTime.Now,
+                PictureUrl = "/img/posts/post13122019.jpg"
+            };
+
+            List<PostViewModel> posts = new List<PostViewModel> { post1, post2 };
+
+            return View(posts);
         }
     }
 }

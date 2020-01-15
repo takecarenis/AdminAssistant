@@ -88,14 +88,14 @@ b.light-color{ color: #444; }
 2. COMMONS FOR PAGE DESIGN
 --------------------------------- */
 
-.btn{ font-size: .9em; padding: 15px 30px; border-radius: 1px; letter-spacing: 2px; 
+.btn-custom{ font-size: .9em; padding: 15px 30px; border-radius: 1px; letter-spacing: 2px; 
 	border: 1px solid #1E377F; background: #1E377F; color: #fff; }
 
-.btn:hover{ color: #1E377F; background: none; }
+.btn-custom:hover{ color: #1E377F; background: none; }
 
-.btn-2{ background: none; color: #1E377F; }
+.btn-custom-2{ background: none; color: #1E377F; }
 
-.btn-2:hover{ background: #1E377F; color: #fff; }
+.btn-custom-2:hover{ background: #1E377F; color: #fff; }
 
 
 .section{ padding: 70px 0 40px; }
@@ -176,7 +176,7 @@ header .src-area .src-input{ position: absolute; top: 0; bottom: 0; left: 0; rig
 
 header .src-area .src-input:focus{ box-shadow: 0px 0px 1px #aaa; }
 
-header .src-area .src-btn{ position: absolute; top: 0; bottom: 0; right: 0; width: 40px; font-size: 1.2em; 
+header .src-area .src-btn-custom{ position: absolute; top: 0; bottom: 0; right: 0; width: 40px; font-size: 1.2em; 
 	opacity: .6; z-index: 10; }
 
 	
@@ -258,7 +258,7 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 .main-slider .slider-content{ padding: 25px 60px 25px 40px!important; border-radius: 3px!important;
 	background: rgba(0,0,0,.6); color: #fff; }
 
-.slider-content .btn{ padding: 7px 15px; }
+.slider-content .btn-custom{ padding: 7px 15px; }
 
 .slider-content .title{ margin: 10px 0 0; letter-spacing: 3px; }
 
@@ -277,7 +277,7 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 
 .single-post .icons{ overflow: hidden; line-height: 30px; margin: 30px 0 10px; }
 
-.single-post .icons .caegory-btn{ padding: 0 20px; height: 30px; line-height: 30px; }
+.single-post .icons .caegory-btn-custom{ padding: 0 20px; height: 30px; line-height: 30px; }
 
 .single-post .icons ul.social-icons{ color: #666; }
 
@@ -289,10 +289,10 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 
 .single-post .date{ color: #999; }
 
-.single-post .read-more-btn{ clear: both; margin-top: 30px; box-shadow: 1px 10px 15px rgba(0,0,0, .15); 
+.single-post .read-more-btn-custom{ clear: both; margin-top: 30px; box-shadow: 1px 10px 15px rgba(0,0,0, .15); 
 	border: 1px solid #1E377F; background: #fff; color: #1E377F; }
 
-.single-post .read-more-btn:hover{ box-shadow: 1px 3px 15px rgba(0,0,0, .15); background: #1E377F; color: #fff; }
+.single-post .read-more-btn-custom:hover{ box-shadow: 1px 3px 15px rgba(0,0,0, .15); background: #1E377F; color: #fff; }
 	
 	
 /* POST STYLE TWO */
@@ -301,12 +301,12 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 
 .post-style-2 .post-details .icons{ margin-top: 0; }
 
-.post-style-2 .post-details .icons .caegory-btn{ margin: 0; }
+.post-style-2 .post-details .icons .caegory-btn-custom{ margin: 0; }
 
 
 /* LOAD MORE BUTTON */
 
-.blog-posts .load-more-btn{ clear: both; margin: 70px 0 30px; }
+.blog-posts .load-more-btn-custom{ clear: both; margin: 70px 0 30px; }
 
 
 /* ---------------------------------
@@ -349,7 +349,7 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 .src-area input{ display: block; width: 100%; padding: 0 50px 0 20px; border: 0; outline: 0; 
 	border-bottom: 1px solid #bbb;  }
 
-.src-area .src-btn{ position: absolute; top: 0; right: 20px; height: 50px; }
+.src-area .src-btn-custom{ position: absolute; top: 0; right: 20px; height: 50px; }
 
 	
 /* NEWSLETTER AREA */
@@ -376,7 +376,7 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 
 .latest-post .post-info{ margin-left: 100px; }
 
-.latest-post .category-btn{ padding: 5px 10px; margin-bottom: 5px; }
+.latest-post .category-btn-custom{ padding: 5px 10px; margin-bottom: 5px; }
 
 .latest-post .date{ margin-top: 5px; color: #888; }
 	
@@ -385,10 +385,10 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 
 .advertisement-img{ position: relative; }
 
-.advertisement-img .discover-btn{ position: absolute; bottom: 30px; padding: 15px 0; width: 200px; 
+.advertisement-img .discover-btn-custom{ position: absolute; bottom: 30px; padding: 15px 0; width: 200px; 
 	left: 50%; margin-left: -100px; border-color: #fff; color: #fff; }
 
-.advertisement-img .discover-btn:hover{ border-color: #1E377F; }
+.advertisement-img .discover-btn-custom:hover{ border-color: #1E377F; }
 
 
 /* INSTAGRAM */
@@ -422,7 +422,15 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 8. FOOTER
 --------------------------------- */
 
-footer{ background: #29333C; color: #ddd;  }
+footer {
+	background: #29333C;
+	color: #ddd;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	margin-bottom: 0px;
+	margin-top: 100px;
+}
 
 footer .footer-section{ margin: 30px 0; }
 

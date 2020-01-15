@@ -5,6 +5,7 @@ using AdminAssistant.Domain;
 using AdminAssistant.Domain.Blog;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace AdminAssistant.Blog.Data
 {
@@ -15,12 +16,30 @@ namespace AdminAssistant.Blog.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<PostCategory>()
+                .HasKey(bc => new { bc.PostId, bc.CategoryId });
+
+            modelBuilder.Entity<PostCategory>()
+                .HasOne(bc => bc.Post)
+                .WithMany(b => b.PostCategories)
+                .HasForeignKey(bc => bc.PostId);
+
+            modelBuilder.Entity<PostCategory>()
+                .HasOne(bc => bc.Category)
+                .WithMany(c => c.PostCategories)
+                .HasForeignKey(bc => bc.CategoryId);
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<Newsletter> Newsletter { get; set; }
         public DbSet<NewsletterHistory> NewsletterHistory { get; set; }
         public DbSet<Post> Post { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Tag> Tag { get; set; }
-        public DbSet<PostTag> PostTag { get; set; }
         public DbSet<PostCategory> PostCategory { get; set; }
     }
 }

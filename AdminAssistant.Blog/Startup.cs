@@ -12,6 +12,8 @@ using AdminAssistant.Blog.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AdminAssistant.Blog.Services.Interfaces;
+using AdminAssistant.Blog.Services.Implementations;
 
 namespace AdminAssistant.Blog
 {
@@ -32,6 +34,10 @@ namespace AdminAssistant.Blog
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddTransient(typeof(ApplicationDbContext));
+            services.AddScoped(typeof(IPostService), typeof(PostService));
+
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }

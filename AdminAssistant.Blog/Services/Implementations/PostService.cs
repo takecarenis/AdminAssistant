@@ -2,6 +2,7 @@
 using AdminAssistant.Blog.Models.DomainModel;
 using AdminAssistant.Blog.Services.Interfaces;
 using AdminAssistant.Domain.Blog;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,80 +20,91 @@ namespace AdminAssistant.Blog.Services.Implementations
         {
             Post newPost = new Post
             {
-                Body = post.Body,
-                Date = post.Date,
-                PictureUrl = post.PictureUrl,
-                PostedBy = post.PostedBy,
-                Title = post.Title
+                Body = "This is body................",
+                Date = DateTime.Now,
+                PictureUrl = "This is url",
+                PostedBy = "Stefan Djokic",
+                Title = "This is Title"
             };
+
+            CategoryViewModel category1 = new CategoryViewModel { Id = 1, Name = "Category" };
+            CategoryViewModel category2 = new CategoryViewModel { Id = 2, Name = "Category2" };
+            post.Categories = new List<CategoryViewModel>
+            {  category1, category2
+            };
+
 
             _dbContext.Post.Add(newPost);
             _dbContext.SaveChanges();
 
-            foreach(var tag in post.Tags)
-            {
-                Tag tagFromTable = _dbContext.Tag.FirstOrDefault(x => x.Id == tag.Id);
-                _dbContext.PostTag.Add(new PostTag
-                {
-                    Post = newPost,
-                    Tag = tagFromTable
-                });
-
-                _dbContext.SaveChanges();
-            }
-
             foreach(var category in post.Categories)
             {
                 Category categoryFromTable = _dbContext.Category.FirstOrDefault(x => x.Id == category.Id);
-                _dbContext.PostCategory.Add(new PostCategory
-                {
-                    Post = newPost,
-                    Category = categoryFromTable
-                });
 
+                PostCategory postCategory = new PostCategory
+                {
+                    Category = categoryFromTable,
+                    CategoryId = categoryFromTable.Id,
+                    Post = newPost,
+                    PostId = newPost.Id
+                };
+
+                _dbContext.PostCategory.Add(postCategory);
                 _dbContext.SaveChanges();
             }
 
-            return new PostViewModel
-            {
-                Body = newPost.Body,
-                Id = newPost.Id,
-                Date = newPost.Date,
-                PictureUrl = newPost.PictureUrl,
-                PostedBy = newPost.PostedBy,
-                Title = newPost.Title,
-                Categories = post.Categories,
-                Tags = post.Tags
-            };
+            return new PostViewModel();
         }
 
         public PostViewModel DeletePost(int id)
         {
-            throw new NotImplementedException();
+            //List<PostCategory>   
+
+            return new PostViewModel();
         }
 
         public List<PostViewModel> GetAllPosts()
         {
-            List<PostViewModel> posts = _dbContext.Post.Select(x => new PostViewModel
-            {
-                Id = x.Id,
-                Body = x.Body,
-                Date = x.Date,
-                PictureUrl = x.PictureUrl,
-                PostedBy = x.PostedBy,
-                Title = x.Title
-            }).ToList();
+            List<PostViewModel> posts = _dbContext.Post
+                .Include(x => x.PostCategories)
+                .Select(x => new PostViewModel
+                {
+                    Id = x.Id,
+                    Body = x.Body,
+                    Date = x.Date,
+                    PictureUrl = x.PictureUrl,
+                    PostedBy = x.PostedBy,
+                    Title = x.Title,
+                    Categories = x.PostCategories.Select(p => new CategoryViewModel
+                    {
+                        Id = p.CategoryId,
+                        Name = p.Category.Name
+                    }).ToList()
+                }).ToList();
 
-            foreach(var post in posts)
-            {
-
-            }
-
+            return posts;
         }
 
         public PostViewModel GetPost(int id)
         {
-            throw new NotImplementedException();
+            PostViewModel post = _dbContext.Post
+                .Include(x => x.PostCategories).Where(x => x.Id == id)
+                .Select(x => new PostViewModel
+                {
+                    Id = id,
+                    Body = x.Body,
+                    Date = x.Date,
+                    PictureUrl = x.PictureUrl,
+                    PostedBy = x.PostedBy,
+                    Title = x.Title,
+                    Categories = x.PostCategories.Select(p => new CategoryViewModel
+                    {
+                        Id = p.CategoryId,
+                        Name = p.Category.Name
+                    }).ToList()
+                }).FirstOrDefault();
+
+            return post;
         }
 
         public PostViewModel UpdatePost(PostViewModel post)

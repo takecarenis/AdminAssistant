@@ -20,9 +20,14 @@ namespace AdminAssistant.Blog.Controllers
 
         public IActionResult Index()
         {
-            List<PostViewModel> posts = _postService.GetFiltered(new FilterModel { Take = 3 });
+            BlogViewModel blog = new BlogViewModel();
 
-            return View(posts);
+            List<PostViewModel> posts = _postService.GetFiltered(new FilterModel { Take = 6 });
+
+            blog.MainPosts.AddRange(posts.Take(2));
+            blog.OtherPosts.AddRange(posts.Skip(2).Take(4));
+
+            return View(blog);
         }
 
         public IActionResult Post(int? id)

@@ -1,4 +1,5 @@
 ﻿using AdminAssistant.Blog.Models.DomainModel;
+using AdminAssistant.Blog.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,16 @@ namespace AdminAssistant.Blog.ViewComponents
 {
     public class CategoryViewComponent : ViewComponent
     {
-        public CategoryViewComponent() { }
+        private readonly ISidebarService _service;
+
+        public CategoryViewComponent(ISidebarService service) 
+        {
+            _service = service;
+        }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<CategoryViewModel> categories = new List<CategoryViewModel>() { new CategoryViewModel { Id = 1, Name = "Test" } };
+            List<CategoryViewModel> categories = _service.GetAllCategories();
 
             return View(categories);
         }

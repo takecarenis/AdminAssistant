@@ -138,7 +138,25 @@ namespace AdminAssistant.Blog.Services.Implementations
 
         public PostViewModel UpdatePost(PostViewModel post)
         {
-            throw new NotImplementedException();
+            Post postFromDb = _dbContext.Post.Include(x => x.PostCategories).FirstOrDefault(x => x.Id == post.Id);
+
+            if (postFromDb != null)
+            {
+                postFromDb.Body = post.Body;
+                postFromDb.PictureUrl = post.PictureUrl;
+                postFromDb.PostedBy = post.PostedBy;
+                postFromDb.Title = post.Title;
+                postFromDb.PostCategories = post.Categories
+                    .Select(x => new PostCategory
+                    {
+                        CategoryId = x.Id,
+                        PostId = postFromDb.Id
+                    }).ToList();
+
+                _dbContext.SaveChanges();
+            }
+
+            return post;
         }
     }
 }

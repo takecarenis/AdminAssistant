@@ -1,4 +1,6 @@
-﻿@{
+﻿@using AdminAssistant.Blog.Models.DomainModel
+@model BlogViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -38,76 +40,17 @@
         <div class="row">
 
             <div class="col-lg-8 col-md-12">
+
                 <div class="blog-posts">
-
-                    <div class="single-post">
-                        <div class="image-wrapper"><img src="~/img/posts/post13122019.jpg" alt="Blog Image"></div>
-                        <div class="icons">
-                            <div class="left-area">
-                                <p class="date"><em>Friday, December 13, 2019</em></p>
-                            </div>
-                            <ul class="right-area social-icons">
-                                <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
-                                <li><a href="#"><i class="ion-android-favorite-outline"></i>Copy Link</a></li>
-                                @* <li><a href="#"><i class="ion-android-textsms"></i>06</a></li>*@
-                            </ul>
-                        </div>
-
-                        <h3 class="title"><a href="#"><b class="light-color">Paušalci, spremite se za test, od Nove godine nova pravila</b></a></h3>
-                        <p>
-                            Informatičari, glumci, taksisti i svi ostali koji rade kao paušalci za Novu godinu mogli bi da se iznenade.
-                            Ako budu usvojene izmene zakona, kompanije više neće moći da one koje angažuju puno radno vreme plaćaju preko
-                            paušalne agencije. U zamenu, Vlada nudi poreske olakšice kompanijama ako ih prime u radni odnos.
-                        </p>
-                        <div class="icons">
-                            <div class="left-area">
-                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 1</b></a>
-                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 2</b></a>
-                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 3</b></a>
-                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 4</b></a>
-                            </div>
-                        </div>
-                        <a class="btn read-more-btn" href="#"><b>READ MORE</b></a>
-                    </div><!-- single-post -->
-
-                    <div class="single-post">
-                        <div class="image-wrapper"><img src="~/img/posts/post13122019.jpg" alt="Blog Image"></div>
-                        <div class="icons">
-                            <div class="left-area">
-                                <p class="date"><em>Friday, December 13, 2019</em></p>
-                            </div>
-                            <ul class="right-area social-icons">
-                                <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
-                                <li><a href="#"><i class="ion-android-favorite-outline"></i>Copy Link</a></li>
-                                @* <li><a href="#"><i class="ion-android-textsms"></i>06</a></li>*@
-                            </ul>
-                        </div>
-
-                        <h3 class="title"><a href="#"><b class="light-color">Paušalci, spremite se za test, od Nove godine nova pravila</b></a></h3>
-                        <p>
-                            Informatičari, glumci, taksisti i svi ostali koji rade kao paušalci za Novu godinu mogli bi da se iznenade.
-                            Ako budu usvojene izmene zakona, kompanije više neće moći da one koje angažuju puno radno vreme plaćaju preko
-                            paušalne agencije. U zamenu, Vlada nudi poreske olakšice kompanijama ako ih prime u radni odnos.
-                        </p>
-                        <div class="icons">
-                            <div class="left-area">
-                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 1</b></a>
-                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 2</b></a>
-                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 3</b></a>
-                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 4</b></a>
-                            </div>
-                        </div>
-                        <a class="btn read-more-btn" href="#"><b>READ MORE</b></a>
-                    </div><!-- single-post -->
-
-                    <div class="row">
-
-                        <div class="col-lg-6 col-md-12">
+                    @if (Model != null && Model.MainPosts != null)
+                    {
+                        foreach (var post in Model.OtherPosts)
+                        {
                             <div class="single-post">
-                                <div class="image-wrapper"><img src="~/img/posts/post13122019.jpg" alt="Blog Image"></div>
+                                <div class="image-wrapper"><img src="@post.PictureUrl" alt="@post.Title"></div>
                                 <div class="icons">
                                     <div class="left-area">
-                                        <p class="date" style="font-size: 0.9em"><em>Friday, December 13, 2019</em></p>
+                                        <p class="date"><em>@post.Date</em></p>
                                     </div>
                                     <ul class="right-area social-icons">
                                         <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
@@ -115,159 +58,67 @@
                                         @* <li><a href="#"><i class="ion-android-textsms"></i>06</a></li>*@
                                     </ul>
                                 </div>
-                                <h3 class="title"><a href="#"><b class="light-color">Paušalci, spremite se za test, od Nove godine nova pravila</b></a></h3>
-                                <p>
-                                    Informatičari, glumci, taksisti i svi ostali koji rade kao paušalci za Novu godinu mogli bi da se iznenade.
-                                    Ako budu usvojene izmene zakona, kompanije više neće moći da one koje angažuju puno radno vreme plaćaju preko
-                                    paušalne agencije. U zamenu, Vlada nudi poreske olakšice kompanijama ako ih prime u radni odnos.
-                                </p>
+
+                                <h3 class="title"><a href="#"><b class="light-color">@post.Title</b></a></h3>
+                                @Html.Raw(post.Body)
                                 <div class="icons">
                                     <div class="left-area">
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 1</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 2</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 3</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 4</b></a>
+
+                                        @foreach (var tag in post.Tags)
+                                        {
+                                            <a class="btn btn-sm btn-primary" href="#"><b>@tag.Name</b></a>
+                                        }
                                     </div>
                                 </div>
                                 <a class="btn read-more-btn" href="#"><b>READ MORE</b></a>
                             </div><!-- single-post -->
-                        </div><!-- col-sm-6 -->
+                        }
 
-                        <div class="col-lg-6 col-md-12">
-                            <div class="single-post">
-                                <div class="image-wrapper"><img src="~/img/posts/post13122019.jpg" alt="Blog Image"></div>
-                                <div class="icons">
-                                    <div class="left-area">
-                                        <p class="date" style="font-size: 0.9em"><em>Friday, December 13, 2019</em></p>
-                                    </div>
-                                    <ul class="right-area social-icons">
-                                        <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
-                                        <li><a href="#"><i class="ion-android-favorite-outline"></i>Copy Link</a></li>
-                                        @* <li><a href="#"><i class="ion-android-textsms"></i>06</a></li>*@
-                                    </ul>
-                                </div>
-                                <h3 class="title"><a href="#"><b class="light-color">Paušalci, spremite se za test, od Nove godine nova pravila</b></a></h3>
-                                <p>
-                                    Informatičari, glumci, taksisti i svi ostali koji rade kao paušalci za Novu godinu mogli bi da se iznenade.
-                                    Ako budu usvojene izmene zakona, kompanije više neće moći da one koje angažuju puno radno vreme plaćaju preko
-                                    paušalne agencije. U zamenu, Vlada nudi poreske olakšice kompanijama ako ih prime u radni odnos.
-                                </p>
-                                <div class="icons">
-                                    <div class="left-area">
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 1</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 2</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 3</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 4</b></a>
-                                    </div>
-                                </div>
-                                <a class="btn read-more-btn" href="#"><b>READ MORE</b></a>
-                            </div><!-- single-post -->
-                        </div><!-- col-sm-6 -->
+                        <div class="row">
 
-                        <div class="col-lg-6 col-md-12">
-                            <div class="single-post">
-                                <div class="image-wrapper"><img src="~/img/posts/post13122019.jpg" alt="Blog Image"></div>
-                                <div class="icons">
-                                    <div class="left-area">
-                                        <p class="date" style="font-size: 0.9em"><em>Friday, December 13, 2019</em></p>
-                                    </div>
-                                    <ul class="right-area social-icons">
-                                        <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
-                                        <li><a href="#"><i class="ion-android-favorite-outline"></i>Copy Link</a></li>
-                                        @* <li><a href="#"><i class="ion-android-textsms"></i>06</a></li>*@
-                                    </ul>
-                                </div>
-                                <h3 class="title"><a href="#"><b class="light-color">Paušalci, spremite se za test, od Nove godine nova pravila</b></a></h3>
-                                <p>
-                                    Informatičari, glumci, taksisti i svi ostali koji rade kao paušalci za Novu godinu mogli bi da se iznenade.
-                                    Ako budu usvojene izmene zakona, kompanije više neće moći da one koje angažuju puno radno vreme plaćaju preko
-                                    paušalne agencije. U zamenu, Vlada nudi poreske olakšice kompanijama ako ih prime u radni odnos.
-                                </p>
-                                <div class="icons">
-                                    <div class="left-area">
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 1</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 2</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 3</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 4</b></a>
-                                    </div>
-                                </div>
-                                <a class="btn read-more-btn" href="#"><b>READ MORE</b></a>
-                            </div><!-- single-post -->
-                        </div><!-- col-sm-6 -->
-
-                        <div class="col-lg-6 col-md-12">
-                            <div class="single-post">
-                                <div class="image-wrapper"><img src="~/img/posts/post13122019.jpg" alt="Blog Image"></div>
-                                <div class="icons">
-                                    <div class="left-area">
-                                        <p class="date" style="font-size: 0.9em"><em>Friday, December 13, 2019</em></p>
-                                    </div>
-                                    <ul class="right-area social-icons">
-                                        <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
-                                        <li><a href="#"><i class="ion-android-favorite-outline"></i>Copy Link</a></li>
-                                        @* <li><a href="#"><i class="ion-android-textsms"></i>06</a></li>*@
-                                    </ul>
-                                </div>
-                                <h3 class="title"><a href="#"><b class="light-color">Paušalci, spremite se za test, od Nove godine nova pravila</b></a></h3>
-                                <p>
-                                    Informatičari, glumci, taksisti i svi ostali koji rade kao paušalci za Novu godinu mogli bi da se iznenade.
-                                    Ako budu usvojene izmene zakona, kompanije više neće moći da one koje angažuju puno radno vreme plaćaju preko
-                                    paušalne agencije. U zamenu, Vlada nudi poreske olakšice kompanijama ako ih prime u radni odnos.
-                                </p>
-                                <div class="icons">
-                                    <div class="left-area">
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 1</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 2</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 3</b></a>
-                                        <a class="btn btn-sm caegory-btn" href="#"><b>Tag 4</b></a>
-                                    </div>
-                                </div>
-                                <a class="btn read-more-btn" href="#"><b>READ MORE</b></a>
-                            </div><!-- single-post -->
-                        </div><!-- col-sm-6 -->
-
-                        <div class="col-lg-12 col-md-12">
-                            <div class="single-post post-style-2">
-                                <div class="image-wrapper width-50 left-area">
-                                    <img src="~/img/posts/post13122019.jpg" alt="Blog Image">
-                                </div>
-                                <div class="post-details width-50 right-area">
-                                    <div class="icons">
-                                        <div class="left-area">
-                                            <p class="date" style="font-size: 0.9em"><em>Friday, December 13, 2019</em></p>
+                            @foreach (var post in Model.OtherPosts)
+                            {
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="single-post">
+                                        <div class="image-wrapper"><img src="~/img/posts/post13122019.jpg" alt="Blog Image"></div>
+                                        <div class="icons">
+                                            <div class="left-area">
+                                                <p class="date" style="font-size: 0.9em"><em>Friday, December 13, 2019</em></p>
+                                            </div>
+                                            <ul class="right-area social-icons">
+                                                <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
+                                                <li><a href="#"><i class="ion-android-favorite-outline"></i>Copy Link</a></li>
+                                                @* <li><a href="#"><i class="ion-android-textsms"></i>06</a></li>*@
+                                            </ul>
                                         </div>
-                                        <ul class="right-area social-icons">
-                                            <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
-                                            <li><a href="#"><i class="ion-android-favorite-outline"></i>Copy Link</a></li>
-                                            @* <li><a href="#"><i class="ion-android-textsms"></i>06</a></li>*@
-                                        </ul>
-                                    </div>
-                                    <h3 class="title"><a href="#"><b class="light-color">Paušalci, spremite se za test, od Nove godine nova pravila</b></a></h3>
-                                    <p>
-                                        Informatičari, glumci, taksisti i svi ostali koji rade kao paušalci za Novu godinu mogli bi da se iznenade.
-                                        Ako budu usvojene izmene zakona, kompanije više neće moći da one koje angažuju puno radno vreme plaćaju preko
-                                        paušalne agencije. U zamenu, Vlada nudi poreske olakšice kompanijama ako ih prime u radni odnos.
-                                    </p>
-                                    <div class="icons">
-                                        <div class="left-area">
-                                            <a class="btn btn-sm caegory-btn" href="#"><b>Tag 1</b></a>
-                                            <a class="btn btn-sm caegory-btn" href="#"><b>Tag 2</b></a>
-                                            <a class="btn btn-sm caegory-btn" href="#"><b>Tag 3</b></a>
-                                            <a class="btn btn-sm caegory-btn" href="#"><b>Tag 4</b></a>
+                                        <h3 class="title"><a href="#"><b class="light-color">Paušalci, spremite se za test, od Nove godine nova pravila</b></a></h3>
+                                        <p>
+                                            Informatičari, glumci, taksisti i svi ostali koji rade kao paušalci za Novu godinu mogli bi da se iznenade.
+                                            Ako budu usvojene izmene zakona, kompanije više neće moći da one koje angažuju puno radno vreme plaćaju preko
+                                            paušalne agencije. U zamenu, Vlada nudi poreske olakšice kompanijama ako ih prime u radni odnos.
+                                        </p>
+                                        <div class="icons">
+                                            <div class="left-area">
+                                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 1</b></a>
+                                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 2</b></a>
+                                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 3</b></a>
+                                                <a class="btn btn-sm caegory-btn" href="#"><b>Tag 4</b></a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <a class="btn read-more-btn" href="#"><b>READ MORE</b></a>
-                                </div><!-- post-details -->
+                                        <a class="btn read-more-btn" href="#"><b>READ MORE</b></a>
+                                    </div><!-- single-post -->
+                                </div><!-- col-sm-6 -->
+                            }
 
-                            </div><!-- single-post -->
-                        </div><!-- col-sm-6 -->
+                        </div>
 
-                    </div><!-- row -->
+                    }
 
-                    <a class="btn load-more-btn" target="_blank" href="#">LOAD OLDER POSTS</a>
+                </div><!-- row -->
 
-                </div><!-- blog-posts -->
-            </div><!-- col-lg-4 -->
+                <a class="btn load-more-btn" target="_blank" href="#">LOAD OLDER POSTS</a>
+
+            </div><!-- blog-posts -->
 
 
             <div class="col-lg-4 col-md-12">

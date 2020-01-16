@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AdminAssistant.Blog.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,16 @@ namespace AdminAssistant.Blog.ViewComponents
 {
     public class LatestPostViewComponent : ViewComponent
     {
-        public LatestPostViewComponent() { }
+        public readonly IPostService _postService;
+        
+        public LatestPostViewComponent(IPostService service) 
+        {
+            _postService = service;
+        }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+
             return View();
         }
     }

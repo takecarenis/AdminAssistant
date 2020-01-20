@@ -19,7 +19,7 @@ namespace AdminAssistant.Blog.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<PostViewModel> latestPosts = _postService.GetFiltered()
+           // List<PostViewModel> latestPosts = _postService.GetFiltered();
             return View();
         }
     }

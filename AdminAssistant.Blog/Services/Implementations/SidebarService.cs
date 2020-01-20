@@ -1,6 +1,7 @@
 ﻿using AdminAssistant.Blog.Data;
 using AdminAssistant.Blog.Models.DomainModel;
 using AdminAssistant.Blog.Services.Interfaces;
+using AdminAssistant.Domain.Blog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,31 @@ namespace AdminAssistant.Blog.Services.Implementations
 
 
             return categories;
+        }
+
+        public CategoryViewModel AddNewCategory(string name)
+        {
+            _dbContext.Category.Add(new Category
+            {
+                Name = name
+            });
+
+            _dbContext.SaveChanges();
+
+            return new CategoryViewModel
+            {
+                Name = name
+            };
+        }
+
+
+        public TagViewModel AddNewTag(string name)
+        {
+            _dbContext.Tag.Add(new Tag
+            { Name = name });
+
+            return new TagViewModel
+            { Name = name };
         }
 
         public List<TagViewModel> GetAllTags()

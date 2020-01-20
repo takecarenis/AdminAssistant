@@ -7,6 +7,7 @@ namespace AdminAssistant.Domain.Blog
     {
         public Post()
         {
+            PostTags = new HashSet<PostTag>();
             PostCategories = new HashSet<PostCategory>();
         }
 
@@ -18,5 +19,6 @@ namespace AdminAssistant.Domain.Blog
         public string PostedBy { get; set; }
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }
+        public virtual ICollection<PostTag> PostTags { get; set; }
     }
 }

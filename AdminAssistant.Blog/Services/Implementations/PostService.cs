@@ -31,15 +31,23 @@ namespace AdminAssistant.Blog.Services.Implementations
             _dbContext.Post.Add(newPost);
             _dbContext.SaveChanges();
 
-            foreach(var category in post.Categories)
+            foreach (var category in post.Categories)
             {
-                Category categoryFromDb = _dbContext.Category.FirstOrDefault(x => x.Id == category.Id);
                 _dbContext.PostCategory.Add(new PostCategory
                 {
-                    Post = newPost,
-                    Category = categoryFromDb,
                     PostId = newPost.Id,
-                    CategoryId = categoryFromDb.Id
+                    CategoryId = category.Id
+                });
+
+                _dbContext.SaveChanges();
+            }
+
+            foreach (var tag in post.Tags)
+            {
+                _dbContext.PostTags.Add(new PostTag
+                {
+                    PostId = newPost.Id,
+                    TagId = tag.Id
                 });
 
                 _dbContext.SaveChanges();
@@ -55,11 +63,16 @@ namespace AdminAssistant.Blog.Services.Implementations
             _dbContext.PostCategory.RemoveRange(postCategories);
             _dbContext.SaveChanges();
 
+            List<PostTag> postTags = _dbContext.PostTags.Where(x => x.TagId == id).ToList();
+
+            _dbContext.PostTags.RemoveRange(postTags);
+            _dbContext.SaveChanges();
+
             Post post = _dbContext.Post.FirstOrDefault(x => x.Id == id);
 
             PostViewModel deletedPost = new PostViewModel();
 
-            if(post!=null)
+            if (post != null)
             {
                 deletedPost.Id = post.Id;
 
@@ -86,6 +99,11 @@ namespace AdminAssistant.Blog.Services.Implementations
                     {
                         Id = p.CategoryId,
                         Name = p.Category.Name
+                    }).ToList(),
+                    Tags = x.PostTags.Select(p => new TagViewModel
+                    {
+                        Id = p.TagId,
+                        Name = p.Tag.Name
                     }).ToList()
                 }).ToList();
 
@@ -108,6 +126,11 @@ namespace AdminAssistant.Blog.Services.Implementations
                     {
                         Id = p.CategoryId,
                         Name = p.Category.Name
+                    }).ToList(),
+                    Tags = x.PostTags.Select(p => new TagViewModel
+                    {
+                        Id = p.TagId,
+                        Name = p.Tag.Name
                     }).ToList()
                 }).Skip(filter.Skip).Take(filter.Take).ToList();
 
@@ -130,6 +153,11 @@ namespace AdminAssistant.Blog.Services.Implementations
                     {
                         Id = p.CategoryId,
                         Name = p.Category.Name
+                    }).ToList(),
+                    Tags = x.PostTags.Select(p => new TagViewModel
+                    {
+                        Id = p.TagId,
+                        Name = p.Tag.Name
                     }).ToList()
                 }).FirstOrDefault();
 
@@ -150,6 +178,12 @@ namespace AdminAssistant.Blog.Services.Implementations
                     .Select(x => new PostCategory
                     {
                         CategoryId = x.Id,
+                        PostId = postFromDb.Id
+                    }).ToList();
+                postFromDb.PostTags = post.Tags
+                    .Select(x => new PostTag
+                    {
+                        TagId = x.Id,
                         PostId = postFromDb.Id
                     }).ToList();
 

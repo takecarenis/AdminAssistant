@@ -44,7 +44,7 @@ namespace AdminAssistant.Blog.Controllers
             return View(posts);
         }
 
-        public void CreatePost()
+        public void CreatePost(PostViewModel post)
         {
             _postService.CreatePost(new PostViewModel());
         }

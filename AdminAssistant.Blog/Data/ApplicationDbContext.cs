@@ -32,6 +32,19 @@ namespace AdminAssistant.Blog.Data
                 .WithMany(c => c.PostCategories)
                 .HasForeignKey(bc => bc.CategoryId);
 
+            modelBuilder.Entity<PostTag>()
+               .HasKey(bc => new { bc.PostId, bc.TagId });
+
+            modelBuilder.Entity<PostTag>()
+                .HasOne(bc => bc.Post)
+                .WithMany(b => b.PostTags)
+                .HasForeignKey(bc => bc.PostId);
+
+            modelBuilder.Entity<PostTag>()
+                .HasOne(bc => bc.Tag)
+                .WithMany(c => c.PostTags)
+                .HasForeignKey(bc => bc.TagId);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -41,5 +54,6 @@ namespace AdminAssistant.Blog.Data
         public DbSet<Category> Category { get; set; }
         public DbSet<Tag> Tag { get; set; }
         public DbSet<PostCategory> PostCategory { get; set; }
+        public DbSet<PostTag> PostTags { get; set; }
     }
 }

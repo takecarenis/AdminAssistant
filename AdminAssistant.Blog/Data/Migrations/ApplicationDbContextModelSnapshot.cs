@@ -53,15 +53,10 @@ namespace AdminAssistant.Blog.Data.Migrations
                     b.Property<string>("PostedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TagId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TagId");
 
                     b.ToTable("Post");
                 });
@@ -79,6 +74,21 @@ namespace AdminAssistant.Blog.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("PostCategory");
+                });
+
+            modelBuilder.Entity("AdminAssistant.Domain.Blog.PostTag", b =>
+                {
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PostId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("PostTags");
                 });
 
             modelBuilder.Entity("AdminAssistant.Domain.Blog.Tag", b =>
@@ -340,13 +350,6 @@ namespace AdminAssistant.Blog.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("AdminAssistant.Domain.Blog.Post", b =>
-                {
-                    b.HasOne("AdminAssistant.Domain.Blog.Tag", null)
-                        .WithMany("Posts")
-                        .HasForeignKey("TagId");
-                });
-
             modelBuilder.Entity("AdminAssistant.Domain.Blog.PostCategory", b =>
                 {
                     b.HasOne("AdminAssistant.Domain.Blog.Category", "Category")
@@ -358,6 +361,21 @@ namespace AdminAssistant.Blog.Data.Migrations
                     b.HasOne("AdminAssistant.Domain.Blog.Post", "Post")
                         .WithMany("PostCategories")
                         .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AdminAssistant.Domain.Blog.PostTag", b =>
+                {
+                    b.HasOne("AdminAssistant.Domain.Blog.Post", "Post")
+                        .WithMany("PostTags")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdminAssistant.Domain.Blog.Tag", "Tag")
+                        .WithMany("PostTags")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

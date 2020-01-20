@@ -1,34 +1,38 @@
 ﻿@using AdminAssistant.Blog.Models.DomainModel
 @model List<PostViewModel>
 
-    <div class="container" style="margin-top: 100px">
-        <h2>Your posts</h2>
+<div class="container" style="margin-top: 100px">
+    <h2>Your posts</h2>
 
-        <div class="row" style="margin-top: 50px;border-top: 2px solid gray; padding-top: 10px">
-            @foreach (var post in Model)
-            {
-                <div class="col-md-6" style="border-right: 2px solid gray">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="image-wrapper"><img src="@post.PictureUrl" alt="Blog Image"></div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <p class="title"><a href="#"><b class="light-color">@post.Title</b></a></p>
-                                        <p class="date" style="margin-top: 10px"><em>@post.Date</em></p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button class="btn btn-sm btn-info">Edit</button>
-                                            </div>
+    <div class="row" style="margin-top: 20px">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNewPost">Add new</button>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 50px;border-top: 2px solid gray; padding-top: 10px">
+        @foreach (var post in Model)
+        {
+            <div class="col-md-6" style="border-right: 2px solid gray">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="image-wrapper"><img src="@post.PictureUrl" alt="Blog Image"></div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="title"><a href="#"><b class="light-color">@post.Title</b></a></p>
+                                    <p class="date" style="margin-top: 10px"><em>@post.Date</em></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-sm btn-info">Edit</button>
                                         </div>
-                                        <div class="row" style="margin-top: 20px">
-                                            <div class="col-md-12">
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 20px">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-danger btn-sm">Delete</button>
                                         </div>
                                     </div>
                                 </div>
@@ -36,6 +40,84 @@
                         </div>
                     </div>
                 </div>
-            }
+            </div>
+        }
+    </div>
+</div>
+
+
+<form method="post" action="/Admin/CreatePost">
+    <!-- Modal -->
+    <div class="modal fade" id="addNewPost" tabindex="-1" role="dialog" aria-labelledby="addNewPostTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewPostTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Title">Title: </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="Title" id="titleInput" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Body">Body: </label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-control" id="bodyInput"></div>
+                                <input type="text" name="Body" id="bodyInputValue" hidden="hidden" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!--Are you sure MODAL?-->
+    <div class="modal" id="areYouSure" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+
+    $("#bodyInput").focusout(function () {
+
+        $(".note-icon-code").click();
+        var inputValue = $(".note-codable")[0].value;
+        console.log(inputValue);
+
+        $("#bodyInputValue").val(inputValue);
+    })
+
+</script>
+

@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
+
 
     <!-- Stylesheets -->
 
@@ -30,6 +32,9 @@
     <link href="~/css/styles.css" rel="stylesheet">
     <link href="~/css/responsive.css" rel="stylesheet">
     <link href="~/css/main.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 <body style="height: auto">
     @*<header>
@@ -180,7 +185,6 @@
     </footer>
 
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     </environment>
     <environment exclude="Development">
@@ -197,6 +201,9 @@
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
     </environment>
+
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script src="~/js/tether.min.js"></script>
@@ -204,5 +211,12 @@
     <script src="~/js/scripts.js"></script>
 
     @RenderSection("Scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            $('#bodyInput').summernote();
+            $(".panel-heading button").css("padding", "15px");
+        });
+    </script>
 </body>
 </html>

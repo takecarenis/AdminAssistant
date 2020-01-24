@@ -772,6 +772,10 @@ ul.list-justify > li {
     padding: 6px 22px;
 }
 
+.btn-white {
+    background-color: white;
+}
+
 .btn-group-lg > .btn,
 .btn-lg {
     padding: 10px 28px;

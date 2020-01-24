@@ -48,5 +48,13 @@ namespace AdminAssistant.Blog.Controllers
         {
             _newsletterService.Subscribe(email);
         }
+
+        [HttpGet]
+        public IActionResult Unsubscribe(string email)
+        {
+            _newsletterService.Unsubscribe(email);
+
+            return View();
+        }
     }
 }

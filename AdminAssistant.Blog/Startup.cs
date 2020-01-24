@@ -38,6 +38,7 @@ namespace AdminAssistant.Blog
             services.AddTransient(typeof(ApplicationDbContext));
             services.AddScoped(typeof(IPostService), typeof(PostService));
             services.AddScoped(typeof(INewsletterService), typeof(NewsletterService));
+            services.AddScoped(typeof(ISidebarService), typeof(SidebarService));
 
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();

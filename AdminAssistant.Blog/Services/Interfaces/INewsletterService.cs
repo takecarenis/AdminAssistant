@@ -9,5 +9,6 @@ namespace AdminAssistant.Blog.Services.Interfaces
     {
         void Subscribe(string email);
         bool IsSubscribed(string email);
+        void Unsubscribe(string email);
     }
 }

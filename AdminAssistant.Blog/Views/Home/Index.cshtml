@@ -123,7 +123,10 @@
 
             <div class="col-lg-4 col-md-12">
                 <div class="sidebar-area">
-
+                    @await Component.InvokeAsync("Newsletter")
+                    @await Component.InvokeAsync("LatestPost")
+                    @await Component.InvokeAsync("Category")
+                    @await Component.InvokeAsync("Tag")
                     @*<div class="sidebar-section about-author center-text">
                             <div class="author-image"><img src="images/author-1-200x200.jpg" alt="Autohr Image"></div>
 
@@ -183,63 +186,62 @@
                                 <h6 class="name">DESIGN</h6>
                             </a>
                         </div>*@<!-- sidebar-section Tag-area -->
+                    @*<div class="sidebar-section tags-area">
+                            <h4 class="title"><b class="light-color">Tags</b></h4>
+                            <ul class="tags">
+                                <li><a class="btn" href="#">Tag 1</a></li>
+                                <li><a class="btn" href="#">Tag 2</a></li>
+                                <li><a class="btn" href="#">Tag 3</a></li>
+                                <li><a class="btn" href="#">Tag 4</a></li>
+                                <li><a class="btn" href="#">Tag 5</a></li>
+                                <li><a class="btn" href="#">Tag 6</a></li>
+                                <li><a class="btn" href="#">Tag 7</a></li>
+                            </ul>
+                        </div> sidebar-section tags-area
 
-                    <div class="sidebar-section tags-area">
-                        <h4 class="title"><b class="light-color">Tags</b></h4>
-                        <ul class="tags">
-                            <li><a class="btn" href="#">Tag 1</a></li>
-                            <li><a class="btn" href="#">Tag 2</a></li>
-                            <li><a class="btn" href="#">Tag 3</a></li>
-                            <li><a class="btn" href="#">Tag 4</a></li>
-                            <li><a class="btn" href="#">Tag 5</a></li>
-                            <li><a class="btn" href="#">Tag 6</a></li>
-                            <li><a class="btn" href="#">Tag 7</a></li>
-                        </ul>
-                    </div><!-- sidebar-section tags-area -->
+                        <div class="sidebar-section latest-post-area">
+                            <h4 class="title"><b class="light-color">Latest Posts</b></h4>
 
-                    <div class="sidebar-section latest-post-area">
-                        <h4 class="title"><b class="light-color">Latest Posts</b></h4>
+                            <div class="latest-post" href="#">
+                                <div class="l-post-image"><img src="~/img/posts/post13122019.jpg" alt="Tag Image"></div>
+                                <div class="post-info">
+                                    <h5><a href="#"><b class="light-color">One more night in the clubs</b></a></h5>
+                                    <h6 class="date"><em>Monday, October 13, 2017</em></h6>
+                                    <a class="btn btn-sm" href="#" style="padding: 5px 10px;">Explore</a>
 
-                        <div class="latest-post" href="#">
-                            <div class="l-post-image"><img src="~/img/posts/post13122019.jpg" alt="Tag Image"></div>
-                            <div class="post-info">
-                                <h5><a href="#"><b class="light-color">One more night in the clubs</b></a></h5>
-                                <h6 class="date"><em>Monday, October 13, 2017</em></h6>
-                                <a class="btn btn-sm" href="#" style="padding: 5px 10px;">Explore</a>
-
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="latest-post" href="#">
-                            <div class="l-post-image"><img src="~/img/posts/post13122019.jpg" alt="Tag Image"></div>
-                            <div class="post-info">
-                                <h5><a href="#"><b class="light-color">Travel lights in winter</b></a></h5>
-                                <h6 class="date"><em>Monday, October 13, 2017</em></h6>
-                                <a class="btn Tag-btn" href="#" style="padding: 5px 10px;">Explore</a>
+                            <div class="latest-post" href="#">
+                                <div class="l-post-image"><img src="~/img/posts/post13122019.jpg" alt="Tag Image"></div>
+                                <div class="post-info">
+                                    <h5><a href="#"><b class="light-color">Travel lights in winter</b></a></h5>
+                                    <h6 class="date"><em>Monday, October 13, 2017</em></h6>
+                                    <a class="btn Tag-btn" href="#" style="padding: 5px 10px;">Explore</a>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="latest-post" href="#">
-                            <div class="l-post-image"><img src="~/img/posts/post13122019.jpg" alt="Tag Image"></div>
-                            <div class="post-info">
-                                <h5><a href="#"><b class="light-color">How to travel with no money</b></a></h5>
-                                <h6 class="date"><em>Monday, October 13, 2017</em></h6>
-                                <a class="btn Tag-btn" href="#" style="padding: 5px 10px;">Explore</a>
+                            <div class="latest-post" href="#">
+                                <div class="l-post-image"><img src="~/img/posts/post13122019.jpg" alt="Tag Image"></div>
+                                <div class="post-info">
+                                    <h5><a href="#"><b class="light-color">How to travel with no money</b></a></h5>
+                                    <h6 class="date"><em>Monday, October 13, 2017</em></h6>
+                                    <a class="btn Tag-btn" href="#" style="padding: 5px 10px;">Explore</a>
 
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="latest-post" href="#">
-                            <div class="l-post-image"><img src="~/img/posts/post13122019.jpg" alt="Tag Image"></div>
-                            <div class="post-info">
-                                <h5><a href="#"><b class="light-color">Smile 10 times a day</b></a></h5>
-                                <h6 class="date"><em>Monday, October 13, 2017</em></h6>
-                                <a class="btn btn-sm Tag-btn" href="#" style="padding: 5px 10px;">Explore</a>
+                            <div class="latest-post" href="#">
+                                <div class="l-post-image"><img src="~/img/posts/post13122019.jpg" alt="Tag Image"></div>
+                                <div class="post-info">
+                                    <h5><a href="#"><b class="light-color">Smile 10 times a day</b></a></h5>
+                                    <h6 class="date"><em>Monday, October 13, 2017</em></h6>
+                                    <a class="btn btn-sm Tag-btn" href="#" style="padding: 5px 10px;">Explore</a>
 
+                                </div>
                             </div>
-                        </div>
 
-                    </div><!-- sidebar-section latest-post-area -->
+                        </div> sidebar-section latest-post-area*@
                     @*<div class="sidebar-section advertisement-area">
                             <h4 class="title"><b class="light-color">Advertisement</b></h4>
                             <a class="advertisement-img" href="#">
@@ -259,9 +261,6 @@
                                 <li><a href="#"><img src="images/instragram-side-6-150x150.jpg" alt="Instagram Image"></a></li>
                             </ul>
                         </div>*@<!-- sidebar-section instagram-area -->
-
-
-
 
                 </div><!-- about-author -->
             </div><!-- col-lg-4 -->

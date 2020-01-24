@@ -354,7 +354,10 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 	
 /* NEWSLETTER AREA */
 
-.newsletter-area{ padding: 30px; background :#29333C; }
+.newsletter-area {
+    padding: 30px;
+    background: #1E377F;
+}
 
 .newsletter-area .title{ margin: 0; color: #fff; }
 

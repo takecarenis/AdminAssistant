@@ -15,5 +15,6 @@ namespace AdminAssistant.Blog.Services.Interfaces
         PostViewModel CreatePost(PostViewModel post);
         PostViewModel UpdatePost(PostViewModel post);
         PostViewModel DeletePost(int id);
+        int GetLastPostId();
     }
 }

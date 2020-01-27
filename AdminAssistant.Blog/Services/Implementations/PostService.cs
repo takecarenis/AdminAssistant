@@ -137,6 +137,13 @@ namespace AdminAssistant.Blog.Services.Implementations
             return posts;
         }
 
+        public int GetLastPostId()
+        {
+            Post post = _dbContext.Post.OrderByDescending(x => x.Date).FirstOrDefault();
+
+            return post != null ? post.Id : 0;
+        }
+
         public PostViewModel GetPost(int id)
         {
             PostViewModel post = _dbContext.Post

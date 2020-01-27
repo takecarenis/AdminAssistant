@@ -15,6 +15,7 @@ namespace AdminAssistant.Blog.Controllers
     {
         IPostService _postService;
         private readonly IWebHostEnvironment _env;
+        private string _currentPhotoPath;
 
         public AdminController(IPostService postService, IWebHostEnvironment env)
         {
@@ -56,18 +57,23 @@ namespace AdminAssistant.Blog.Controllers
             _postService.CreatePost(new PostViewModel());
         }
 
-        public void FileUpload(IFormFile file)
+        public ActionResult FileUpload(IFormFile file)
         {
             if (file != null)
             {
-                string pic = Path.GetFileName(file.FileName);
-                string path = Path.Combine(_env.WebRootPath, "~/img/posts", pic);
+                int lastPostId = _postService.GetLastPostId();
 
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
+                string pic = Path.GetFileName(file.FileName);
+                string path = Path.Combine(_env.WebRootPath, "img\\posts", (lastPostId + 1).ToString() + Path.GetExtension(file.FileName));
+
+                file.CopyTo(new FileStream(path, FileMode.CreateNew));
+
+                _currentPhotoPath = path;
+
+                return Json(path);
             }
+
+            return null;
         }
     }
 }

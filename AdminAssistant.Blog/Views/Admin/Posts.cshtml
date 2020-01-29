@@ -44,13 +44,13 @@
         }
     </div>
 
-    @*<form method="post" action="/Admin/CreatePost">*@
+    <form method="post" id="createPostForm">
     <!-- Modal -->
     <div class="modal fade" id="addNewPost" tabindex="-1" role="dialog" aria-labelledby="addNewPostTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addNewPostTitle">Modal title</h5>
+                    <h5 class="modal-title" id="addNewPostTitle">Add new post</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -75,61 +75,45 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="file">Upload Image:</label>
+                                <input type="file" name="file" id="fileUpload" />
+                                <input type="button" value="Submit photo" class="btn btn-primary" id="submitUploadingPhoto" />
                             </div>
-                            <form action="/Admin/FileUpload" id="uploadPhotoForm" method="post" enctype="multipart/form-data">
-                                <input type="file" name="file" id="file" />
-                                <input type="submit" value="Submit photo" class="submit" id="submitUploadingPhoto" />
-                            </form>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" data-target="#areYouSure" data-toggle="modal" data-dismiss="modal">Save changes</button>
+                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" id="submitAddingNewPost">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--Are you sure MODAL?-->
-    @*<div class="modal fade" id="areYouSure" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Save changes</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <p>Are you sure want to continue?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary">Yes</button>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-    @*</form>*@
-
+    </form>
 </div>
 
 
 <script>
 
-    $("#areYouSure").show(function () {
+    $("#submitUploadingPhoto").on('click', function () {
 
-        //$(".note-icon-code").click();
-        //var inputValue = $(".note-codable")[0].value;
-        //console.log(inputValue);
+        Admin.uploadImage();
+    });
 
-        //$("#bodyInputValue").val(inputValue);
 
-        //$("#file").val($("#fileUpload").val());
-        //$("#submitUploadingPhoto").click();
+    $("#submitAddingNewPost").on('click', function () {
+
+        $(".note-icon-code").click();
+        var inputValue = $(".note-codable")[0].value;
+        console.log(inputValue);
+
+        $("#bodyInputValue").val(inputValue);
+
+        $("#file").val($("#fileUpload").val());
+        $("#submitUploadingPhoto").click();
+
+        Admin.createNewPost();
     })
 
 </script>

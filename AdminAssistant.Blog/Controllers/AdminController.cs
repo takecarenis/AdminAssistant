@@ -15,7 +15,7 @@ namespace AdminAssistant.Blog.Controllers
     {
         IPostService _postService;
         private readonly IWebHostEnvironment _env;
-        private string _currentPhotoPath;
+        private string _currentPhotoPath { get; set; }
 
         public AdminController(IPostService postService, IWebHostEnvironment env)
         {
@@ -54,23 +54,32 @@ namespace AdminAssistant.Blog.Controllers
 
         public void CreatePost(PostViewModel post)
         {
+            FileUpload();
+
             _postService.CreatePost(new PostViewModel());
         }
 
-        public ActionResult FileUpload(IFormFile file)
+        public ActionResult FileUpload()
         {
-            if (file != null)
+            if (string.IsNullOrEmpty(_currentPhotoPath))
             {
-                int lastPostId = _postService.GetLastPostId();
+                var files = Request.Form.Files;
 
-                string pic = Path.GetFileName(file.FileName);
-                string path = Path.Combine(_env.WebRootPath, "img\\posts", (lastPostId + 1).ToString() + Path.GetExtension(file.FileName));
+                if (files != null && files.Count > 0 && files[0] != null)
+                {
+                    var file = files[0];
 
-                file.CopyTo(new FileStream(path, FileMode.CreateNew));
+                    int lastPostId = _postService.GetLastPostId();
 
-                _currentPhotoPath = path;
+                    string pic = Path.GetFileName(file.FileName);
+                    string path = Path.Combine(_env.WebRootPath, "img\\posts", (lastPostId + 1).ToString() + Path.GetExtension(file.FileName));
 
-                return Json(path);
+                    file.CopyTo(new FileStream(path, FileMode.CreateNew));
+
+                    _currentPhotoPath = path;
+
+                    return Json("Successfully added photo!");
+                }
             }
 
             return null;

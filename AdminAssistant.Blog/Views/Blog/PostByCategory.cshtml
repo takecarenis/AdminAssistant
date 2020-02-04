@@ -1,0 +1,100 @@
+﻿@using AdminAssistant.Blog.Models.DomainModel
+
+@model List<PostViewModel>
+@{
+    ViewData["Title"] = "PostByCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-slider" style="margin: 0px;">
+    <div id="slider">
+        <div class="ls-slide" data-ls="bgsize:cover; bgposition:50% 50%; duration:4000; transition2d:104; kenburnsscale:1.00;">
+            <img src="~/img/slider/1.jpg" class="ls-bg" alt="" />
+
+            <div class="slider-content ls-l" style="top:60%; left:30%;" data-ls="offsetyin:100%; offsetxout:-50%; durationin:800; delayin:100; durationout:400; parallaxlevel:0;">
+                <a class="btn" href="#">Explore</a>
+                <h3 class="title"><b>Interested in Laws? You're in the right place!</b></h3>
+                <h6>29 October, 2019</h6>
+            </div>
+        </div>
+
+        <div class="ls-slide" data-ls="bgsize:cover; bgposition:50% 50%; duration:4000; transition2d:104; kenburnsscale:1.00;">
+            <img src="~/img/slider/3.jpg" class="ls-bg" alt="" />
+            <div class="slider-content ls-l" style="top:60%; left:30%;" data-ls="offsetyin:100%; offsetxout:-50%; durationin:800; delayin:100; durationout:400; parallaxlevel:0;">
+                <h3 class="title"><b>Subscribe to our newsletter</b></h3>
+                <h6>29 October, 2019</h6>
+                <br />
+                <a class="btn" href="#">Subscribe</a>
+            </div>
+        </div><!-- ls-slide -->
+    </div><!-- slider -->
+</div><!-- main-slider -->
+
+<section class="section blog-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+                <div class="blog-posts">
+                    @if (Model != null)
+                    {
+                        foreach (var post in Model)
+                        {
+                            <div class="single-post">
+                                @if(!string.IsNullOrEmpty(post.PictureUrl))
+                                {
+                                    <div class="image-wrapper"><img src="@post.PictureUrl" alt="@post.Title"></div>
+                                }
+                                <div class="icons">
+                                    <div class="left-area">
+                                        <p class="date"><em>@post.Date</em></p>
+                                    </div>
+                                    <ul class="right-area social-icons">
+                                        <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
+                                        <li><a href="#"><i class="ion-android-favorite-outline"></i>Copy Link</a></li>
+                                    </ul>
+                                </div>
+
+                                <h3 class="title"><a href="#"><b class="light-color">@post.Title</b></a></h3>
+                                @Html.Raw(post.Body)
+                                <div class="icons">
+                                    <div class="left-area">
+
+                                        @foreach (var tag in post.Tags)
+                                        {
+                                            <a class="btn btn-sm btn-primary" href="#"><b>@tag.Name</b></a>
+                                        }
+                                    </div>
+                                </div>
+                                <a class="btn read-more-btn" href="#"><b>READ MORE</b></a>
+                            </div>
+                        }
+                    }
+
+                </div><!-- row -->
+
+                <a class="btn load-more-btn" target="_blank" href="#">LOAD OLDER POSTS</a>
+
+            </div><!-- blog-posts -->
+
+
+            <div class="col-lg-4 col-md-12">
+                <div class="sidebar-area">
+                    @await Component.InvokeAsync("Newsletter")
+                    @await Component.InvokeAsync("LatestPost")
+                    @await Component.InvokeAsync("Category")
+                    @await Component.InvokeAsync("Tag")
+
+                </div><!-- about-author -->
+            </div><!-- col-lg-4 -->
+
+        </div><!-- row -->
+    </div><!-- container -->
+</section><!-- section -->
+
+<style>
+    .single-post {
+        border: 2px inset #1C6EA4;
+        border-radius: 40px 40px 0px 40px;
+        padding: 30px;
+    }
+</style>

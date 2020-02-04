@@ -11,6 +11,7 @@ namespace AdminAssistant.Blog.Models.DomainModel
         public string Body { get; set; }
         public string PictureUrl { get; set; }
         public string PostedBy { get; set; }
+        public string Intro { get; set; }
         public List<TagViewModel> Tags { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
     }

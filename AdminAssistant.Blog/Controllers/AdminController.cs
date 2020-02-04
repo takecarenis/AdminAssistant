@@ -15,7 +15,7 @@ namespace AdminAssistant.Blog.Controllers
     {
         IPostService _postService;
         private readonly IWebHostEnvironment _env;
-        private string _currentPhotoPath { get; set; }
+        private static string _currentPhotoPath { get; set; }
 
         public AdminController(IPostService postService, IWebHostEnvironment env)
         {
@@ -32,54 +32,41 @@ namespace AdminAssistant.Blog.Controllers
 
         public ActionResult Posts()
         {
-           
-            PostViewModel post1 = new PostViewModel
-            {
-                Title = "This is first post!",
-                Date = DateTime.Now,
-                PictureUrl = "/img/posts/post13122019.jpg"
-            };
-
-            PostViewModel post2 = new PostViewModel
-            {
-                Title = "This is second post!",
-                Date = DateTime.Now,
-                PictureUrl = "/img/posts/post13122019.jpg"
-            };
-
-            List<PostViewModel> posts = new List<PostViewModel> { post1, post2 };
+            List<PostViewModel> posts = _postService.GetAllPosts();
 
             return View(posts);
         }
 
         public void CreatePost(PostViewModel post)
         {
-            FileUpload();
+            post.PictureUrl = _currentPhotoPath;
 
-            _postService.CreatePost(new PostViewModel());
+            _postService.CreatePost(post);
+        }
+
+        public bool DeletePost(PostViewModel post)
+        {
+            return _postService.DeletePost(post.Id);
         }
 
         public ActionResult FileUpload()
         {
-            if (string.IsNullOrEmpty(_currentPhotoPath))
+            var files = Request.Form.Files;
+
+            if (files != null && files.Count > 0 && files[0] != null)
             {
-                var files = Request.Form.Files;
+                var file = files[0];
 
-                if (files != null && files.Count > 0 && files[0] != null)
-                {
-                    var file = files[0];
+                int lastPostId = _postService.GetLastPostId();
 
-                    int lastPostId = _postService.GetLastPostId();
+                string pic = Path.GetFileName(file.FileName);
+                string path = Path.Combine(_env.WebRootPath, "img\\posts", (lastPostId + 1).ToString() + Path.GetExtension(file.FileName));
 
-                    string pic = Path.GetFileName(file.FileName);
-                    string path = Path.Combine(_env.WebRootPath, "img\\posts", (lastPostId + 1).ToString() + Path.GetExtension(file.FileName));
+                file.CopyTo(new FileStream(path, FileMode.CreateNew));
 
-                    file.CopyTo(new FileStream(path, FileMode.CreateNew));
+                _currentPhotoPath = "\\img\\posts\\" + (lastPostId + 1).ToString() + Path.GetExtension(file.FileName);
 
-                    _currentPhotoPath = path;
-
-                    return Json("Successfully added photo!");
-                }
+                return Json("Successfully added photo!");
             }
 
             return null;

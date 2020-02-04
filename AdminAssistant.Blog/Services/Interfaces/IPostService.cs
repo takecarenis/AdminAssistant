@@ -11,10 +11,11 @@ namespace AdminAssistant.Blog.Services.Interfaces
     {
         List<PostViewModel> GetAllPosts();
         List<PostViewModel> GetFiltered(FilterModel filter);
+        List<PostViewModel> GetPostByCategory(int categoryId);
         PostViewModel GetPost(int id);
         PostViewModel CreatePost(PostViewModel post);
         PostViewModel UpdatePost(PostViewModel post);
-        PostViewModel DeletePost(int id);
+        bool DeletePost(int id);
         int GetLastPostId();
     }
 }

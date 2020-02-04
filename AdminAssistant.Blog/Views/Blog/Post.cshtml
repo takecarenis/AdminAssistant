@@ -15,7 +15,7 @@
                             <div class="left-area">
                                 @foreach (var category in Model.Categories)
                                 {
-                                    <a class="btn caegory-btn" href="#"><b>@category.Name</b></a>
+                                    <a class="btn btn-outline-primary" href="#"><b>@category.Name</b></a>
                                 }
                             </div>
                             @*<ul class="right-area social-icons">
@@ -31,7 +31,7 @@
                         <ul style="margin-top: 30px;">
                             @foreach (var tag in Model.Tags)
                             {
-                                <li><a class="btn" href="#">@tag.Name</a></li>
+                                <li><a class="btn btn-outline-dark" href="#">@tag.Name</a></li>
                             }
                         </ul>
                     </div><!-- single-post -->

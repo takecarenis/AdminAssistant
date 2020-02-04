@@ -24,39 +24,46 @@ namespace AdminAssistant.Blog.Services.Implementations
                 Body = post.Body,
                 Date = DateTime.Now,
                 PictureUrl = post.PictureUrl,
-                PostedBy = post.PostedBy,
-                Title = post.Title
+                PostedBy = "Administrator",
+                Title = post.Title,
+                Intro = post.Intro
             };
 
             _dbContext.Post.Add(newPost);
             _dbContext.SaveChanges();
 
-            foreach (var category in post.Categories)
+            if (post.Categories != null)
             {
-                _dbContext.PostCategory.Add(new PostCategory
+                foreach (var category in post.Categories)
                 {
-                    PostId = newPost.Id,
-                    CategoryId = category.Id
-                });
+                    _dbContext.PostCategory.Add(new PostCategory
+                    {
+                        PostId = newPost.Id,
+                        CategoryId = category.Id
+                    });
 
-                _dbContext.SaveChanges();
+                    _dbContext.SaveChanges();
+                }
             }
 
-            foreach (var tag in post.Tags)
+            if (post.Tags != null)
             {
-                _dbContext.PostTags.Add(new PostTag
+                foreach (var tag in post.Tags)
                 {
-                    PostId = newPost.Id,
-                    TagId = tag.Id
-                });
+                    _dbContext.PostTags.Add(new PostTag
+                    {
+                        PostId = newPost.Id,
+                        TagId = tag.Id
+                    });
 
-                _dbContext.SaveChanges();
+                    _dbContext.SaveChanges();
+                }
             }
 
             return new PostViewModel { Id = newPost.Id };
         }
 
-        public PostViewModel DeletePost(int id)
+        public bool DeletePost(int id)
         {
             List<PostCategory> postCategories = _dbContext.PostCategory.Where(x => x.PostId == id).ToList();
 
@@ -77,10 +84,10 @@ namespace AdminAssistant.Blog.Services.Implementations
                 deletedPost.Id = post.Id;
 
                 _dbContext.Post.Remove(post);
-                _dbContext.SaveChanges();
+                return _dbContext.SaveChanges() == 1;
             }
 
-            return deletedPost;
+            return false;
         }
 
         public List<PostViewModel> GetAllPosts()
@@ -106,6 +113,35 @@ namespace AdminAssistant.Blog.Services.Implementations
                         Name = p.Tag.Name
                     }).ToList()
                 }).ToList();
+
+            return posts;
+        }
+
+        public List<PostViewModel> GetPostByCategory(int categoryId)
+        {
+            List<PostViewModel> posts = _dbContext.Post
+               .Include(x => x.PostCategories)
+               .Select(x => new PostViewModel
+               {
+                   Id = x.Id,
+                   Body = x.Body,
+                   Date = x.Date,
+                   PictureUrl = x.PictureUrl,
+                   PostedBy = x.PostedBy,
+                   Title = x.Title,
+                   Categories = x.PostCategories.Select(p => new CategoryViewModel
+                   {
+                       Id = p.CategoryId,
+                       Name = p.Category.Name
+                   }).ToList(),
+                   Tags = x.PostTags.Select(p => new TagViewModel
+                   {
+                       Id = p.TagId,
+                       Name = p.Tag.Name
+                   }).ToList()
+               }).ToList();
+
+            posts = posts.Where(x => x.Categories.Select(p => p.Id).Contains(categoryId)).ToList();
 
             return posts;
         }

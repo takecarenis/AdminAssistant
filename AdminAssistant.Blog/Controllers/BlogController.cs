@@ -32,6 +32,15 @@ namespace AdminAssistant.Blog.Controllers
             return View(blog);
         }
 
+        public IActionResult PostByCategory(int category)
+        {
+            if (category == 0) return Redirect("/Blog/Index");
+
+            List<PostViewModel> posts = _postService.GetPostByCategory(category);
+
+            return View(posts);
+        }
+
         public IActionResult Post(int? id)
         {
             if (id.HasValue && id != 0)

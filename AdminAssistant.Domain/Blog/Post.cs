@@ -17,6 +17,7 @@ namespace AdminAssistant.Domain.Blog
         public string Body { get; set; }
         public string PictureUrl { get; set; }
         public string PostedBy { get; set; }
+        public string Intro { get; set; }
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }
         public virtual ICollection<PostTag> PostTags { get; set; }

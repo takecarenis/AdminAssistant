@@ -102,6 +102,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                     PictureUrl = x.PictureUrl,
                     PostedBy = x.PostedBy,
                     Title = x.Title,
+                    Intro = x.Intro,
                     Categories = x.PostCategories.Select(p => new CategoryViewModel
                     {
                         Id = p.CategoryId,
@@ -146,6 +147,39 @@ namespace AdminAssistant.Blog.Services.Implementations
             return posts;
         }
 
+        public List<PostViewModel> GetPaginated(int currentPage, int pageSize = 3)
+        {
+            List<PostViewModel> posts = _dbContext.Post
+               .Include(x => x.PostCategories)
+               .Select(x => new PostViewModel
+               {
+                   Id = x.Id,
+                   Body = x.Body,
+                   Date = x.Date,
+                   PictureUrl = x.PictureUrl,
+                   PostedBy = x.PostedBy,
+                   Intro = x.Intro,
+                   Title = x.Title,
+                   Categories = x.PostCategories.Select(p => new CategoryViewModel
+                   {
+                       Id = p.CategoryId,
+                       Name = p.Category.Name
+                   }).ToList(),
+                   Tags = x.PostTags.Select(p => new TagViewModel
+                   {
+                       Id = p.TagId,
+                       Name = p.Tag.Name
+                   }).ToList()
+               }).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+
+            return posts;
+        }
+
+        public int GetPostCount()
+        {
+            return _dbContext.Post.Count();
+        }
+
         public List<PostViewModel> GetFiltered(FilterModel filter)
         {
             List<PostViewModel> posts = _dbContext.Post
@@ -157,6 +191,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                     Date = x.Date,
                     PictureUrl = x.PictureUrl,
                     PostedBy = x.PostedBy,
+                    Intro = x.Intro,
                     Title = x.Title,
                     Categories = x.PostCategories.Select(p => new CategoryViewModel
                     {
@@ -234,6 +269,18 @@ namespace AdminAssistant.Blog.Services.Implementations
             }
 
             return post;
+        }
+
+        public int GetCategoryId(string categoryName)
+        {
+            Category category = _dbContext.Category.FirstOrDefault(x => x.Name.ToLower() == categoryName.ToLower());
+
+            if (category != null)
+            {
+                return category.Id;
+            }
+
+            return 0;
         }
     }
 }

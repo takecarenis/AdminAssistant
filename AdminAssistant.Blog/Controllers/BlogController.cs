@@ -27,7 +27,6 @@ namespace AdminAssistant.Blog.Controllers
             List<PostViewModel> posts = _postService.GetFiltered(new FilterModel { Take = 6 });
 
             blog.MainPosts.AddRange(posts.Take(2));
-            blog.OtherPosts.AddRange(posts.Skip(2).Take(4));
 
             return View(blog);
         }
@@ -43,7 +42,7 @@ namespace AdminAssistant.Blog.Controllers
 
         public IActionResult Post(int? id)
         {
-            if (id.HasValue && id != 0)
+             if (id.HasValue && id != 0)
             {
                 PostViewModel post = _postService.GetPost(id.Value);
                 return View(post);

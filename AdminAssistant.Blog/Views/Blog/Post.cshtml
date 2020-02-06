@@ -9,31 +9,57 @@
                     <div class="single-post" style="margin-top: 30px">
                         @if (!string.IsNullOrEmpty(Model.PictureUrl))
                         {
-                            <div class="image-wrapper"><img src="@Model.PictureUrl" alt="Blog Image"></div>
+                            <div class="image-wrapper"><img src="@Model.PictureUrl" alt="@Model.Title"></div>
+
+                            <div class="icons">
+                                <div class="left-area">
+                                    <p class="date"><em>@Model.Date</em></p>
+                                </div>
+                                <ul class="right-area">
+                                    <li><button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink()">Copy Link</button></li>
+                                    <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")" id="copyLinkValue"/>
+                                </ul>
+                            </div>
+                            <hr />
+
+                            @foreach (var category in Model.Categories)
+                            {
+                                <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
+                            }
+
+                            <h3 class="title"><a href="/Blog/Post?id=@Model.Id"><b class="light-color">@Model.Title</b></a></h3>
+
                         }
+                        else
+                        {
+                            <h3 class="title"><a href="/Blog/Post?id=@Model.Id"><b class="light-color">@Model.Title</b></a></h3>
+                            <div class="icons">
+                                <div class="left-area">
+                                    <p class="date"><em>@Model.Date</em></p>
+                                </div>
+                                <ul class="right-area">
+                                    <li><a href="#">Copy Link</a></li>
+                                </ul>
+                            </div>
+                            <hr />
+
+                            @foreach (var category in Model.Categories)
+                            {
+                                <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
+                            }
+
+                        }
+
+                        @Html.Raw(Model.Body)
                         <div class="icons">
                             <div class="left-area">
-                                @foreach (var category in Model.Categories)
+                                <h5>Tags</h5>
+                                @foreach (var tag in Model.Tags)
                                 {
-                                    <a class="btn btn-outline-primary" href="#"><b>@category.Name</b></a>
+                                    <a href="#" style="margin-right: 5px;"><b>#@tag.Name</b></a>
                                 }
                             </div>
-                            @*<ul class="right-area social-icons">
-                                    <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
-                                    <li><a href="#"><i class="ion-android-favorite-outline"></i>03</a></li>
-                                    <li><a href="#"><i class="ion-android-textsms"></i>06</a></li>
-                                </ul>*@
                         </div>
-                        <p class="date"><em>@Model.Date</em></p>
-                        <h3 class="title"><a href="#"><b class="light-color">@Model.Title</b></a></h3>
-                        @Html.Raw(Model.Body)
-
-                        <ul style="margin-top: 30px;">
-                            @foreach (var tag in Model.Tags)
-                            {
-                                <li><a class="btn btn-outline-dark" href="#">@tag.Name</a></li>
-                            }
-                        </ul>
                     </div><!-- single-post -->
 
                 </div><!-- blog-posts -->
@@ -67,10 +93,10 @@
                     <!-- sidebar-section about-author -->
 
                     @await Component.InvokeAsync("Newsletter")
-                    @await Component.InvokeAsync("LatestPost")
+                    @await Component.InvokeAsync("LatestPost", new { category = "Article" })
+                    @await Component.InvokeAsync("LatestPost", new { category = "News" })
                     @await Component.InvokeAsync("Category")
                     @await Component.InvokeAsync("Tag")
-
 
                 </div><!-- about-author -->
             </div><!-- col-lg-4 -->

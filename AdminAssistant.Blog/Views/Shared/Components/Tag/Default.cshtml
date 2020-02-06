@@ -1,12 +1,14 @@
-﻿<div class="sidebar-section tags-area">
-    <h4 class="title"><b class="light-color">Tags</b></h4>
-    <ul class="tags">
-        <li><a class="btn btn-outline-dark" href="#">TAGGGGG</a></li>
-        <li><a class="btn btn-outline-dark" href="#">fasinon</a></li>
-        <li><a class="btn btn-outline-dark" href="#">travel</a></li>
-        <li><a class="btn btn-outline-dark" href="#">music</a></li>
-        <li><a class="btn btn-outline-dark" href="#">video</a></li>
-        <li><a class="btn btn-outline-dark" href="#">photography</a></li>
-        <li><a class="btn btn-outline-dark" href="#">adventure</a></li>
-    </ul>
-</div>
+﻿@using AdminAssistant.Blog.Models.DomainModel
+@model List<TagViewModel>
+
+    <div class="sidebar-section category-area">
+        <h4 class="title"><b class="light-color">Tags</b></h4>
+        <div class="row">
+            <div class="col-md-12">
+                @foreach (var tag in Model)
+                {
+                    <a href="#" style="margin-right: 5px;" id="@tag.Id"><b>#@tag.Name</b></a>
+                }
+            </div>
+        </div>
+    </div>

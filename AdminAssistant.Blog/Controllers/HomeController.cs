@@ -22,14 +22,15 @@ namespace AdminAssistant.Blog.Controllers
             _postService = service;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page=1)
         {
             BlogViewModel blog = new BlogViewModel();
 
-            List<PostViewModel> posts = _postService.GetFiltered(new FilterModel { Take = 6 });
+            List<PostViewModel> posts = _postService.GetPaginated(page);
 
-            blog.MainPosts.AddRange(posts.Take(2));
-            blog.OtherPosts.AddRange(posts.Skip(2).Take(4));
+            blog.MainPosts.AddRange(posts);
+            blog.CurrentPageIndex = page;
+            blog.Count = _postService.GetPostCount();
 
             return View(blog);
         }

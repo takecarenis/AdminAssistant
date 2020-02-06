@@ -12,6 +12,9 @@ namespace AdminAssistant.Blog.Services.Interfaces
         List<PostViewModel> GetAllPosts();
         List<PostViewModel> GetFiltered(FilterModel filter);
         List<PostViewModel> GetPostByCategory(int categoryId);
+        int GetCategoryId(string categoryName);
+        List<PostViewModel> GetPaginated(int currentPage, int pageSize = 3);
+        int GetPostCount();
         PostViewModel GetPost(int id);
         PostViewModel CreatePost(PostViewModel post);
         PostViewModel UpdatePost(PostViewModel post);

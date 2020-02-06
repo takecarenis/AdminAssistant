@@ -17,10 +17,16 @@ namespace AdminAssistant.Blog.ViewComponents
             _postService = service;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string category)
         {
-           // List<PostViewModel> latestPosts = _postService.GetFiltered();
-            return View();
+            int categoryId = _postService.GetCategoryId(category);
+            List<PostViewModel> latestPosts = new List<PostViewModel>();
+
+            if (categoryId != 0)
+                latestPosts = _postService.GetPostByCategory(categoryId);
+
+            ViewBag.Category = category == "Article" ? category + "s" : category;
+            return View(latestPosts);
         }
     }
 }

@@ -1,12 +1,24 @@
-﻿<div class="sidebar-section latest-post-area">
-    <h4 class="title"><b class="light-color">Latest Posts</b></h4>
+﻿@using AdminAssistant.Blog.Models.DomainModel
+@model List<PostViewModel>
 
-    <div class="latest-post" href="#">
-        <div class="l-post-image"><img src="images/recent-post-1-150x200.jpg" alt="Category Image"></div>
-        <div class="post-info">
-            <a class="btn category-btn" href="#">TRAVEL</a>
-            <h5><a href="#"><b class="light-color">One more night in the clubs</b></a></h5>
-            <h6 class="date"><em>Monday, October 13, 2017</em></h6>
-        </div>
+@{
+    string category = "Posts";
+
+    if (ViewBag.Category != null)
+    {
+        category =ViewBag.Category;
+    }
+}
+
+    <div class="sidebar-section latest-post-area">
+        <h4 class="title"><b class="light-color">Latest @category</b></h4>
+
+        @foreach (PostViewModel post in Model)
+        {
+            <div class="latest-post" href="#">
+                    <h5><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></h5>
+                    <h6 class="date"><em>@post.Date</em></h6>
+            </div>
+        }
+
     </div>
-</div>

@@ -1,7 +1,6 @@
 ﻿<div class="sidebar-section newsletter-area" style="margin-top: 30px; border-radius: 10px">
     <h5 class="title"><b>Subscribe to our newsletter</b></h5>
-    <form action="/Blog/Subscribe" method="post" >
-        <input class="email-input" name="email" type="text" placeholder="Your email here">
-        <button class="btn btn-white" type="submit">Subscribe</button>
-    </form>
+    <input class="email-input" name="email" type="text" id="emailInput" placeholder="Your email here">
+    <label for="email" id="emailvalidation" style="display: none" class="text-danger">Please enter an email to continue!</label>
+    <button class="btn btn-white" id="subscribeButton" onclick="Admin.subscribe()">Subscribe</button>
 </div>

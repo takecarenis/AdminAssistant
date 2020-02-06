@@ -58,6 +58,7 @@ Admin.createNewPost = function () {
 
     var title = $("#titleInput").val();
     var body = $("#bodyInputValue").val();
+    var intro = $("#introInput").val();
 
     var checkboxes = document.querySelectorAll('input[name="categories"]:checked'), categories = [];
     Array.prototype.forEach.call(checkboxes, function (el) {
@@ -78,6 +79,7 @@ Admin.createNewPost = function () {
     var post = {
         Title: title,
         Body: body,
+        Intro: intro,
         Categories: categories,
         Tags: tags
     };
@@ -93,4 +95,44 @@ Admin.createNewPost = function () {
             alert(err.statusText);
         }
     });
+}
+
+Admin.copyLink = function(id) {
+
+    var $temp = $("<input>");
+    $("body").append($temp);
+
+    if (id == null || id == "") {
+        $temp.val($("#copyLinkValue").val()).select();
+    }
+    else {
+        $temp.val($("#copyLinkValue_"+id).val()).select();
+    }
+
+    document.execCommand("copy");
+    $temp.remove();
+}
+
+Admin.subscribe = function () {
+
+    var email = $("#emailInput").val();
+
+    if (email == null || email == "") {
+
+        $("#emailvalidation").css("display", "block");
+    }
+    else {
+        $("#emailvalidation").css("display", "none");
+
+        $.ajax({
+            url: '/Blog/Subscribe?email=' + email,
+            type: "POST",
+            success: function (result) {
+                $("#emailInput").val("");
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
+    }
 }

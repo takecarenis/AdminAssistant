@@ -10,7 +10,7 @@
     <title>@ViewData["Title"] - Administration Assistant</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -19,15 +19,17 @@
               crossorigin="anonymous"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
+
+    
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
 
 
     <!-- Stylesheets -->
 
-    <link href="~/css/ionicons.css" rel="stylesheet">
     <link href="~/css/layerslider.css" rel="stylesheet">
     <link href="~/css/styles.css" rel="stylesheet">
     <link href="~/css/responsive.css" rel="stylesheet">
@@ -37,29 +39,6 @@
 
 </head>
 <body style="height: auto">
-    @*<header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-page="/Index">AdminAssistant.Blog</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <partial name="_LoginPartial" />
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>*@
-
     @if (!currentUrl.ToString().Contains("Admin"))
     {
         <header style="position: initial">
@@ -77,15 +56,15 @@
                     <div class="src-area">
                         <form action="post">
                             <input class="src-input" type="text" placeholder="Search">
-                            <button class="src-btn" type="submit"><i class="ion-ios-search-strong"></i></button>
+                            <button class="src-btn" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                         </form>
 
                         <partial name="_LoginPartial" />
                     </div><!-- src-area -->
 
                     <ul class="social-icons">
-                        <li><a href="#"><i class="ion-social-facebook-outline"></i></a></li>
-                        <li><a href="#"><i class="ion-social-twitter-outline"></i></a></li>
+                        <li><a href="#"><i class="fas facebook-bg"></i></a></li>
+                        <li><a href="#"><i class="fas fa-facebook-square"></i></a></li>
                         <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
                         <li><a href="#"><i class="ion-social-vimeo-outline"></i></a></li>
                         <li><a href="#"><i class="ion-social-pinterest-outline"></i></a></li>
@@ -98,33 +77,17 @@
             <div class="middle-menu center-text"><a href="#" class="logo"><img src="~/img/logo.png" alt="Logo Image"></a></div>
 
             <div class="bottom-area">
-
-                <div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
-
                 <ul class="main-menu visible-on-click" id="main-menu">
                     <li class="drop-down">
-                        <a href="#!">HOME@*<i class="ion-ios-arrow-down"></i>*@</a>
-
-                        @*<ul class="drop-down-menu">
-                                <li><a href="#">FEATURED</a></li>
-                                <li><a href="#">ABOUT</a></li>
-                                <li class="drop-down">
-                                    <a href="#!">CATEGORIES<i class="ion-ios-arrow-right"></i></a>
-                                    <ul class="drop-down-menu drop-down-inner">
-                                        <li><a href="#">FEATURED</a></li>
-                                        <li><a href="#">ABOUT</a></li>
-                                        <li><a href="#">CATEGORIES</a></li>
-                                    </ul>
-                                </li>
-                            </ul>*@
-
+                        <a href="/Home/Index">Home</a>
                     </li>
-                    @* <li><a href="#">FEATURED</a></li>*@
-                    @*<li><a href="#">ABOUT</a></li>*@
-                    @*<li><a href="#">CATEGORIES</a></li>*@
-                    <li>@*<a href="#">CONTACT</a>*@</li>
+                    <li class="drop-down">
+                        <a href="/Home/About">About</a>
+                    </li>
+                    <li class="drop-down">
+                        <a href="/Home/Contact">Contact</a>
+                    </li>
                 </ul><!-- main-menu -->
-
             </div><!-- conatiner -->
         </header>
     }
@@ -143,6 +106,12 @@
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/Blog/Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Home/About">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Home/Contact">Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin">Admin Page</a>

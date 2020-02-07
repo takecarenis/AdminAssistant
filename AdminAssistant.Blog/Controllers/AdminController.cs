@@ -1,32 +1,29 @@
 ﻿using AdminAssistant.Blog.Models.DomainModel;
 using AdminAssistant.Blog.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AdminAssistant.Blog.Controllers
 {
     public class AdminController : Controller
     {
         IPostService _postService;
+        INewsletterService _newsletterService;
+
         private readonly IWebHostEnvironment _env;
         private static string _currentPhotoPath { get; set; }
 
-        public AdminController(IPostService postService, IWebHostEnvironment env)
+        public AdminController(IPostService postService, INewsletterService newsLetterService, IWebHostEnvironment env)
         {
             _postService = postService;
+            _newsletterService = newsLetterService;
             _env = env;
         }
 
         public IActionResult Index()
         {
-            _postService.GetPost(2);
-            _postService.GetAllPosts();
             return View();
         }
 
@@ -35,6 +32,28 @@ namespace AdminAssistant.Blog.Controllers
             List<PostViewModel> posts = _postService.GetAllPosts();
 
             return View(posts);
+        }
+
+        public ActionResult Newsletter()
+        {
+            UserNewsletterViewModel newsletter = new UserNewsletterViewModel();
+
+            //List<PostViewModel> subscribers = _newsletterService.GetPaginated(page);
+
+            //blog.MainPosts.AddRange(posts);
+            //blog.CurrentPageIndex = page;
+            //blog.Count = _postService.GetPostCount();
+
+            return View();
+        }
+
+        public List<UserNewsletterViewModel> GetSubscribers()
+        {
+            UserNewsletterViewModel newsletter = new UserNewsletterViewModel();
+
+            List<UserNewsletterViewModel> subscribers = _newsletterService.GetPaginated(1, 10);
+
+            return subscribers;
         }
 
         public void CreatePost(PostViewModel post)

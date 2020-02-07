@@ -1,39 +1,43 @@
 ﻿@using AdminAssistant.Blog.Models.DomainModel
 @model List<PostViewModel>
 
-    <div class="container" style="margin-top: 100px">
-        <h2>Your posts</h2>
+@{
+    ViewData["Title"] = "Admin Posts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-        <div class="row" style="margin-top: 20px">
-            <div class="col-md-12 text-right">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNewPost">Add new</button>
-            </div>
+<div class="container" style="margin-top: 200px">
+    <h2>Your posts</h2>
+
+    <div class="row" style="margin-top: 20px">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNewPost">Add new</button>
         </div>
-        <div class="row" style="margin-top: 50px; padding-top: 10px">
-            @foreach (var post in Model)
-            {
-                <div class="col-md-6" style="border-right: 2px solid gray; border-top: 2px solid gray; padding-top: 20px; padding-bottom: 20px;">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="image-wrapper"><img src="@post.PictureUrl" width="100%" height="100%" alt="Blog Image"></div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <p class="title"><a href="#"><b class="light-color">@post.Title</b></a></p>
-                                        <p class="date" style="margin-top: 10px"><em>@post.Date</em></p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        @*<div class="row">
+    </div>
+    <div class="row" style="margin-top: 50px; padding-top: 10px">
+        @foreach (var post in Model)
+        {
+            <div class="col-md-6" style="border-right: 2px solid gray; border-top: 2px solid gray; padding-top: 20px; padding-bottom: 20px;">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="image-wrapper"><img src="@post.PictureUrl" width="100%" height="100%" alt="Blog Image"></div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="title"><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></p>
+                                    <p class="date" style="margin-top: 10px"><em>@post.Date</em></p>
+                                </div>
+                                <div class="col-md-4">
+                                    @*<div class="row">
                                             <div class="col-md-12">
                                                 <button class="btn btn-sm btn-info" style="width: 100%" id="@post.Id">Edit</button>
                                             </div>
                                         </div>*@
-                                        <div class="row" style="margin-top: 10px">
-                                            <div class="col-md-12">
-                                                <button class="btn btn-danger btn-sm" style="width: 100%" id="@post.Id" onclick="Admin.deletePost(event)">Delete</button>
-                                            </div>
+                                    <div class="row" style="margin-top: 10px">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-danger btn-sm" style="width: 100%" id="@post.Id" onclick="Admin.deletePost(event)">Delete</button>
                                         </div>
                                     </div>
                                 </div>
@@ -41,85 +45,86 @@
                         </div>
                     </div>
                 </div>
-            }
-        </div>
+            </div>
+        }
+    </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="addNewPost" tabindex="-1" role="dialog" aria-labelledby="addNewPostTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addNewPostTitle">Add new post</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="Title">Title: </label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="Title" id="titleInput" />
-                                </div>
+    <!-- Modal -->
+    <div class="modal fade" id="addNewPost" tabindex="-1" role="dialog" aria-labelledby="addNewPostTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewPostTitle">Add new post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Title">Title: </label>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="Intro">Intro: </label>
-                                </div>
-                                <div class="col-md-12">
-                                    <textarea class="form-control" id="introInput"></textarea>
-                                </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="Title" id="titleInput" />
                             </div>
-                            <div class="row" style="margin-top: 10px">
-                                <div class="col-md-6">
-                                    <label for="Body">Body: </label>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-control" id="bodyInput"></div>
-                                    <input type="text" name="Body" id="bodyInputValue" hidden="hidden" value="" />
-                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Intro">Intro: </label>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="file">Upload Image:</label>
-                                    <input type="file" name="file" id="fileUpload" />
-                                    <input type="button" value="Submit photo" class="btn btn-primary" id="submitUploadingPhoto" />
-                                </div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" id="introInput"></textarea>
                             </div>
-                            <div class="row" style="margin-top: 20px">
-                                <div class="col-md-6">
-                                    <label for="categories">Categories: </label>
-                                </div>
-                                <div class="col-md-12">
-                                    <input type="checkbox" name="categories" value="1" title="Category 1" />
-                                    <label for="categories" style="margin-right: 10px">Category 1</label>
-                                    <input type="checkbox" name="categories" value="2" title="Category 2" />
-                                    <label for="categories" style="margin-right: 10px">Category 2</label>
-                                </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col-md-6">
+                                <label for="Body">Body: </label>
                             </div>
-                            <div class="row" style="margin-top: 20px">
-                                <div class="col-md-6">
-                                    <label for="tags">Tags: </label>
-                                </div>
-                                <div class="col-md-12">
-                                    <input type="checkbox" name="tags" value="1" title="Tag 1" />
-                                    <label for="tags" style="margin-right: 10px">Tag 1</label>
-                                    <input type="checkbox" name="tags" value="2" title="Tag 2" />
-                                    <label for="tags" style="margin-right: 10px">Tag 2</label>
-                                </div>
+                            <div class="col-md-12">
+                                <div class="form-control" id="bodyInput"></div>
+                                <input type="text" name="Body" id="bodyInputValue" hidden="hidden" value="" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="file">Upload Image:</label>
+                                <input type="file" name="file" id="fileUpload" />
+                                <input type="button" value="Submit photo" class="btn btn-primary" id="submitUploadingPhoto" />
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px">
+                            <div class="col-md-6">
+                                <label for="categories">Categories: </label>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="checkbox" name="categories" value="1" title="Category 1" />
+                                <label for="categories" style="margin-right: 10px">Category 1</label>
+                                <input type="checkbox" name="categories" value="2" title="Category 2" />
+                                <label for="categories" style="margin-right: 10px">Category 2</label>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px">
+                            <div class="col-md-6">
+                                <label for="tags">Tags: </label>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="checkbox" name="tags" value="1" title="Tag 1" />
+                                <label for="tags" style="margin-right: 10px">Tag 1</label>
+                                <input type="checkbox" name="tags" value="2" title="Tag 2" />
+                                <label for="tags" style="margin-right: 10px">Tag 2</label>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" id="submitAddingNewPost">Save changes</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" id="submitAddingNewPost">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 <script>
@@ -144,4 +149,3 @@
     })
 
 </script>
-

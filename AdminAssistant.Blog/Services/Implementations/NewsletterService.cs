@@ -1,4 +1,5 @@
 ﻿using AdminAssistant.Blog.Data;
+using AdminAssistant.Blog.Models.DomainModel;
 using AdminAssistant.Blog.Services.Interfaces;
 using AdminAssistant.Domain;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,25 @@ namespace AdminAssistant.Blog.Services.Implementations
         {
             _dbContext = dbContext;
             _configuration = configuration;
+        }
+
+        public List<UserNewsletterViewModel> GetPaginated(int currentPage, int pageSize = 10)
+        {
+            List<UserNewsletterViewModel> newsletters = _dbContext.Newsletter
+                .Select(x => new UserNewsletterViewModel
+                {
+                    Id = x.Id,
+                    Email = x.Email,
+                    IsActive = x.IsActive,
+                    SubscribeDate = x.Date
+                }).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+
+            return newsletters;
+        }
+
+        public int GetSubscribersCount()
+        {
+            return _dbContext.Newsletter.Count();
         }
 
         public bool IsSubscribed(string email)

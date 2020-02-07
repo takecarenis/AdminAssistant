@@ -1,5 +1,21 @@
-﻿@{
-    var currentUrl = @Context.Request.Path; 
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    var currentUrl = @Context.Request.Path;
+
+    string position = "";
+
+    if(Context.Request.Path.HasValue && (Context.Request.Path.Value == "/" || Context.Request.Path.Value == "/Home/Index" || Context.Request.Path.Value == "/Blog/Post"))
+    {
+        position = "position: initial;";
+
+    }
+    else
+    {
+        position = "position: absolute;";
+    }
 }
 
 <!DOCTYPE html>
@@ -10,7 +26,7 @@
     <title>@ViewData["Title"] - Administration Assistant</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -20,7 +36,7 @@
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
 
-    
+
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
@@ -37,6 +53,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
 </head>
 <body style="height: auto">
     @if (!currentUrl.ToString().Contains("Admin"))
@@ -51,27 +71,17 @@
                 </ul><!-- left-area -->
 
 
+                <div class="src-area">
+                    <form action="post">
+                        <input class="src-input" type="text" placeholder="Search">
+                        <button class="src-btn" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </form>
+
+                </div><!-- src-area -->
+
                 <div class="right-area">
-
-                    <div class="src-area">
-                        <form action="post">
-                            <input class="src-input" type="text" placeholder="Search">
-                            <button class="src-btn" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </form>
-
-                        <partial name="_LoginPartial" />
-                    </div><!-- src-area -->
-
-                    <ul class="social-icons">
-                        <li><a href="#"><i class="fas facebook-bg"></i></a></li>
-                        <li><a href="#"><i class="fas fa-facebook-square"></i></a></li>
-                        <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                        <li><a href="#"><i class="ion-social-vimeo-outline"></i></a></li>
-                        <li><a href="#"><i class="ion-social-pinterest-outline"></i></a></li>
-                    </ul><!-- right-area -->
-
-                </div><!-- right-area -->
-
+                    <partial name="_LoginPartial" />
+                </div>
             </div><!-- top-menu -->
 
             <div class="middle-menu center-text"><a href="#" class="logo"><img src="~/img/logo.png" alt="Logo Image"></a></div>
@@ -87,6 +97,12 @@
                     <li class="drop-down">
                         <a href="/Home/Contact">Contact</a>
                     </li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="drop-down">
+                            <a href="/Admin/Index">Admin Page</a>
+                        </li>
+                    }
                 </ul><!-- main-menu -->
             </div><!-- conatiner -->
         </header>
@@ -113,9 +129,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/Home/Contact">Contact</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin">Admin Page</a>
-                            </li>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin Page</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -123,33 +142,30 @@
         </header>
     }
     <partial name="_CookieConsentPartial" />
-    <main role="main" class="pb-3">
+    <main role="main" class="pb-3" style="min-height: 465px;">
         @RenderBody()
     </main>
 
-    <footer>
+    <footer style="@position">
         <div class="container">
             <div class="row">
-
                 <div class="col-sm-6">
                     <div class="footer-section">
-                        <p class="copyright">Juli &copy; 2018. All rights reserved. | This template is made with <i class="ion-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
-                    </div><!-- footer-section -->
-                </div><!-- col-lg-4 col-md-6 -->
+                        <p class="copyright">&copy; @DateTime.Now.Year. All rights reserved. | Made with by <a href="https://www.linkedin.com/in/stefan-djokic-2a72b3151/" target="_blank">TheCodeMan</a></p>
+        </div><!-- footer-section -->
+        </div><!-- col-lg-4 col-md-6 -->
 
-                <div class="col-sm-6">
-                    <div class="footer-section">
-                        <ul class="social-icons">
-                            <li><a href="#"><i class="ion-social-facebook-outline"></i></a></li>
-                            <li><a href="#"><i class="ion-social-twitter-outline"></i></a></li>
-                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                            <li><a href="#"><i class="ion-social-vimeo-outline"></i></a></li>
-                            <li><a href="#"><i class="ion-social-pinterest-outline"></i></a></li>
-                        </ul>
-                    </div><!-- footer-section -->
-                </div><!-- col-lg-4 col-md-6 -->
-
-            </div><!-- row -->
+        <div class="col-sm-6">
+            <div class="footer-section">
+                <div class="social-icons">
+                    <img src="~/img/icons/facebook.png" style="width: 32px; padding-right: 10px"/>
+                    <img src="~/img/icons/instagram.png" style="width: 32px;padding-right: 10px" />
+                    <img src="~/img/icons/linkedin.png" style="width: 32px;padding-right: 10px"/>
+                    <img src="~/img/icons/twitter.png" style="width: 32px;padding-right: 10px"/>
+                </div>
+            </div><!-- footer-section -->
+        </div><!-- col-lg-4 col-md-6 -->
+        </div><!-- row -->
         </div><!-- container -->
     </footer>
 

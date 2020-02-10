@@ -5,25 +5,157 @@
 @using AdminAssistant.Blog.Models.DomainModel
 @model UserNewsletterViewModel
 
-<h1>Newsletter</h1>
-<table id="example" class="display table table-striped table-bordered" style="width:100%;">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Email</th>
-            <th>Subscribe Date</th>
-            <th>Active</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <th>Email</th>
-            <th>Subscribe Date</th>
-            <th>Active</th>
-        </tr>
-    </tbody>
-</table>
+<div style="padding-top: 120px;">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>All subscribed users</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <table id="example" class="display table table-striped table-bordered" style="width:100%; margin-top: 20px">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Subscribe Date</th>
+                        <th>Active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Id</td>
+                        <td>Email</td>
+                        <td>Subscribe Date</td>
+                        <td>Active</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-md-2"></div>
+        <div class="col-md-1">
+            <button id="sendEmailButton" class="btn btn-success">Send email</button>
+        </div>
+        <div class="col-md-1">
+            <button id="deleteSubscriberButton" class="btn btn-danger" data-toggle="modal" data-target="#deleteSubscriberModal" onclick="Admin.openDeleteSubscribeModal()">Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addNewPost" tabindex="-1" role="dialog" aria-labelledby="addNewPostTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addNewPostTitle">Add new post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="Title">Title: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="Title" id="titleInput" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="Intro">Intro: </label>
+                        </div>
+                        <div class="col-md-12">
+                            <textarea class="form-control" id="introInput"></textarea>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-6">
+                            <label for="Body">Body: </label>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-control" id="bodyInput"></div>
+                            <input type="text" name="Body" id="bodyInputValue" hidden="hidden" value="" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="file">Upload Image:</label>
+                            <input type="file" name="file" id="fileUpload" />
+                            <input type="button" value="Submit photo" class="btn btn-primary" id="submitUploadingPhoto" />
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-6">
+                            <label for="categories">Categories: </label>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="checkbox" name="categories" value="1" title="Category 1" />
+                            <label for="categories" style="margin-right: 10px">Category 1</label>
+                            <input type="checkbox" name="categories" value="2" title="Category 2" />
+                            <label for="categories" style="margin-right: 10px">Category 2</label>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-6">
+                            <label for="tags">Tags: </label>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="checkbox" name="tags" value="1" title="Tag 1" />
+                            <label for="tags" style="margin-right: 10px">Tag 1</label>
+                            <input type="checkbox" name="tags" value="2" title="Tag 2" />
+                            <label for="tags" style="margin-right: 10px">Tag 2</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="submitAddingNewPost">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteSubscriberModal" tabindex="-1" role="dialog" aria-labelledby="deleteSubscriberTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addNewPostTitle">Delete subscribers</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Do you want to continue with deleting following subscribers?</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="Title">Subscribers: </label>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 10px;">
+                            <label style="background-color: gray; color:white;border-radius: 4px; padding: 5px" id="listOfDeleteSubscribers"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-secondary" data-dismiss="modal" onclick="Admin.clearLabels()">Close</button>
+                <button class="btn btn-primary" id="submitDeletingSubscribers" onclick="Admin.deleteSubcribers()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function () {
@@ -32,18 +164,51 @@
             url: "/Admin/GetSubscribers",
             dataType: 'json',
             success: function (data) {
-                $('#example').DataTable({
+                Admin.subscribersTable = $('#example').DataTable({
+                    select: true,
                     data: data,
                     columns: [
+                        { "data": "checked" },
                         { "data": "id" },
                         { "data": "email" },
-                        { "data": "subscribeDate" },
+                        { "data": "subscribeDateString" },
                         { "data": "isActive" }
-                    ]
+                    ],
+                    'columnDefs': [
+                        {
+                            'targets': 0,
+                            'checkboxes': {
+                                'selectRow': true
+                            }
+                        }
+                    ],
+                    'select': {
+                        'style': 'multi'
+                    },
+                    'order': [[1, 'asc']]
                 });
             },
             error: function (error) {
                 alert(error);
+            }
+        });
+
+        $("#example").on('change', "input[type='checkbox']", function (e) {
+
+            var email = e.currentTarget.parentElement.parentElement.cells[2].innerText;
+
+            if (e.currentTarget.checked) {
+
+                Admin.listOfSubscribers.push(email);
+            }
+            else {
+
+                for (var i = 0; i < Admin.listOfSubscribers.length; i++) {
+                    if (Admin.listOfSubscribers[i] === email) {
+                        Admin.listOfSubscribers.splice(i, 1);
+                        i--;
+                    }
+                }
             }
         });
     });

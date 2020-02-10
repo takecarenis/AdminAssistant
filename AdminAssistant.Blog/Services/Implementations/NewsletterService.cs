@@ -22,6 +22,15 @@ namespace AdminAssistant.Blog.Services.Implementations
             _configuration = configuration;
         }
 
+        public void DeleteSubscribers(List<string> users)
+        {
+            List<Newsletter> newsletterUsers = _dbContext.Newsletter.Where(x => users.Contains(x.Email)).ToList();
+
+            _dbContext.Newsletter.RemoveRange(newsletterUsers);
+
+            _dbContext.SaveChanges();
+        }
+
         public List<UserNewsletterViewModel> GetPaginated(int currentPage, int pageSize = 10)
         {
             List<UserNewsletterViewModel> newsletters = _dbContext.Newsletter
@@ -30,7 +39,8 @@ namespace AdminAssistant.Blog.Services.Implementations
                     Id = x.Id,
                     Email = x.Email,
                     IsActive = x.IsActive,
-                    SubscribeDate = x.Date
+                    SubscribeDate = x.Date,
+                    SubscribeDateString = x.Date.ToString("dd/MM/yyyy"),
                 }).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
 
             return newsletters;

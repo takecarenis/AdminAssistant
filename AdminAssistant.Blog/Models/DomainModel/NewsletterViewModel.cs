@@ -11,7 +11,9 @@ namespace AdminAssistant.Blog.Models.DomainModel
         public int Id { get; set; }
         public string Email { get; set; }
         public DateTime SubscribeDate { get; set; }
+        public string SubscribeDateString { get; set; }
         public bool IsActive { get; set; }
+        public bool Checked { get; set; } = false;
     }
 
     public class SubscriberViewModel

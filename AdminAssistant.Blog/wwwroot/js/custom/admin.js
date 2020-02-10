@@ -1,5 +1,7 @@
 ﻿Admin = {
-    uploadImageStatus: ''
+    uploadImageStatus: '',
+    subscribersTable: '',
+    listOfSubscribers: []
 }
 
 Admin.uploadImage = function () {
@@ -135,4 +137,38 @@ Admin.subscribe = function () {
             }
         });
     }
+}
+
+Admin.openDeleteSubscribeModal = function () {
+
+    var rows_selected = Admin.subscribersTable.column(0).checkboxes.selected();
+
+    $.each(rows_selected, function (index, rowId) {
+
+        var row = Admin.subscribersTable.row(index).data();
+
+        var email = row.email;
+
+        $("#listOfDeleteSubscribers").text($("#listOfDeleteSubscribers").text() + " - " + email);
+    });
+};
+
+Admin.deleteSubcribers = function () {
+
+    $.ajax({
+        url: '/Admin/DeleteSubscribers',
+        type: "POST",
+        data: Admin.listOfSubscribers,
+        success: function (result) {
+            alert(result);
+        },
+        error: function (err) {
+            alert(err.statusText);
+        }
+    });
+}
+
+Admin.clearLabels = function () {
+
+    $("#listOfDeleteSubscribers").text("");
 }

@@ -68,6 +68,12 @@ namespace AdminAssistant.Blog.Controllers
             return _postService.DeletePost(post.Id);
         }
 
+        public void DeleteSubscribers(List<string> users)
+        {
+            _newsletterService.DeleteSubscribers(users);
+        }
+
+
         public ActionResult FileUpload()
         {
             var files = Request.Form.Files;

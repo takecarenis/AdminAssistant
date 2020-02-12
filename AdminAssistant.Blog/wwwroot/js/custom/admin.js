@@ -4,6 +4,41 @@
     listOfSubscribers: []
 }
 
+Admin.initSubscribersTable = function () {
+    $.ajax({
+        url: "/Admin/GetSubscribers",
+        dataType: 'json',
+        success: function (data) {
+            Admin.subscribersTable = $('#example').DataTable({
+                select: true,
+                data: data,
+                columns: [
+                    { "data": "checked" },
+                    { "data": "id" },
+                    { "data": "email" },
+                    { "data": "subscribeDateString" },
+                    { "data": "isActive" }
+                ],
+                'columnDefs': [
+                    {
+                        'targets': 0,
+                        'checkboxes': {
+                            'selectRow': true
+                        }
+                    }
+                ],
+                'select': {
+                    'style': 'multi'
+                },
+                'order': [[1, 'asc']]
+            });
+        },
+        error: function (error) {
+            alert(error);
+        }
+    });
+}
+
 Admin.uploadImage = function () {
 
     if (Admin.uploadImageStatus == '') {
@@ -141,16 +176,12 @@ Admin.subscribe = function () {
 
 Admin.openDeleteSubscribeModal = function () {
 
-    var rows_selected = Admin.subscribersTable.column(0).checkboxes.selected();
+    for (var i = 0; i < Admin.listOfSubscribers.length; i++) {
 
-    $.each(rows_selected, function (index, rowId) {
-
-        var row = Admin.subscribersTable.row(index).data();
-
-        var email = row.email;
+        var email = Admin.listOfSubscribers[i];
 
         $("#listOfDeleteSubscribers").text($("#listOfDeleteSubscribers").text() + " - " + email);
-    });
+    }
 };
 
 Admin.deleteSubcribers = function () {
@@ -158,7 +189,30 @@ Admin.deleteSubcribers = function () {
     $.ajax({
         url: '/Admin/DeleteSubscribers',
         type: "POST",
-        data: Admin.listOfSubscribers,
+        data: { users: Admin.listOfSubscribers },
+        dataType: 'json',
+        success: function (result) {
+            alert(result);
+        },
+        error: function (err) {
+            alert(err.statusText);
+        }
+    });
+}
+
+Admin.sendMail = function () {
+
+    var mail = {
+        Subject: $("#subjectInput").val(),
+        Body: $("#bodyInputValue").val(),
+        Users: Admin.listOfSubscribers
+    };
+
+    $.ajax({
+        url: '/Admin/SendEmail',
+        type: "POST",
+        data: mail,
+        dataType: 'json',
         success: function (result) {
             alert(result);
         },

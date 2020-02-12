@@ -56,6 +56,38 @@ namespace AdminAssistant.Blog.Services.Implementations
             return _dbContext.Newsletter.Any(x => x.Email == email && x.IsActive);
         }
 
+        public void SendEmail(SendMailViewModel sendMail)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient smtpServer = new SmtpClient(_configuration.GetValue<string>("Newsletter:SmtpClient"));
+
+                mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
+
+                foreach(var user in sendMail.Users)
+                {
+                    mail.To.Add(user);
+                }
+
+                mail.Subject = sendMail.Subject;
+                mail.Body = sendMail.Body;
+                mail.IsBodyHtml = true;
+
+                smtpServer.Port = 587;
+                smtpServer.UseDefaultCredentials = false;
+                smtpServer.Credentials = new System.Net.NetworkCredential(_configuration.GetValue<string>("Newsletter:Credentials:Username"),
+                    _configuration.GetValue<string>("Newsletter:Credentials:Password"));
+                smtpServer.EnableSsl = true;
+
+                smtpServer.Send(mail);
+            }
+            catch(Exception e)
+            {
+                //
+            }
+        }
+
         public void Subscribe(string email)
         {
             try

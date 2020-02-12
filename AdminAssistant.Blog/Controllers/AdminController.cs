@@ -73,6 +73,11 @@ namespace AdminAssistant.Blog.Controllers
             _newsletterService.DeleteSubscribers(users);
         }
 
+        public void SendEmail(SendMailViewModel mail)
+        {
+            _newsletterService.SendEmail(mail);
+        }
+
 
         public ActionResult FileUpload()
         {

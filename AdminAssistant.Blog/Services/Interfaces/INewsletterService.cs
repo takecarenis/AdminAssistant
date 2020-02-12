@@ -14,5 +14,6 @@ namespace AdminAssistant.Blog.Services.Interfaces
         List<UserNewsletterViewModel> GetPaginated(int currentPage, int pageSize = 10);
         int GetSubscribersCount();
         void DeleteSubscribers(List<string> users);
+        void SendEmail(SendMailViewModel sendMail);
     }
 }

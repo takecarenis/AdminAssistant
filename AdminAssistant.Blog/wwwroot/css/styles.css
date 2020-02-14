@@ -192,13 +192,21 @@ header .logo img{ height: 100%; width: auto; }
 
 /* BOTTOM AREA */
 
-header .bottom-area{ text-align: center; }
+    header .bottom-area {
+        text-align: center;
+        background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
+    }
 
 header .main-menu{ font-weight: 500; }
 
-header .main-menu > li > a{ height: 60px; line-height: 60px; padding: 0 25px; }
+    header .main-menu > li > a {
+        color: white;
+        height: 60px;
+        line-height: 60px;
+        padding: 0 25px;
+    }
 
-header .main-menu > li > a:hover{ background: #eee; }
+header .main-menu > li > a:hover{ background: #eee; color: black; }
 
 
 header .visible.main-menu{ display: block; }

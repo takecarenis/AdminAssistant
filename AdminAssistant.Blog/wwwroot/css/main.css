@@ -792,13 +792,14 @@ ul.list-justify > li {
 }
 
 .btn-primary {
-    background-color: #00AAFF;
+    background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
     border-color: #00a0f0;
 }
 
     .btn-primary:hover, .btn-primary:focus {
-        background-color: #00a0f0;
+        background: white;
         border-color: #00a0f0;
+        color: rgb(174,39,95);
     }
 
 .btn-warning {

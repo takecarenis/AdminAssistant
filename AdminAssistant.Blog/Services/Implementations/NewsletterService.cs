@@ -88,7 +88,7 @@ namespace AdminAssistant.Blog.Services.Implementations
             }
         }
 
-        public void Subscribe(string email)
+        public bool Subscribe(string email)
         {
             try
             {
@@ -125,11 +125,12 @@ namespace AdminAssistant.Blog.Services.Implementations
                     IsActive = true,
                     Date = DateTime.Now
                 });
-                _dbContext.SaveChanges();
+
+                return _dbContext.SaveChanges() == 1;
             }
             catch (Exception ex)
             {
-                //
+                return false;
             }
         }
 

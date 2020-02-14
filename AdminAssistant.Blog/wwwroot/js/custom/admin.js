@@ -59,12 +59,16 @@ Admin.uploadImage = function () {
             processData: false, // Not to process data  
             data: fileData,
             success: function (result) {
-                alert(result);
-
-                Admin.uploadImageStatus = result;
+                if (result == true || result == "True") {
+                    $.notify("You successfully uploaded photo!", "success");
+                    $("#submitUploadingPhoto").attr("disabled", "disabled");
+                }
+                else {
+                    $.notify("Something went wrong! Please try later.");
+                }
             },
             error: function (err) {
-                alert(err.statusText);
+                $.notify("Something went wrong! Please try later.");
             }
         });
     }
@@ -83,10 +87,15 @@ Admin.deletePost = function (e) {
         type: "POST",
         data: post,
         success: function (result) {
-            alert(result);
+            if (result == true || result == "True") {
+                $.notify("You successfully deleted post! Please refresh the page.", "success");
+            }
+            else {
+                $.notify("Something went wrong! Please try later.");
+            }
         },
         error: function (err) {
-            alert(err.statusText);
+            $.notify("Something went wrong! Please try later.");
         }
     });
 }
@@ -126,10 +135,15 @@ Admin.createNewPost = function () {
         type: "POST",
         data: post,
         success: function (result) {
-            alert(result);
+            if (result == true || result == "True") {
+                $.notify("You successfully added new post! Please refresh the page.", "success");
+            }
+            else {
+                $.notify("Something went wrong! Please try later.");
+            }
         },
         error: function (err) {
-            alert(err.statusText);
+            $.notify("Something went wrong! Please try later.");
         }
     });
 }
@@ -166,9 +180,16 @@ Admin.subscribe = function () {
             type: "POST",
             success: function (result) {
                 $("#emailInput").val("");
+
+                if (result == true || result == "True") {
+                    $.notify("You successfully subscribed!", "success");
+                }
+                else {
+                    $.notify("Something went wrong! Please check is entered email is valid or try later.");
+                }
             },
             error: function (err) {
-                alert(err.statusText);
+                $.notify("Something went wrong! Please check is entered email is valid or try later.");
             }
         });
     }

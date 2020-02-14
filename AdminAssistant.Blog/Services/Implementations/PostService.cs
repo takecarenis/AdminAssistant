@@ -17,77 +17,88 @@ namespace AdminAssistant.Blog.Services.Implementations
 
         public PostService(ApplicationDbContext dbContext) => _dbContext = dbContext;
 
-        public PostViewModel CreatePost(PostViewModel post)
+        public bool CreatePost(PostViewModel post)
         {
-            Post newPost = new Post
+            try
             {
-                Body = post.Body,
-                Date = DateTime.Now,
-                PictureUrl = post.PictureUrl,
-                PostedBy = "Administrator",
-                Title = post.Title,
-                Intro = post.Intro
-            };
-
-            _dbContext.Post.Add(newPost);
-            _dbContext.SaveChanges();
-
-            if (post.Categories != null)
-            {
-                foreach (var category in post.Categories)
+                Post newPost = new Post
                 {
-                    _dbContext.PostCategory.Add(new PostCategory
-                    {
-                        PostId = newPost.Id,
-                        CategoryId = category.Id
-                    });
+                    Body = post.Body,
+                    Date = DateTime.Now,
+                    PictureUrl = post.PictureUrl,
+                    PostedBy = "Administrator",
+                    Title = post.Title,
+                    Intro = post.Intro
+                };
 
-                    _dbContext.SaveChanges();
-                }
-            }
+                _dbContext.Post.Add(newPost);
+                if (_dbContext.SaveChanges() != 1) return false;
 
-            if (post.Tags != null)
-            {
-                foreach (var tag in post.Tags)
+                if (post.Categories != null)
                 {
-                    _dbContext.PostTags.Add(new PostTag
+                    foreach (var category in post.Categories)
                     {
-                        PostId = newPost.Id,
-                        TagId = tag.Id
-                    });
+                        _dbContext.PostCategory.Add(new PostCategory
+                        {
+                            PostId = newPost.Id,
+                            CategoryId = category.Id
+                        });
 
-                    _dbContext.SaveChanges();
+                        _dbContext.SaveChanges();
+                    }
                 }
-            }
 
-            return new PostViewModel { Id = newPost.Id };
+                if (post.Tags != null)
+                {
+                    foreach (var tag in post.Tags)
+                    {
+                        _dbContext.PostTags.Add(new PostTag
+                        {
+                            PostId = newPost.Id,
+                            TagId = tag.Id
+                        });
+
+                        _dbContext.SaveChanges();
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public bool DeletePost(int id)
         {
-            List<PostCategory> postCategories = _dbContext.PostCategory.Where(x => x.PostId == id).ToList();
-
-            _dbContext.PostCategory.RemoveRange(postCategories);
-            _dbContext.SaveChanges();
-
-            List<PostTag> postTags = _dbContext.PostTags.Where(x => x.TagId == id).ToList();
-
-            _dbContext.PostTags.RemoveRange(postTags);
-            _dbContext.SaveChanges();
-
-            Post post = _dbContext.Post.FirstOrDefault(x => x.Id == id);
-
-            PostViewModel deletedPost = new PostViewModel();
-
-            if (post != null)
+            try
             {
+                List<PostCategory> postCategories = _dbContext.PostCategory.Where(x => x.PostId == id).ToList();
+
+                _dbContext.PostCategory.RemoveRange(postCategories);
+                _dbContext.SaveChanges();
+
+                List<PostTag> postTags = _dbContext.PostTags.Where(x => x.TagId == id).ToList();
+
+                _dbContext.PostTags.RemoveRange(postTags);
+                _dbContext.SaveChanges();
+
+                Post post = _dbContext.Post.FirstOrDefault(x => x.Id == id);
+
+                PostViewModel deletedPost = new PostViewModel();
+
+                if (post == null) return false;
+
                 deletedPost.Id = post.Id;
 
                 _dbContext.Post.Remove(post);
                 return _dbContext.SaveChanges() == 1;
             }
-
-            return false;
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public List<PostViewModel> GetAllPosts()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using AdminAssistant.Blog.Models;
 using AdminAssistant.Blog.Models.DomainModel;
@@ -52,9 +53,20 @@ namespace AdminAssistant.Blog.Controllers
         }
 
         [HttpPost]
-        public void Subscribe(string email)
+        public bool Subscribe(string email)
         {
-            _newsletterService.Subscribe(email);
+            try
+            {
+                var addr = new MailAddress(email);
+
+                if (addr.Address == email) return _newsletterService.Subscribe(email);
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         [HttpGet]

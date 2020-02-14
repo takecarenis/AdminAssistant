@@ -60,6 +60,7 @@
     <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
     <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 
+    <script type="text/javascript" src="~/js/notify.js"></script>
 </head>
 <body style="height: auto">
     @if (!currentUrl.ToString().Contains("Admin"))
@@ -87,7 +88,7 @@
                 </div>
             </div><!-- top-menu -->
 
-            <div class="middle-menu center-text"><a href="#" class="logo"><img src="~/img/logo.png" alt="Logo Image"></a></div>
+            <div class="middle-menu center-text"><a href="/Home/Index" class="logo"><img src="~/img/logo2.png" alt="Logo Image"></a></div>
 
             <div class="bottom-area">
                 <ul class="main-menu visible-on-click" id="main-menu">
@@ -115,7 +116,7 @@
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
                 <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-page="/Index">AdminAssistant.Blog</a>
+                    <a class="navbar-brand" href="/Home/Index">AdminAssistant.Blog</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -124,7 +125,7 @@
                         <partial name="_LoginPartial" />
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Blog/Index">Home</a>
+                                <a class="nav-link text-dark" href="/Home/Index">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/Home/About">About</a>

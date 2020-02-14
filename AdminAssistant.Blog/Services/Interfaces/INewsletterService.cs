@@ -8,7 +8,7 @@ namespace AdminAssistant.Blog.Services.Interfaces
 {
     public interface INewsletterService
     {
-        void Subscribe(string email);
+        bool Subscribe(string email);
         bool IsSubscribed(string email);
         void Unsubscribe(string email);
         List<UserNewsletterViewModel> GetPaginated(int currentPage, int pageSize = 10);

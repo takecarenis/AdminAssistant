@@ -15,8 +15,10 @@
         </div>
     </div>
     <div class="row" style="margin-top: 50px; padding-top: 10px">
-        @foreach (var post in Model)
+        @if (Model.Count > 0)
         {
+            foreach (var post in Model)
+            {
             <div class="col-md-6" style="border-right: 2px solid gray; border-top: 2px solid gray; padding-top: 20px; padding-bottom: 20px;">
                 <div class="col-md-12">
                     <div class="row">
@@ -46,6 +48,11 @@
                     </div>
                 </div>
             </div>
+            }
+        }
+        else
+        {
+            <h3>Currently there are no posts here. Use Add new button to create a new post.</h3>
         }
     </div>
 

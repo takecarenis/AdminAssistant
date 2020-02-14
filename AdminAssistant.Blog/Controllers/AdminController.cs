@@ -1,5 +1,6 @@
 ﻿using AdminAssistant.Blog.Models.DomainModel;
 using AdminAssistant.Blog.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.IO;
 
 namespace AdminAssistant.Blog.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         IPostService _postService;
@@ -56,15 +58,17 @@ namespace AdminAssistant.Blog.Controllers
             return subscribers;
         }
 
-        public void CreatePost(PostViewModel post)
+        public bool CreatePost(PostViewModel post)
         {
+            if (post == null) return false;
             post.PictureUrl = _currentPhotoPath;
 
-            _postService.CreatePost(post);
+            return _postService.CreatePost(post);
         }
 
         public bool DeletePost(PostViewModel post)
         {
+            if (post == null || post.Id == 0) return false;
             return _postService.DeletePost(post.Id);
         }
 
@@ -79,27 +83,34 @@ namespace AdminAssistant.Blog.Controllers
         }
 
 
-        public ActionResult FileUpload()
+        public bool FileUpload()
         {
-            var files = Request.Form.Files;
-
-            if (files != null && files.Count > 0 && files[0] != null)
+            try
             {
-                var file = files[0];
+                var files = Request.Form.Files;
 
-                int lastPostId = _postService.GetLastPostId();
+                if (files != null && files.Count > 0 && files[0] != null)
+                {
+                    var file = files[0];
 
-                string pic = Path.GetFileName(file.FileName);
-                string path = Path.Combine(_env.WebRootPath, "img\\posts", (lastPostId + 1).ToString() + Path.GetExtension(file.FileName));
+                    int lastPostId = _postService.GetLastPostId();
 
-                file.CopyTo(new FileStream(path, FileMode.CreateNew));
+                    string pic = Path.GetFileName(file.FileName);
+                    string path = Path.Combine(_env.WebRootPath, "img\\posts", (lastPostId + 1).ToString() + Path.GetExtension(file.FileName));
 
-                _currentPhotoPath = "\\img\\posts\\" + (lastPostId + 1).ToString() + Path.GetExtension(file.FileName);
+                    file.CopyTo(new FileStream(path, FileMode.CreateNew));
 
-                return Json("Successfully added photo!");
+                    _currentPhotoPath = "\\img\\posts\\" + (lastPostId + 1).ToString() + Path.GetExtension(file.FileName);
+
+                    return true;
+                }
+
+                return false;
             }
-
-            return null;
+            catch
+            {
+                return false;
+            }
         }
     }
 }

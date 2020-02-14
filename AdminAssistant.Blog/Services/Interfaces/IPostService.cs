@@ -16,7 +16,7 @@ namespace AdminAssistant.Blog.Services.Interfaces
         List<PostViewModel> GetPaginated(int currentPage, int pageSize = 3);
         int GetPostCount();
         PostViewModel GetPost(int id);
-        PostViewModel CreatePost(PostViewModel post);
+        bool CreatePost(PostViewModel post);
         PostViewModel UpdatePost(PostViewModel post);
         bool DeletePost(int id);
         int GetLastPostId();

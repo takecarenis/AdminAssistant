@@ -7,7 +7,8 @@
 
     string position = "";
 
-    if(Context.Request.Path.HasValue && (Context.Request.Path.Value == "/" || Context.Request.Path.Value == "/Home/Index" || Context.Request.Path.Value == "/Blog/Post"))
+    if(Context.Request.Path.HasValue && (Context.Request.Path.Value == "/" || Context.Request.Path.Value == "/Home/Index" || Context.Request.Path.Value == "/Blog/Post")
+        || Context.Request.Path.Value == "/Home/About")
     {
         position = "position: initial;";
 
@@ -23,7 +24,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Administration Assistant</title>
+    <title>@ViewData["Title"] - PrivacyOneStop</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
@@ -146,7 +147,7 @@
         </header>
     }
     <partial name="_CookieConsentPartial" />
-    <main role="main" class="pb-3" style="min-height: 465px;">
+    <main role="main"  style="min-height: 465px;">
         @RenderBody()
     </main>
 
@@ -155,7 +156,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="footer-section">
-                        <p class="copyright">&copy; @DateTime.Now.Year. All rights reserved. | Made with by <a href="https://www.linkedin.com/in/stefan-djokic-2a72b3151/" target="_blank">TheCodeMan</a></p>
+                        <p class="copyright">PrivacyOneStop&copy; @DateTime.Now.Year. All rights reserved. | Made with by <a href="https://www.linkedin.com/in/stefan-djokic-2a72b3151/" target="_blank">TheCodeMan</a></p>
         </div><!-- footer-section -->
         </div><!-- col-lg-4 col-md-6 -->
 

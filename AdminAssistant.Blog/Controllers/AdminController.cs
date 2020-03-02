@@ -13,14 +13,16 @@ namespace AdminAssistant.Blog.Controllers
     {
         IPostService _postService;
         INewsletterService _newsletterService;
+        IPageService _pageService;
 
         private readonly IWebHostEnvironment _env;
         private static string _currentPhotoPath { get; set; }
 
-        public AdminController(IPostService postService, INewsletterService newsLetterService, IWebHostEnvironment env)
+        public AdminController(IPostService postService, INewsletterService newsLetterService, IPageService pageService, IWebHostEnvironment env)
         {
             _postService = postService;
             _newsletterService = newsLetterService;
+            _pageService = pageService;
             _env = env;
         }
 
@@ -47,6 +49,13 @@ namespace AdminAssistant.Blog.Controllers
             //blog.Count = _postService.GetPostCount();
 
             return View();
+        }
+
+        public ActionResult Pages()
+        {
+            List<PageViewModel> pages = _pageService.GetAllPages();
+
+            return View(pages);
         }
 
         public List<UserNewsletterViewModel> GetSubscribers()
@@ -112,5 +121,24 @@ namespace AdminAssistant.Blog.Controllers
                 return false;
             }
         }
+
+        #region Pages
+
+        public void AddNewPage(string name)
+        {
+            _pageService.AddNewPage(name);
+        }
+
+        public void AddNewPageWithContent(string name, string content)
+        {
+            _pageService.AddNewPageWithContent(name, content);
+        }
+
+        public void UpdateContent(PageViewModel page)
+        {
+            _pageService.UpdateContent(page.Name, page.Text);
+        }
+
+        #endregion
     }
 }

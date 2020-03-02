@@ -3,47 +3,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container" style="margin-top: 120px">
-    <div class="row">
-        <div class="col-md-3">
-            <a asp-action="Posts" asp-controller="Admin">
-                <div class="card text-white bg-primary mb-3 text-center" style="max-width: 18rem; height: 220px">
-                    <div class="card-header">Posts</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Post Management</h5>
-                        <p class="card-text" style="color: white;">You can control your posts here. Add new, change and delete existing ones.</p>
+    <div class="container" style="margin-top: 200px">
+        <div class="row text-center">
+            <div class="col-md-6 text-center">
+                <a asp-action="Posts" asp-controller="Admin">
+                    <div class="card text-white bg-primary mb-3 text-center" style="width: 100%; max-width: 25em; min-height: 220px">
+                        <div class="card-header">Posts</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Post Management</h5>
+                            <p class="card-text" style="color: white;">You can control your posts here. Add new, change and delete existing ones.</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a href="">
-                <div class="card text-white bg-success mb-3 text-center" style="max-width: 18rem; height: 220px">
-                    <div class="card-header">Newsletter</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Newsletter Management</h5>
-                        <p class="card-text" style="color: white;">Here you can see who and when subscribed to your blog, as well as add new people, delete some.</p>
+                </a>
+            </div>
+            <div class="col-md-6 text-center">
+                <a asp-action="Newsletter" asp-controller="Admin">
+                    <div class="card text-white bg-success mb-3 text-center" style="width: 100%; max-width: 25em; min-height: 220px">
+                        <div class="card-header">Newsletter</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Newsletter Management</h5>
+                            <p class="card-text" style="color: white;">Here you can see who and when subscribed to your blog, as well as add new people, delete some.</p>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h5 class="card-title">Danger card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div class="row text-center" style="margin-top: 50px;">
+                <div class="col-md-6 text-center">
+                    <a asp-action="Pages" asp-controller="Admin">
+                        <div class="card text-white bg-danger mb-3 text-center" style="width: 100%; max-width: 25em; min-height: 220px">
+                            <div class="card-header">Pages</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Pages Management</h5>
+                                <p class="card-text" style="color: white;">Here you can see your static pages with their content. Also, you can update content.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 text-center">
+                    <a asp-action="Newsletter" asp-controller="Admin">
+                        <div class="card text-white bg-warning mb-3 text-center" style="width: 100%; max-width: 25em; min-height: 220px">
+                            <div class="card-header">Header</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Warning card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h5 class="card-title">Warning card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

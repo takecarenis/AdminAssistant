@@ -55,5 +55,6 @@ namespace AdminAssistant.Blog.Data
         public DbSet<Tag> Tag { get; set; }
         public DbSet<PostCategory> PostCategory { get; set; }
         public DbSet<PostTag> PostTags { get; set; }
+        public DbSet<Page> Pages { get; set; }
     }
 }

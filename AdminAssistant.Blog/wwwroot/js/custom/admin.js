@@ -1,7 +1,8 @@
 ﻿Admin = {
     uploadImageStatus: '',
     subscribersTable: '',
-    listOfSubscribers: []
+    listOfSubscribers: [],
+    currentPageName: ''
 }
 
 Admin.initSubscribersTable = function () {
@@ -246,4 +247,43 @@ Admin.sendMail = function () {
 Admin.clearLabels = function () {
 
     $("#listOfDeleteSubscribers").text("");
+}
+
+Admin.editPageContent = function (e) {
+
+    var id = e.srcElement.id;
+
+    var name = id.substring(5, id.length);
+
+    Admin.currentPageName = name;
+
+    $("#editContentTitle").text("Edit Page content - " + name);
+    var currentContent = $("#currentContent_" + name).text();
+    $(".note-editable").text(currentContent);
+
+    $("#editPageContent").modal();
+}
+
+Admin.updatePageContent = function () {
+
+    var body = $("#bodyInputValue").val();
+    var name = Admin.currentPageName;
+
+    var page = {
+        Name: name,
+        Text: body
+    }
+
+    $.ajax({
+        url: '/Admin/UpdateContent',
+        type: "POST",
+        data: page,
+        dataType: 'json',
+        success: function (result) {
+            alert(result);
+        },
+        error: function (err) {
+            alert(err.statusText);
+        }
+    });
 }

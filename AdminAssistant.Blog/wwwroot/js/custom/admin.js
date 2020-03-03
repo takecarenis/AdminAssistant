@@ -106,6 +106,33 @@ Admin.createNewPost = function () {
     var body = $("#bodyInputValue").val();
     var intro = $("#introInput").val();
 
+    if (title == "") {
+        $("#titleValidation").css("display", "block");
+
+        return;
+    }
+    else {
+        $("#titleValidation").css("display", "none");
+    }
+
+    if (intro == "") {
+        $("#introValidation").css("display", "block");
+
+        return;
+    }
+    else {
+        $("#introValidation").css("display", "none");
+    }
+
+    if (body == "") {
+        $("#bodyValidation").css("display", "block");
+
+        return;
+    }
+    else {
+        $("#bodyValidation").css("display", "none");
+    }
+
     var checkboxes = document.querySelectorAll('input[name="categories"]:checked'), categories = [];
     Array.prototype.forEach.call(checkboxes, function (el) {
         categories.push({

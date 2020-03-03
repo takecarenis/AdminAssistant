@@ -4,19 +4,6 @@
 
 @{
     var currentUrl = @Context.Request.Path;
-
-    string position = "";
-
-    if(Context.Request.Path.HasValue && (Context.Request.Path.Value == "/" || Context.Request.Path.Value == "/Home/Index" || Context.Request.Path.Value == "/Blog/Post")
-        || Context.Request.Path.Value == "/Home/About")
-    {
-        position = "position: initial;";
-
-    }
-    else
-    {
-        position = "position: absolute;";
-    }
 }
 
 <!DOCTYPE html>
@@ -62,6 +49,12 @@
     <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 
     <script type="text/javascript" src="~/js/notify.js"></script>
+
+    <style>
+        a.mouseover {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body style="height: auto">
     @if (!currentUrl.ToString().Contains("Admin"))
@@ -117,7 +110,7 @@
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
                 <div class="container">
-                    <a class="navbar-brand" href="/Home/Index">AdminAssistant.Blog</a>
+                    <a href="/Home/Index" class="col-md-2"><img src="~/img/logo2.png" style="height: 100%;" alt="Logo Image"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -137,7 +130,7 @@
                             @if (SignInManager.IsSignedIn(User))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin Page</a>
+                                    <a class="nav-link text-dark" href="/Admin/Index">Admin Page</a>
                                 </li>
                             }
                         </ul>
@@ -147,11 +140,11 @@
         </header>
     }
     <partial name="_CookieConsentPartial" />
-    <main role="main"  style="min-height: 465px;">
+    <main role="main"  style="min-height: 465px; ">
         @RenderBody()
     </main>
 
-    <footer style="@position">
+    <footer>
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">

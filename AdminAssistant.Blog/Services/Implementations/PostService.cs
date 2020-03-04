@@ -109,7 +109,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                 {
                     Id = x.Id,
                     Body = x.Body,
-                    Date = x.Date,
+                    Date = x.Date.Date,
                     PictureUrl = x.PictureUrl,
                     PostedBy = x.PostedBy,
                     Title = x.Title,
@@ -137,6 +137,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                {
                    Id = x.Id,
                    Body = x.Body,
+                   Intro = x.Intro,
                    Date = x.Date,
                    PictureUrl = x.PictureUrl,
                    PostedBy = x.PostedBy,
@@ -292,6 +293,35 @@ namespace AdminAssistant.Blog.Services.Implementations
             }
 
             return 0;
+        }
+
+        public List<PostViewModel> Search(string searchTerm)
+        {
+            List<PostViewModel> posts = _dbContext.Post
+               .Include(x => x.PostCategories)
+               .Where(x => x.Title.Contains(searchTerm) || x.Body.Contains(searchTerm))
+               .Select(x => new PostViewModel
+               {
+                   Id = x.Id,
+                   Body = x.Body,
+                   Date = x.Date,
+                   PictureUrl = x.PictureUrl,
+                   PostedBy = x.PostedBy,
+                   Intro = x.Intro,
+                   Title = x.Title,
+                   Categories = x.PostCategories.Select(p => new CategoryViewModel
+                   {
+                       Id = p.CategoryId,
+                       Name = p.Category.Name
+                   }).ToList(),
+                   Tags = x.PostTags.Select(p => new TagViewModel
+                   {
+                       Id = p.TagId,
+                       Name = p.Tag.Name
+                   }).ToList()
+               }).ToList();
+
+            return posts;
         }
     }
 }

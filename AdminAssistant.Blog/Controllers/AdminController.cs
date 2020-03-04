@@ -14,15 +14,17 @@ namespace AdminAssistant.Blog.Controllers
         IPostService _postService;
         INewsletterService _newsletterService;
         IPageService _pageService;
+        ISidebarService _sidebarService;
 
         private readonly IWebHostEnvironment _env;
         private static string _currentPhotoPath { get; set; }
 
-        public AdminController(IPostService postService, INewsletterService newsLetterService, IPageService pageService, IWebHostEnvironment env)
+        public AdminController(IPostService postService, INewsletterService newsLetterService, IPageService pageService, ISidebarService sidebar, IWebHostEnvironment env)
         {
             _postService = postService;
             _newsletterService = newsLetterService;
             _pageService = pageService;
+            _sidebarService = sidebar;
             _env = env;
         }
 
@@ -34,8 +36,17 @@ namespace AdminAssistant.Blog.Controllers
         public ActionResult Posts()
         {
             List<PostViewModel> posts = _postService.GetAllPosts();
+            List<CategoryViewModel> categories = _sidebarService.GetAllCategories();
+            List<TagViewModel> tags = _sidebarService.GetAllTags();
 
-            return View(posts);
+            BlogViewModel blog = new BlogViewModel
+            {
+                MainPosts = posts,
+                Categories = categories,
+                Tags = tags
+            };
+
+            return View(blog);
         }
 
         public ActionResult Newsletter()
@@ -91,6 +102,10 @@ namespace AdminAssistant.Blog.Controllers
             _newsletterService.SendEmail(mail);
         }
 
+        public TagViewModel AddNewTag(TagViewModel newTag)
+        {
+            return _sidebarService.AddNewTag(newTag.Name);
+        }
 
         public bool FileUpload()
         {

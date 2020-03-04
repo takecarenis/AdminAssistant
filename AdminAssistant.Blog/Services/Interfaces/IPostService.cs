@@ -20,5 +20,6 @@ namespace AdminAssistant.Blog.Services.Interfaces
         PostViewModel UpdatePost(PostViewModel post);
         bool DeletePost(int id);
         int GetLastPostId();
+        List<PostViewModel> Search(string searchTerm);
     }
 }

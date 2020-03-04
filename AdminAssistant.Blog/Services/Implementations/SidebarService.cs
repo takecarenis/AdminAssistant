@@ -49,11 +49,13 @@ namespace AdminAssistant.Blog.Services.Implementations
 
         public TagViewModel AddNewTag(string name)
         {
-            _dbContext.Tag.Add(new Tag
-            { Name = name });
+            Tag newTag = new Tag { Name = name };
+            _dbContext.Tag.Add(newTag);
+
+            _dbContext.SaveChanges();
 
             return new TagViewModel
-            { Name = name };
+            { Name = name, Id = newTag.Id };
         }
 
         public List<TagViewModel> GetAllTags()

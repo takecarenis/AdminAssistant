@@ -24,4 +24,9 @@
     <ProjectReference Include="..\AdminAssistant.Domain\AdminAssistant.Domain.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\posts\" />
+  </ItemGroup>
+
 </Project>

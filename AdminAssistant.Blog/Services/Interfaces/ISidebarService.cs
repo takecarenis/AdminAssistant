@@ -10,5 +10,9 @@ namespace AdminAssistant.Blog.Services.Interfaces
     {
         List<CategoryViewModel> GetAllCategories();
         List<TagViewModel> GetAllTags();
+
+        TagViewModel AddNewTag(string name);
+
+        CategoryViewModel AddNewCategory(string name);
     }
 }

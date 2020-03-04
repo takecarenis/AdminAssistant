@@ -1,5 +1,5 @@
 ﻿@using AdminAssistant.Blog.Models.DomainModel
-@model List<PostViewModel>
+@model BlogViewModel
 
 @{
     ViewData["Title"] = "Admin Posts";
@@ -15,9 +15,9 @@
         </div>
     </div>
     <div class="row" style="margin-top: 50px; padding-top: 10px">
-        @if (Model.Count > 0)
+        @if (Model.MainPosts.Count > 0)
         {
-            foreach (var post in Model)
+            foreach (var post in Model.MainPosts)
             {
             <div class="col-md-6" style="border-right: 2px solid gray; border-top: 2px solid gray; padding-top: 20px; padding-bottom: 20px;">
                 <div class="col-md-12">
@@ -108,21 +108,29 @@
                                 <label for="categories">Categories: </label>
                             </div>
                             <div class="col-md-12">
-                                <input type="checkbox" name="categories" value="1" title="Category 1" />
-                                <label for="categories" style="margin-right: 10px">Category 1</label>
-                                <input type="checkbox" name="categories" value="2" title="Category 2" />
-                                <label for="categories" style="margin-right: 10px">Category 2</label>
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <input type="checkbox" name="categories" value="@category.Id" title="@category.Name" />
+                                    <label for="categories" style="margin-right: 10px">@category.Name</label>
+                                }
                             </div>
                         </div>
                         <div class="row" style="margin-top: 20px">
                             <div class="col-md-6">
                                 <label for="tags">Tags: </label>
                             </div>
+                            <div class="col-md-12" id="tagsDiv">
+                                @foreach (var tag in Model.Tags)
+                                {
+                                    <input type="checkbox" name="tags" value="@tag.Id" title="@tag.Name" />
+                                    <label for="tags" style="margin-right: 10px">@tag.Name</label>
+                                }
+                                </div>
                             <div class="col-md-12">
-                                <input type="checkbox" name="tags" value="1" title="Tag 1" />
-                                <label for="tags" style="margin-right: 10px">Tag 1</label>
-                                <input type="checkbox" name="tags" value="2" title="Tag 2" />
-                                <label for="tags" style="margin-right: 10px">Tag 2</label>
+                                <br />
+                                <br />
+                                <label>Add new tag: </label> <input type="text" style="width: 100px; margin-left: 5px" id="newTagInput" />
+                                <button class="btn btn-sm btn-primary" id="addNewTagBtn" onclick="Admin.addNewTag()" >Add</button>
                             </div>
                         </div>
                     </div>

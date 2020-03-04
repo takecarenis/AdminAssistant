@@ -2,7 +2,7 @@
 
 @model List<PostViewModel>
 @{
-    ViewData["Title"] = "PostByCategory";
+    ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -129,16 +129,4 @@
         border-radius: 40px 40px 40px 40px;
         padding: 30px;
     }
-
-    .isDisabled {
-        cursor: not-allowed;
-        opacity: 0.5;
-    }
-
-        .isDisabled > a {
-            color: currentColor;
-            display: inline-block; /* For IE11/ MS Edge bug */
-            pointer-events: none;
-            text-decoration: none;
-        }
 </style>

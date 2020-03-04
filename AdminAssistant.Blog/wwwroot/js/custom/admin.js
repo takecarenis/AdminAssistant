@@ -314,3 +314,45 @@ Admin.updatePageContent = function () {
         }
     });
 }
+
+Admin.addNewTag = function() {
+
+    var tagName = $("#newTagInput").val();
+
+    var newTag = {
+        Name: tagName
+    }
+
+    $.ajax({
+        url: '/Admin/AddNewTag',
+        type: "POST",
+        data: newTag,
+        dataType: 'json',
+        success: function(result) {
+
+            var input = document.createElement("input");
+            input.type = "checkbox";
+            input.name = "tags";
+            input.value = result.id;
+            input.title = result.name;
+
+            var label = document.createElement("label");
+            label.htmlFor = "tags";
+            label.innerHTML = result.name;
+            label.style.marginRight = "10px";
+
+            var tagsDiv = document.getElementById("tagsDiv");
+
+            tagsDiv.append(input);
+            tagsDiv.append(label);
+        },
+        error: function(err) {
+            alert(err.statusText);
+        }
+    });
+}
+
+Admin.backToPreviousPage = function() {
+
+    window.location = localStorage.getItem("backPage");
+}

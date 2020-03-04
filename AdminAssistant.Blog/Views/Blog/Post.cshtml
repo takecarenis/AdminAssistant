@@ -1,106 +1,80 @@
 ﻿@using AdminAssistant.Blog.Models.DomainModel
 @model PostViewModel
 
-<section class="blog-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-12">
-                <div class="blog-posts">
-                    <div class="single-post" style="margin-top: 30px">
-                        @if (!string.IsNullOrEmpty(Model.PictureUrl))
-                        {
-                            <div class="image-wrapper"><img src="@Model.PictureUrl" alt="@Model.Title"></div>
-
-                            <div class="icons">
-                                <div class="left-area">
-                                    <p class="date"><em>@Model.Date</em></p>
-                                </div>
-                                <ul class="right-area">
-                                    <li><button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink()">Copy Link</button></li>
-                                    <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")" id="copyLinkValue"/>
-                                </ul>
-                            </div>
-                            <hr />
-
-                            @foreach (var category in Model.Categories)
+    <section class="blog-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <div class="blog-posts">
+                        <div class="single-post" style="margin-top: 30px">
+                            @if (!string.IsNullOrEmpty(Model.PictureUrl))
                             {
-                                <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
+                                <div class="image-wrapper"><img src="@Model.PictureUrl" alt="@Model.Title"></div>
+
+                                <div class="icons">
+                                    <div class="left-area">
+                                        <p class="date"><em>@Model.Date.ToString("MM/dd/yyyy")</em></p>
+                                    </div>
+                                    <ul class="right-area">
+                                        @foreach (var category in Model.Categories)
+                                        {
+                                            <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
+                                        }
+                                    </ul>
+                                </div>
+                                <hr />
+
+                                <h3 class="title"><a href="/Blog/Post?id=@Model.Id"><b class="light-color">@Model.Title</b></a></h3>
+                            }
+                            else
+                            {
+                                <h3 class="title"><a href="/Blog/Post?id=@Model.Id"><b class="light-color">@Model.Title</b></a></h3>
+                                <div class="icons">
+                                    <div class="left-area">
+                                        <p class="date"><em>@Model.Date.ToString("MM/dd/yyyy")</em></p>
+                                    </div>
+                                    <ul class="right-area">
+                                        @foreach (var category in Model.Categories)
+                                        {
+                                            <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
+                                        }
+                                    </ul>
+                                </div>
+                                <hr />
                             }
 
-                            <h3 class="title"><a href="/Blog/Post?id=@Model.Id"><b class="light-color">@Model.Title</b></a></h3>
-
-                        }
-                        else
-                        {
-                            <h3 class="title"><a href="/Blog/Post?id=@Model.Id"><b class="light-color">@Model.Title</b></a></h3>
+                            @Html.Raw(Model.Body)
                             <div class="icons">
                                 <div class="left-area">
-                                    <p class="date"><em>@Model.Date</em></p>
+                                    <h5><b>Tags: </b></h5>
+                                    @foreach (var tag in Model.Tags)
+                                    {
+                                        <a href="#" style="margin-right: 5px;"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
+                                    }
                                 </div>
-                                <ul class="right-area">
-                                    <li><a href="#">Copy Link</a></li>
-                                </ul>
+
                             </div>
-                            <hr />
-
-                            @foreach (var category in Model.Categories)
-                            {
-                                <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
-                            }
-
-                        }
-
-                        @Html.Raw(Model.Body)
-                        <div class="icons">
-                            <div class="left-area">
-                                <h5>Tags</h5>
-                                @foreach (var tag in Model.Tags)
-                                {
-                                    <a href="#" style="margin-right: 5px;"><b>#@tag.Name</b></a>
-                                }
-                            </div>
+                            <button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink()">Copy Link</button>
+                            <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")" id="copyLinkValue" />
+                            <br />
+                            <br />
+                            <button id="backToPreviousPage" class="btn btn-sm btn-primary" onclick="Admin.backToPreviousPage()">Back</button>
                         </div>
-                    </div><!-- single-post -->
 
-                </div><!-- blog-posts -->
-            </div><!-- col-lg-4 -->
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="sidebar-area">
 
+                        @await Component.InvokeAsync("Newsletter")
+                        @await Component.InvokeAsync("LatestPost", new { category = "Article" })
+                        @await Component.InvokeAsync("LatestPost", new { category = "News" })
+                        @await Component.InvokeAsync("Category")
+                        @await Component.InvokeAsync("Tag")
 
-            <div class="col-lg-4 col-md-12">
-                <div class="sidebar-area">
+                    </div>
+                </div>
 
-                    <!--
-    <div class="sidebar-section about-author center-text">
-        <div class="author-image"><img src="~/img/man.jpg" alt="Autohr Image"></div>
-
-        <ul class="social-icons">
-            <li><a href="#"><i class="ion-social-facebook-outline"></i></a></li>
-            <li><a href="#"><i class="ion-social-twitter-outline"></i></a></li>
-            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-            <li><a href="#"><i class="ion-social-vimeo-outline"></i></a></li>
-            <li><a href="#"><i class="ion-social-pinterest-outline"></i></a></li>
-        </ul><!-- right-area -->
-                    <!--  <h4 class="author-name"><b class="light-color">Cristine Smith</b></h4>
-        <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-            dolore magnam aliquam quaerat voluptatem.
-        </p>
-
-        <div class="signature-image"><img src="images/signature-image.png" alt="Signature Image"></div>
-        <a class="read-more-link" href="#"><b>READ MORE</b></a>
-
-    </div>-->
-                    <!-- sidebar-section about-author -->
-
-                    @await Component.InvokeAsync("Newsletter")
-                    @await Component.InvokeAsync("LatestPost", new { category = "Article" })
-                    @await Component.InvokeAsync("LatestPost", new { category = "News" })
-                    @await Component.InvokeAsync("Category")
-                    @await Component.InvokeAsync("Tag")
-
-                </div><!-- about-author -->
-            </div><!-- col-lg-4 -->
-
-        </div><!-- row -->
-    </div><!-- container -->
-</section><!-- section -->
+            </div>
+        </div>
+    </section>

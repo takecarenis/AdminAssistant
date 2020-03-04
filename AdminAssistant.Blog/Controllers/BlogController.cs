@@ -41,6 +41,12 @@ namespace AdminAssistant.Blog.Controllers
             return View(posts);
         }
 
+        public IActionResult Search(string searchTerm)
+        {
+            List<PostViewModel> posts = _postService.Search(searchTerm);
+            return View(posts);
+        }
+
         public IActionResult Post(int? id)
         {
              if (id.HasValue && id != 0)

@@ -10,21 +10,22 @@
 
         <div class="ls-slide" data-ls="bgsize:cover; bgposition:50% 50%; duration:4000; transition2d:104; kenburnsscale:1.00;">
             <img src="~/img/slider/1.jpg" class="ls-bg" alt="" />
-
-            <div class="slider-content ls-l" style="top:60%; left:30%;" data-ls="offsetyin:100%; offsetxout:-50%; durationin:800; delayin:100; durationout:400; parallaxlevel:0;">
-                <h3 class="title"><b>Interested in Laws? You're in the right place!</b></h3>
-            </div>
-
         </div><!-- ls-slide -->
 
         <div class="ls-slide" data-ls="bgsize:cover; bgposition:50% 50%; duration:4000; transition2d:104; kenburnsscale:1.00;">
             <img src="~/img/slider/2.jpg" class="ls-bg" alt="" />
+        </div><!-- ls-slide -->
 
+        <div class="ls-slide" data-ls="bgsize:cover; bgposition:50% 50%; duration:4000; transition2d:104; kenburnsscale:1.00;">
+            <img src="~/img/slider/3.png" class="ls-bg" alt="" />
+        </div><!-- ls-slide -->
+
+        <div class="ls-slide" data-ls="bgsize:cover; bgposition:50% 50%; duration:4000; transition2d:104; kenburnsscale:1.00;">
+            <img src="~/img/slider/4.png" class="ls-bg" alt="" />
         </div><!-- ls-slide -->
 
         <div class="ls-slide" data-ls="bgsize:cover; bgposition:50% 50%; duration:4000; transition2d:104; kenburnsscale:1.00;">
             <img src="~/img/slider/5.png" class="ls-bg" alt="" />
-
         </div><!-- ls-slide -->
 
     </div><!-- slider -->
@@ -42,63 +43,61 @@
                     {
                         foreach (var post in Model.MainPosts)
                         {
-                            <div class="single-post">
-                                @if (!string.IsNullOrEmpty(post.PictureUrl))
-                                {
-                                    <div class="image-wrapper"><img src="@post.PictureUrl" alt="@post.Title"></div>
+                    <div class="single-post">
+                        @if (!string.IsNullOrEmpty(post.PictureUrl))
+                        {
+                            <div class="image-wrapper"><img src="@post.PictureUrl" alt="@post.Title"></div>
 
-                                    <div class="icons">
-                                        <div class="left-area">
-                                            <p class="date"><em>@post.Date</em></p>
-                                        </div>
-                                        <ul class="right-area">
-                                            <li><button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink('@post.Id')">Copy Link</button></li>
-                                            <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")/Blog/Post?id=@post.Id" id="copyLinkValue_@post.Id" />
-                                        </ul>
-                                    </div>
-                                    <hr />
-
-                                    @foreach (var category in post.Categories)
-                                    {
-                                        <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
-                                    }
-
-                                    <h3 class="title"><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></h3>
-
-                                }
-                                else
-                                {
-                                    <h3 class="title"><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></h3>
-                                    <div class="icons">
-                                        <div class="left-area">
-                                            <p class="date"><em>@post.Date</em></p>
-                                        </div>
-                                        <ul class="right-area">
-                                            <li><button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink('@post.Id')">Copy Link</button></li>
-                                            <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")/Blog/Post?id=@post.Id" id="copyLinkValue_@post.Id" />
-                                        </ul>
-                                    </div>
-                                    <hr />
-
-                                    @foreach (var category in post.Categories)
-                                    {
-                                        <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
-                                    }
-
-                                }
-
-                                <p style="margin-top:20px;">@post.Intro</p>
-                                <div class="icons">
-                                    <div class="left-area">
-                                        <h5>Tags</h5>
-                                        @foreach (var tag in post.Tags)
-                                        {
-                                            <a href="#" style="margin-right: 5px;"><b>#@tag.Name</b></a>
-                                        }
-                                    </div>
+                            <div class="icons">
+                                <div class="left-area">
+                                    <p class="date"><em>@post.Date.ToString("dd/MM/yyy")</em></p>
                                 </div>
-                                <a class="btn read-more-btn" href="/Blog/Post?id=@post.Id"><b>READ MORE</b></a>
-                            </div><!-- single-post -->
+                                <ul class="right-area">
+                                    @foreach (var category in post.Categories)
+                                    {
+                                        <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
+                                    }
+                                </ul>
+                            </div>
+                            <hr />
+
+                            <button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink('@post.Id')">Copy Link</button>
+                            <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")/Blog/Post?id=@post.Id" id="copyLinkValue_@post.Id" />
+
+                            <h3 class="title"><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></h3>
+                        }
+                        else
+                        {
+                            <h3 class="title"><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></h3>
+                            <div class="icons">
+                                <div class="left-area">
+                                    <p class="date"><em>@post.Date.ToString("dd/MM/yyy")</em></p>
+                                </div>
+                                <ul class="right-area">
+                                    @foreach (var category in post.Categories)
+                                    {
+                                        <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
+                                    }
+                                </ul>
+                            </div>
+                            <hr />
+                        }
+
+                        <p style="margin-top:20px;">@post.Intro</p>
+                    <br />
+                        <a class="btn btn-sm read-more-btn btn-primary" href="/Blog/Post?id=@post.Id"><b>Continue Reading</b></a>
+                        <div class="icons">
+                            <div class="left-area">
+                                <h5>Tags</h5>
+                                @foreach (var tag in post.Tags)
+                                {
+                                    <a href="#" style="margin-right: 5px;"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
+                                }
+                            </div>
+                        </div>
+                        <button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink('@post.Id')">Copy Link</button>
+                        <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")/Blog/Post?id=@post.Id" id="copyLinkValue_@post.Id" />
+                    </div><!-- single-post -->
                         }
                     }
                     else
@@ -140,8 +139,8 @@
 
 <style>
     .single-post {
-        border: 2px inset #1C6EA4;
-        border-radius: 40px 40px 0px 40px;
+        border: 2px inset rgba(92,45,145,1);
+        border-radius: 40px 40px 40px 40px;
         padding: 30px;
     }
 

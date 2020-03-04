@@ -14,6 +14,8 @@ namespace AdminAssistant.Blog.Models.DomainModel
         }
 
         public List<PostViewModel> MainPosts { get; set; }
+        public List<CategoryViewModel> Categories { get; set; }
+        public List<TagViewModel> Tags { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int CurrentPageIndex { get; set; } = 1;

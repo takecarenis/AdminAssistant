@@ -50,11 +50,7 @@
 
     <script type="text/javascript" src="~/js/notify.js"></script>
 
-    <style>
-        a.mouseover {
-            cursor: pointer;
-        }
-    </style>
+ 
 </head>
 <body style="height: auto">
     @if (!currentUrl.ToString().Contains("Admin"))
@@ -65,13 +61,12 @@
 
                 <ul class="left-area welcome-area">
                     <li class="hello-blog">Hello nice people, welcome to my blog</li>
-                    <li><a href="mailto:test@gmail.com">test@gmail.com</a></li>
                 </ul><!-- left-area -->
 
 
-                <div class="src-area">
-                    <form action="post">
-                        <input class="src-input" type="text" placeholder="Search">
+                <div class="right-area src-area" style="float:right">
+                    <form action="/Blog/Search">
+                        <input class="src-input" name="searchTerm" type="text" placeholder="Search" id="searchPostsInput">
                         <button class="src-btn" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </form>
 
@@ -85,20 +80,18 @@
             <div class="middle-menu center-text"><a href="/Home/Index" class="logo"><img src="~/img/logo2.png" alt="Logo Image"></a></div>
 
             <div class="bottom-area">
-                <ul class="main-menu visible-on-click" id="main-menu">
-                    <li class="drop-down">
-                        <a href="/Home/Index">Home</a>
+                <h2 class="right-area" id="threeLinesMenu">☰</h2>
+                <ul class="main-menu" id="main-menu">
+                    <li>
+                        <a href="/Home/Index" style="font-size: 20px">Home</a>
                     </li>
-                    <li class="drop-down">
-                        <a href="/Home/About">About</a>
-                    </li>
-                    <li class="drop-down">
-                        <a href="/Home/Contact">Contact</a>
+                    <li>
+                        <a href="/Home/About" style="font-size: 20px">About</a>
                     </li>
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <li class="drop-down">
-                            <a href="/Admin/Index">Admin Page</a>
+                        <li>
+                            <a href="/Admin/Index" style="font-size: 20px">Admin Page</a>
                         </li>
                     }
                 </ul><!-- main-menu -->
@@ -117,20 +110,18 @@
                     </button>
                     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                         <partial name="_LoginPartial" />
+                        <h2 class="right-area" id="threeLinesMenu">☰</h2>
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Home/Index">Home</a>
+                                <a class="nav-link text-dark" href="/Home/Index" style="font-size: 20px">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Home/About">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Home/Contact">Contact</a>
+                                <a class="nav-link text-dark" href="/Home/About" style="font-size: 20px">About</a>
                             </li>
                             @if (SignInManager.IsSignedIn(User))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" href="/Admin/Index">Admin Page</a>
+                                    <a class="nav-link text-dark" href="/Admin/Index" style="font-size: 20px">Admin Page</a>
                                 </li>
                             }
                         </ul>
@@ -140,7 +131,7 @@
         </header>
     }
     <partial name="_CookieConsentPartial" />
-    <main role="main"  style="min-height: 465px; ">
+    <main role="main" style="min-height: 465px; ">
         @RenderBody()
     </main>
 
@@ -156,8 +147,6 @@
                 <div class="col-sm-6">
                     <div class="footer-section">
                         <div class="social-icons">
-                            <img src="~/img/icons/facebook.png" style="width: 32px; padding-right: 10px" />
-                            <img src="~/img/icons/instagram.png" style="width: 32px;padding-right: 10px" />
                             <img src="~/img/icons/linkedin.png" style="width: 32px;padding-right: 10px" />
                             <img src="~/img/icons/twitter.png" style="width: 32px;padding-right: 10px" />
                         </div>
@@ -206,6 +195,22 @@
         $(document).ready(function () {
             $('#bodyInput').summernote();
             $(".panel-heading button").css("padding", "15px");
+
+            if (window.location.pathname != "/Blog/Post") {
+                localStorage.setItem("backPage", window.location.href);
+            }
+
+            $("#threeLinesMenu").on('click', function () {
+
+                var display = $(".main-menu").css("display")
+
+                if (display == "none") {
+                    $(".main-menu").css("display", "block");
+                }
+                else {
+                    $(".main-menu").css("display", "none");
+                }
+            });
         });
     </script>
 </body>

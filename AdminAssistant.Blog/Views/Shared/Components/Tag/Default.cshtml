@@ -5,9 +5,16 @@
         <h4 class="title"><b class="light-color">Tags</b></h4>
         <div class="row">
             <div class="col-md-12">
-                @foreach (var tag in Model)
+                @if (Model.Count > 0)
                 {
-                    <a href="#" style="margin-right: 5px;" id="@tag.Id"><b>#@tag.Name</b></a>
+                    foreach (var tag in Model)
+                    {
+                        <a href="#" style="margin-right: 5px;" id="@tag.Id"><b>#@tag.Name</b></a>
+                    }
+                }
+                else
+                {
+                    <h5>There are currently no tags to display.</h5>
                 }
             </div>
         </div>

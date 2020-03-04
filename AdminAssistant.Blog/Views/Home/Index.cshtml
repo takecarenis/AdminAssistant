@@ -38,7 +38,7 @@
             <div class="col-lg-8 col-md-12">
 
                 <div class="blog-posts">
-                    @if (Model != null && Model.MainPosts != null)
+                    @if (Model != null && Model.MainPosts != null && Model.MainPosts.Count > 0)
                     {
                         foreach (var post in Model.MainPosts)
                         {
@@ -52,8 +52,8 @@
                                             <p class="date"><em>@post.Date</em></p>
                                         </div>
                                         <ul class="right-area">
-                                            <li><button id="copyLink" class="btn btn-sm btn-dark"  onclick="Admin.copyLink('@post.Id')">Copy Link</button></li>
-                                            <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")/Blog/Post?id=@post.Id"  id="copyLinkValue_@post.Id" />
+                                            <li><button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink('@post.Id')">Copy Link</button></li>
+                                            <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")/Blog/Post?id=@post.Id" id="copyLinkValue_@post.Id" />
                                         </ul>
                                     </div>
                                     <hr />
@@ -101,19 +101,27 @@
                             </div><!-- single-post -->
                         }
                     }
-
+                    else
+                    {
+                        <h2>There are currently no posts to display.</h2>
+                    }
                 </div><!-- row -->
 
-                <div>
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <span class="@(Model.ShowPrevious ? "" : "isDisabled")"><a href="/Home/Index?page=@(Model.CurrentPageIndex-1)" class="page-link">Previous</a></span></li>
-                        <li class="page-item">
-                            <span class="@(Model.ShowNext ? "" : "isDisabled")"><a href="/Home/Index?page=@(Model.CurrentPageIndex + 1)"  class="page-link">Next</a></span></li>
-                    </ul>
-                </div>
+                @if (Model != null && Model.MainPosts != null && Model.MainPosts.Count > 0)
+                {
+                    <div>
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <span class="@(Model.ShowPrevious ? "" : "isDisabled")"><a href="/Home/Index?page=@(Model.CurrentPageIndex - 1)" class="page-link">Previous</a></span>
+                            </li>
+                            <li class="page-item">
+                                <span class="@(Model.ShowNext ? "" : "isDisabled")"><a href="/Home/Index?page=@(Model.CurrentPageIndex + 1)" class="page-link">Next</a></span>
+                            </li>
+                        </ul>
+                    </div>
+                }
 
-            </div><!-- blog-posts -->
+                </div><!-- blog-posts -->
 
 
             <div class="col-lg-4 col-md-12">

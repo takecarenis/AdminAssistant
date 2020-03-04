@@ -13,12 +13,19 @@
     <div class="sidebar-section latest-post-area">
         <h4 class="title"><b class="light-color">Latest @category</b></h4>
 
-        @foreach (PostViewModel post in Model)
+        @if (Model.Count > 0)
         {
-            <div class="latest-post" href="#">
+            foreach (PostViewModel post in Model)
+            {
+                <div class="latest-post" href="#">
                     <h5><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></h5>
                     <h6 class="date"><em>@post.Date</em></h6>
-            </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h5>There are currently no posts to display.</h5>
         }
 
     </div>

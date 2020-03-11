@@ -86,10 +86,10 @@
 
 	/* BOTTOM AREA */
 	
-	header .main-menu{ text-align: left; display: none; float: none; clear: both; max-height: 400px;
-		overflow: auto; border-top: 1px solid #ccc; }
+	header .main-menu{ text-align: left; float: none; clear: both; max-height: 400px;
+		overflow: auto; }
 	
-	header .main-menu > li{ display: block; float: none; border-bottom: 1px solid #ddd; }
+	header .main-menu > li{ display: block; float: none; }
 	
 	header .main-menu > li:last-child{ border-bottom: 0; }
 	
@@ -188,48 +188,70 @@
     }
 }
 
-/* Screens Resolution : 479px
--------------------------------------------------------------------------- */
-@media only screen and (max-width: 479px) {
+@media only screen and (max-width: 576px) {
 
-	/* ---------------------------------
+	header .main-menu {
+		text-align: left;
+		float: none;
+		clear: both;
+		max-height: 400px;
+		overflow: auto;
+		border-top: 1px solid #ccc;
+	}
+
+		header .main-menu > li {
+			display: block;
+			float: none;
+			border-bottom: 1px solid #ddd;
+		}
+}
+
+	/* Screens Resolution : 479px
+-------------------------------------------------------------------------- */
+	@media only screen and (max-width: 479px) {
+
+		/* ---------------------------------
 	1. PRIMARY STYLES
 	--------------------------------- */
 
-	body{ font-size: 14px;  }
-	
-	/* ---------------------------------
+		body {
+			font-size: 14px;
+		}
+
+		/* ---------------------------------
 	2. COMMONS FOR PAGE DESIGN
 	--------------------------------- */
 
-	.left-area,
-	.right-area{ float: none;  }
+		.left-area,
+		.right-area {
+			float: none;
+		}
 
-	.width-60,
-	.width-50{ width: 100%; }
+		.width-60,
+		.width-50 {
+			width: 100%;
+		}
 
-	.left-area li a,
-	.right-area li a{ padding: 0 10px 0 0!important; }
-	
-	/* ---------------------------------
+		.left-area li a,
+		.right-area li a {
+			padding: 0 10px 0 0 !important;
+		}
+
+		/* ---------------------------------
 	5. SINGLE POST
 	--------------------------------- */
-	
-	.single-post .icons ul.social-icons{ margin-top: 10px; }
 
+		.single-post .icons ul.social-icons {
+			margin-top: 10px;
+		}
+	}
 
-}
-
-/* Screens Resolution : 359px
+	/* Screens Resolution : 359px
 -------------------------------------------------------------------------- */
-@media only screen and (max-width: 359px) {
-	
-	
-}
+	@media only screen and (max-width: 359px) {
+	}
 
-/* Screens Resolution : 290px
+	/* Screens Resolution : 290px
 -------------------------------------------------------------------------- */
-@media only screen and (max-width: 290px) {
-	
-	
-}
+	@media only screen and (max-width: 290px) {
+	}

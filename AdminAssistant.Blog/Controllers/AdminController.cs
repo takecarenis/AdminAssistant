@@ -3,12 +3,12 @@ using AdminAssistant.Blog.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace AdminAssistant.Blog.Controllers
 {
-    [Authorize]
     public class AdminController : Controller
     {
         IPostService _postService;
@@ -52,12 +52,6 @@ namespace AdminAssistant.Blog.Controllers
         public ActionResult Newsletter()
         {
             UserNewsletterViewModel newsletter = new UserNewsletterViewModel();
-
-            //List<PostViewModel> subscribers = _newsletterService.GetPaginated(page);
-
-            //blog.MainPosts.AddRange(posts);
-            //blog.CurrentPageIndex = page;
-            //blog.Count = _postService.GetPostCount();
 
             return View();
         }
@@ -131,7 +125,7 @@ namespace AdminAssistant.Blog.Controllers
 
                 return false;
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }
@@ -149,9 +143,9 @@ namespace AdminAssistant.Blog.Controllers
             _pageService.AddNewPageWithContent(name, content);
         }
 
-        public void UpdateContent(PageViewModel page)
+        public bool UpdateContent(PageViewModel page)
         {
-            _pageService.UpdateContent(page.Name, page.Text);
+            return _pageService.UpdateContent(page.Id, page.Text);
         }
 
         #endregion

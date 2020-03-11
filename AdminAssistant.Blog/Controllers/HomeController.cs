@@ -15,11 +15,13 @@ namespace AdminAssistant.Blog.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         IPostService _postService;
+        IPageService _pageService;
 
-        public HomeController(ILogger<HomeController> logger, IPostService service)
+        public HomeController(ILogger<HomeController> logger, IPostService service, IPageService pageService)
         {
             _logger = logger;
             _postService = service;
+            _pageService = pageService;
         }
 
         public IActionResult Index(int page=1)
@@ -37,17 +39,23 @@ namespace AdminAssistant.Blog.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            PageViewModel page = _pageService.GetPage(2);
+
+            return View(page);
         }
 
         public IActionResult Terms()
         {
-            return View();
+            PageViewModel page = _pageService.GetPage(1);
+
+            return View(page);
         }
 
         public IActionResult About()
         {
-            return View();
+            PageViewModel page = _pageService.GetPage(3);
+
+            return View(page);
         }
 
         public IActionResult Contact()

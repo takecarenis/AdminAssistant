@@ -41,6 +41,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                     IsActive = x.IsActive,
                     SubscribeDate = x.Date,
                     SubscribeDateString = x.Date.ToString("dd/MM/yyyy"),
+                    Category = x.Category
                 }).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
 
             return newsletters;
@@ -97,25 +98,25 @@ namespace AdminAssistant.Blog.Services.Implementations
 
                 mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
                 mail.To.Add(email);
-                mail.Subject = "You have subscribed to #AdminAdministration# Newsletter";
+                mail.Subject = "You have subscribed to PrivacyOneStop Newsletter";
                 mail.Body = "Hello!";
                 mail.Body += "<br/><br/>";
                 mail.Body += "Thank You for Your interest in our service.";
                 mail.Body += "<br/>";
                 mail.Body += "Several times a month, You will receive a newsletter with information about new app releases, major updates and other news form #AdminAdministration#";
                 mail.Body += "<br/><br/>";
-                mail.Body += "If You don't want to receive our occasional emails please unsubscribe <a href='https://localhost:44376/Blog/Unsubscribe?email=" + email + "'>here</a>.";
+                mail.Body += "If You don't want to receive our occasional emails please unsubscribe <a href='http://privacyonestop.com/Blog/Unsubscribe?email=" + email + "'>here</a>.";
                 mail.Body += "<br/><br/>";
                 mail.Body += "Regards,";
                 mail.Body += "<br/>";
-                mail.Body += "#AdminAdministration# Team";
+                mail.Body += "PrivacyOneStop";
                 mail.IsBodyHtml = true;
 
-                SmtpServer.Port = 587;
+                SmtpServer.Port = 25;
                 SmtpServer.UseDefaultCredentials = false;
                 SmtpServer.Credentials = new System.Net.NetworkCredential(_configuration.GetValue<string>("Newsletter:Credentials:Username"),
                     _configuration.GetValue<string>("Newsletter:Credentials:Password"));
-                SmtpServer.EnableSsl = true;
+                SmtpServer.EnableSsl = false;
 
                 SmtpServer.Send(mail);
 

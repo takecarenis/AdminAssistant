@@ -1,6 +1,38 @@
 ﻿<div class="sidebar-section newsletter-area" style="margin-top: 30px; border-radius: 10px">
-    <h5 class="title"><b>Subscribe to our newsletter</b></h5>
+    <p class="title" style="text-align: justify">
+        <b>Subscribe to our newsletter</b> to receive emails about articles and news.
+        We might personalize emails based on your interests. Occasionally,
+        these emails may contain commercial offers from us.
+        You may unsubscribe by clicking on the unsubscribe link at the bottom of our marketing emails or by writing to us.
+    </p>
     <input class="email-input" name="email" type="text" id="emailInput" placeholder="Your email here">
     <label for="email" id="emailvalidation" style="display: none" class="text-danger">Please enter an email to continue!</label>
     <button class="btn btn-white" id="subscribeButton" onclick="Admin.subscribe()">Subscribe</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="subscribedModal" tabindex="-1" role="dialog" aria-labelledby="subscribedModalTItle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="subscribedModalTItle">Subscribe Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="text-success" id="successfullySubscribedLabel">You have successfully subscribed.</label>
+                            <label class="text-danger" id="unsuccessfullySubscribedLabel">Something went wrong! Please check is entered email is valid or try later.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

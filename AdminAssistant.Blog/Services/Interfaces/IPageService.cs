@@ -7,7 +7,9 @@ namespace AdminAssistant.Blog.Services.Interfaces
     {
         void AddNewPage(string name);
         void AddNewPageWithContent(string name, string content);
-        void UpdateContent(string name, string content);
+        bool UpdateContent(int id, string content);
         List<PageViewModel> GetAllPages();
+
+        PageViewModel GetPage(int id);
     }
 }

@@ -4,40 +4,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@using AdminAssistant.Blog.Models.DomainModel
+@model PageViewModel
+
     <div class="about-container">
-        <img src="~/img/lawyer.jpg" width="100%" height="100%">
+        <img src="~/img/about.png" width="100%" height="100%" style="margin-left: 2%; padding-left: 5%">
         <div class="text-about row" style="text-align: center;">
-            <div class="col-md-6 col-sm-6 text-width">
-                <h4 style="font-size: 2vw; margin-bottom: 30px">Hello and welcome to the PrivacyOneStop.</h4>
-                <div class="text">
-                    Are you a privacy professional or you seek to become one? Our guess is that you ended up
-                    here because you want to know more about privacy!
-                    This blog will quench your thirst when it comes to privacy. We will equip you with knowledge
-                    on how to set up a privacy programme, publish thought-provoking articles, and keep you on
-                    top of most relevant news from the privacy world. If you entrust us with your email address
-                    we will send you updates on these regularly, and we promise not to spam your inbox.
-                    We understand that being a privacy professional in a corporate world and the fast pace
-                    business environment requires having the right piece of information at the tip of your fingers.
-                    We value what is already available out there, but we strongly believe that our expertise can
-                    provide new perspectives and useful insights. With privacy laws emerging around the world on
-                    an almost monthly basis, the privacy universe is yet to be shaped.
-                    PrivacyOneStop aims to contribute to this development, and make your job easier..
-                    I hope we will become your top destination for all your privacy needs and if you want to get
-                    in touch about anything related to privacy, feel free to get in touch at
-                    <a href="mailto:info@privacyonestop.com"> info@privacyonestop.com</a>.
-                    </div>
-                <div style="margin-top: 30px">
-                    <p style="color:white;font-size: 1.4vw">
-                        <b>
-                            Stevan Stanojevic
-                        </b>
-                    </p>
-                    <p style="color:white;font-size: 1.4vw">
-                        <b>Founder &amp; CEO, PrivacyOneStop</b>
-                    </p>
-                </div>
+            <div class="col-md- col-sm-6 text-width">
+                <h4 style="font-size: 2vw; margin-bottom: 30px; color:black">Hello and welcome to the PrivacyOneStop.</h4>
+                @Html.Raw(Model.Text)
             </div>
-            <div class="col-md-6 col-sm-6" style="background-color: black; opacity: 0%;">
+            <div class="col-md-6 col-sm-6" style="background-color: white; opacity: 0%;">
                 <div></div>
             </div>
         </div>
@@ -57,11 +34,11 @@
     }
 
     .text-width {
-        color: white;
+        color: black;
     }
 
     .text {
-        color: white;
+        color: black;
         font-size: 1.4vw;
         text-align: justify;
     }
@@ -72,19 +49,19 @@
         }
     }
 
-     @@media (max-width: 600px) {
+    @@media (max-width: 600px) {
         .text {
             font-size: 1.8vw;
         }
     }
 
-      @@media (max-width: 480px) {
+    @@media (max-width: 480px) {
         .text {
             font-size: 2vw;
         }
     }
 
-       @@media (max-width: 400px) {
+    @@media (max-width: 400px) {
         .text {
             font-size: 2.2vw;
         }
@@ -101,12 +78,11 @@
             color: white;
             flex: 0 0 50%;
             max-width: 50%;
-             font-size: 2.4vw;
+            font-size: 2.4vw;
         }
     }
 
     main {
-        background-color: black;
+        background-color: white;
     }
-
 </style>

@@ -323,5 +323,35 @@ namespace AdminAssistant.Blog.Services.Implementations
 
             return posts;
         }
+
+        public List<PostViewModel> GetPostByTag(int tag)
+        {
+            List<PostViewModel> posts = _dbContext.Post
+               .Include(x => x.PostTags)
+               .Select(x => new PostViewModel
+               {
+                   Id = x.Id,
+                   Body = x.Body,
+                   Intro = x.Intro,
+                   Date = x.Date,
+                   PictureUrl = x.PictureUrl,
+                   PostedBy = x.PostedBy,
+                   Title = x.Title,
+                   Categories = x.PostCategories.Select(p => new CategoryViewModel
+                   {
+                       Id = p.CategoryId,
+                       Name = p.Category.Name
+                   }).ToList(),
+                   Tags = x.PostTags.Select(p => new TagViewModel
+                   {
+                       Id = p.TagId,
+                       Name = p.Tag.Name
+                   }).ToList()
+               }).ToList();
+
+            posts = posts.Where(x => x.Tags.Select(p => p.Id).Contains(tag)).ToList();
+
+            return posts;
+        }
     }
 }

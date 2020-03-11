@@ -10,5 +10,6 @@ namespace AdminAssistant.Domain
         public string Email { get; set; }
         public DateTime Date { get; set; }
         public bool IsActive { get; set; }
+        public string Category { get; set; }
     }
 }

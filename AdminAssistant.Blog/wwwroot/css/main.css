@@ -375,7 +375,7 @@ html.fullscreen-bg #wrapper {
 
         .navbar-nav > li {
             display: table-cell;
-            width: 1%;
+            width: 100%;
             position: inherit;
             text-align: center;
         }

@@ -361,8 +361,8 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 /* NEWSLETTER AREA */
 
 .newsletter-area {
-    padding: 30px;
-    background: #1E377F;
+	padding: 30px;
+	background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
 }
 
 .newsletter-area .title{ margin: 0; color: #fff; }

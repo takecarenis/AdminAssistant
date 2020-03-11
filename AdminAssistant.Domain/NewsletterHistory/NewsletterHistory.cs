@@ -10,5 +10,6 @@ namespace AdminAssistant.Domain
         public Newsletter Newsletter { get; set; }
         public string Subject { get; set; }
         public DateTime Date { get; set; }
+        public string Category { get; set; }
     }
 }

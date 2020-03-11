@@ -21,5 +21,6 @@ namespace AdminAssistant.Blog.Services.Interfaces
         bool DeletePost(int id);
         int GetLastPostId();
         List<PostViewModel> Search(string searchTerm);
+        List<PostViewModel> GetPostByTag(int tag);
     }
 }

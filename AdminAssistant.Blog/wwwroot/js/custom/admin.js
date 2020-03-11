@@ -18,6 +18,7 @@ Admin.initSubscribersTable = function () {
                     { "data": "id" },
                     { "data": "email" },
                     { "data": "subscribeDateString" },
+                    { "data": "category" },
                     { "data": "isActive" }
                 ],
                 'columnDefs': [
@@ -169,6 +170,8 @@ Admin.createNewPost = function () {
             else {
                 $.notify("Something went wrong! Please try later.");
             }
+
+            $("#addNewPost").modal('toggle');
         },
         error: function (err) {
             $.notify("Something went wrong! Please try later.");
@@ -210,14 +213,20 @@ Admin.subscribe = function () {
                 $("#emailInput").val("");
 
                 if (result == true || result == "True") {
-                    $.notify("You successfully subscribed!", "success");
+                    $("#successfullySubscribedLabel").css('display', 'block');
+                    $("#unsuccessfullySubscribedLabel").css('display', 'none');
+                    $("#subscribedModal").modal();
                 }
                 else {
-                    $.notify("Something went wrong! Please check is entered email is valid or try later.");
+                    $("#successfullySubscribedLabel").css('display', 'none');
+                    $("#unsuccessfullySubscribedLabel").css('display', 'block');
+                    $("#subscribedModal").modal();
                 }
             },
             error: function (err) {
-                $.notify("Something went wrong! Please check is entered email is valid or try later.");
+                $("#successfullySubscribedLabel").css('display', 'none');
+                $("#unsuccessfullySubscribedLabel").css('display', 'block');
+                $("#subscribedModal").modal();
             }
         });
     }
@@ -284,9 +293,9 @@ Admin.editPageContent = function (e) {
 
     Admin.currentPageName = name;
 
-    $("#editContentTitle").text("Edit Page content - " + name);
-    var currentContent = $("#currentContent_" + name).text();
-    $(".note-editable").text(currentContent);
+    $("#editContentTitle").text("Edit Page content");
+    var currentContent = $("#currentContent_" + name).html();
+    $(".note-editable").html(currentContent);
 
     $("#editPageContent").modal();
 }
@@ -294,10 +303,10 @@ Admin.editPageContent = function (e) {
 Admin.updatePageContent = function () {
 
     var body = $("#bodyInputValue").val();
-    var name = Admin.currentPageName;
+    var id = Admin.currentPageName;
 
     var page = {
-        Name: name,
+        Id: id,
         Text: body
     }
 
@@ -307,10 +316,17 @@ Admin.updatePageContent = function () {
         data: page,
         dataType: 'json',
         success: function (result) {
-            alert(result);
+
+            $("#editPageContent").modal('toggle');
+            if (result == true || result == "True") {
+                $.notify("You successfully updated the page! Please refresh the page.", "success");
+            }
+            else {
+                $.notify("Something went wrong! Please try later.");
+            }
         },
         error: function (err) {
-            alert(err.statusText);
+            $.notify("Something went wrong! Please try later.");
         }
     });
 }
@@ -356,3 +372,28 @@ Admin.backToPreviousPage = function() {
 
     window.location = localStorage.getItem("backPage");
 }
+
+$("#addNewPostButton").on('click', function () {
+
+    $("#titleInput").val('');
+    $("#bodyInputValue").val('');
+    $("#introInput").val('');
+    $("#file").val(null);
+    $("#fileUpload").val(null);
+    $("#newTagInput").val('');
+
+    if ($(".note-editable")[0].innerHTML != "<p><br></p>") {
+        $(".note-icon-code").click();
+        $(".note-editable")[0].innerHTML = ''
+    }
+
+    var checkboxes = document.querySelectorAll('input[name="categories"]:checked');
+    Array.prototype.forEach.call(checkboxes, function (el) {
+        el.checked = false;
+    });
+
+    var checkboxesTags = document.querySelectorAll('input[name="tags"]:checked');
+    Array.prototype.forEach.call(checkboxesTags, function (el) {
+        el.checked = false;
+    });
+});

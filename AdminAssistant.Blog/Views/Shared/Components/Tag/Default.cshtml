@@ -9,7 +9,7 @@
                 {
                     foreach (var tag in Model)
                     {
-                        <a href="#" style="margin-right: 5px;" id="@tag.Id"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
+                        <a href="/Blog/PostByTag?tag=@tag.Id" style="margin-right: 5px;" id="@tag.Id"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
                     }
                 }
                 else

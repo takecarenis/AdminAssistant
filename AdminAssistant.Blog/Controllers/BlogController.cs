@@ -41,6 +41,15 @@ namespace AdminAssistant.Blog.Controllers
             return View(posts);
         }
 
+        public IActionResult PostByTag(int tag)
+        {
+            if (tag == 0) return Redirect("/Blog/Index");
+
+            List<PostViewModel> posts = _postService.GetPostByTag(tag);
+
+            return View(posts);
+        }
+
         public IActionResult Search(string searchTerm)
         {
             List<PostViewModel> posts = _postService.Search(searchTerm);

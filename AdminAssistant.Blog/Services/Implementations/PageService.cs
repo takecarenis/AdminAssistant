@@ -38,16 +38,18 @@ namespace AdminAssistant.Blog.Services.Implementations
             _context.SaveChanges();
         }
 
-        public void UpdateContent(string name, string content)
+        public bool UpdateContent(int id, string content)
         {
-            Page existPage = _context.Pages.FirstOrDefault(x => x.Name == name);
+            Page existPage = _context.Pages.FirstOrDefault(x => x.Id == id);
 
             if (existPage != null)
             {
                 existPage.Text = content;
 
-                _context.SaveChanges();
+                return _context.SaveChanges() == 1;
             }
+
+            return false;
         }
 
         public List<PageViewModel> GetAllPages()
@@ -60,6 +62,20 @@ namespace AdminAssistant.Blog.Services.Implementations
             }).ToList();
 
             return pages;
+        }
+
+        public PageViewModel GetPage(int id)
+        {
+            PageViewModel page = _context.Pages
+                .Where(x => x.Id == id)
+                .Select(x => new PageViewModel
+                {
+                    Name = x.Name,
+                    Text = x.Text,
+                    Id = x.Id
+                }).FirstOrDefault();
+
+            return page;
         }
     }
 }

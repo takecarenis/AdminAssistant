@@ -15,5 +15,6 @@ namespace AdminAssistant.Blog.Services.Interfaces
         int GetSubscribersCount();
         void DeleteSubscribers(List<string> users);
         void SendEmail(SendMailViewModel sendMail);
+        bool UpdateUserCategory(SendMailViewModel updateCategory);
     }
 }

@@ -50,85 +50,85 @@
 
     <script type="text/javascript" src="~/js/notify.js"></script>
 
- 
+
 </head>
 <body style="height: auto">
     @if (!currentUrl.ToString().Contains("Admin"))
     {
-    <header style="position: initial">
+        <header style="position: initial">
 
-        <div class="top-menu">
+            <div class="top-menu">
 
-            <ul class="left-area welcome-area">
-                <li class="hello-blog">Welcome to your PrivacyOneStop</li>
-            </ul><!-- left-area -->
+                <ul class="left-area welcome-area">
+                    <li class="hello-blog">Welcome to your PrivacyOneStop</li>
+                </ul><!-- left-area -->
 
 
-            <div class="right-area src-area" style="float:right">
-                <form action="/Blog/Search">
-                    <input class="src-input" name="searchTerm" type="text" placeholder="Search" id="searchPostsInput">
-                    <button class="src-btn" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                </form>
+                <div class="left-area src-area" style="float:left">
+                    <form action="/Blog/Search">
+                        <input class="src-input" name="searchTerm" type="text" placeholder="Search" id="searchPostsInput">
+                        <button class="src-btn" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </form>
 
-            </div><!-- src-area -->
+                </div><!-- src-area -->
 
-            <div class="right-area">
-                <partial name="_LoginPartial" />
-            </div>
-        </div><!-- top-menu -->
-
-        <div class="middle-menu center-text"><a href="/Home/Index" class="logo"><img src="~/img/logo2.png" alt="Logo Image"></a></div>
-
-        <nav class="bottom-area navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow" style="padding: 0px">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation" style="border-color: white;padding: 5px; margin-left: 5px; margin-top: 5px;margin-bottom: 5px;">
-                    <div style="width: 30px;height: 3px;background-color: white;margin: 6px 0;"></div>
-                    <div style="width: 30px;height: 3px;background-color: white;margin: 6px 0;"></div>
-                    <div style="width: 30px;height: 3px;background-color: white;margin: 6px 0;"></div>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="main-menu navbar-nav" style="margin: auto">
-                        <li class="nav-item">
-                            <a href="/Home/Index" style="font-size: 20px">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Home/About" style="font-size: 20px">About</a>
-                        </li>
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a href="/Admin/Index" style="font-size: 20px">Admin Page</a>
-                            </li>
-                        }
-                    </ul>
+                <div class="right-area">
+                    <partial name="_LoginPartial" />
                 </div>
-            </div>
-        </nav>
+            </div><!-- top-menu -->
 
-        @*<div class="bottom-area navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <ul class="main-menu navbar-nav flex-grow-1" id="main-menu">
-                    <li>
-                        <a href="/Home/Index" style="font-size: 20px">Home</a>
-                    </li>
-                    <li>
-                        <a href="/Home/About" style="font-size: 20px">About</a>
-                    </li>
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <li>
-                            <a href="/Admin/Index" style="font-size: 20px">Admin Page</a>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>*@
-    </header>
+            <div class="middle-menu center-text"><a href="/Home/Index" class="logo"><img src="~/img/logo2.png" alt="Logo Image"></a></div>
+
+            <nav class="bottom-area navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow" style="padding: 0px">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation" style="border-color: white;padding: 5px; margin-left: 5px; margin-top: 5px;margin-bottom: 5px;">
+                        <div style="width: 30px;height: 3px;background-color: white;margin: 6px 0;"></div>
+                        <div style="width: 30px;height: 3px;background-color: white;margin: 6px 0;"></div>
+                        <div style="width: 30px;height: 3px;background-color: white;margin: 6px 0;"></div>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="main-menu navbar-nav" style="margin: auto">
+                            <li class="nav-item">
+                                <a href="/Home/Index" style="font-size: 20px">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/Home/About" style="font-size: 20px">About</a>
+                            </li>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <a href="/Admin/Index" style="font-size: 20px">Admin Page</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            @*<div class="bottom-area navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="main-menu navbar-nav flex-grow-1" id="main-menu">
+                            <li>
+                                <a href="/Home/Index" style="font-size: 20px">Home</a>
+                            </li>
+                            <li>
+                                <a href="/Home/About" style="font-size: 20px">About</a>
+                            </li>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <li>
+                                    <a href="/Admin/Index" style="font-size: 20px">Admin Page</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>*@
+        </header>
     }
     else
     {
@@ -232,5 +232,32 @@
             }
         });
     </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalTitle">Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="text-success" id="statusLabel"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

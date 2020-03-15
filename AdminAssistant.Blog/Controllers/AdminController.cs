@@ -96,6 +96,11 @@ namespace AdminAssistant.Blog.Controllers
             _newsletterService.SendEmail(mail);
         }
 
+        public bool UpdateUserCategory(SendMailViewModel updateCategory)
+        {
+            return _newsletterService.UpdateUserCategory(updateCategory);
+        }
+
         public TagViewModel AddNewTag(TagViewModel newTag)
         {
             return _sidebarService.AddNewTag(newTag.Name);

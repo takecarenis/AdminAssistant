@@ -89,15 +89,22 @@ Admin.deletePost = function (e) {
         type: "POST",
         data: post,
         success: function (result) {
+
             if (result == true || result == "True") {
-                $.notify("You successfully deleted post! Please refresh the page.", "success");
+                $("#statusLabel").addClass("text-success");
+                $("#statusLabel").text("You successfully deleted post! Please refresh the page.");
+                $("#successModal").modal();
             }
             else {
-                $.notify("Something went wrong! Please try later.");
+                $("#statusLabel").addClass("text-danger");
+                $("#statusLabel").text("Something went wrong! Please try again.");
+                $("#successModal").modal();
             }
         },
         error: function (err) {
-            $.notify("Something went wrong! Please try later.");
+            $("#statusLabel").addClass("text-danger");
+            $("#statusLabel").text("Something went wrong! Please try again.");
+            $("#successModal").modal();
         }
     });
 }
@@ -164,17 +171,24 @@ Admin.createNewPost = function () {
         type: "POST",
         data: post,
         success: function (result) {
+
             if (result == true || result == "True") {
-                $.notify("You successfully added new post! Please refresh the page.", "success");
+                $("#statusLabel").addClass("text-success");
+                $("#statusLabel").text("You successfully create a new post! Please refresh the page.");
+                $("#successModal").modal();
             }
             else {
-                $.notify("Something went wrong! Please try later.");
+                $("#statusLabel").addClass("text-danger");
+                $("#statusLabel").text("Something went wrong! Please try again.");
+                $("#successModal").modal();
             }
 
             $("#addNewPost").modal('toggle');
         },
         error: function (err) {
-            $.notify("Something went wrong! Please try later.");
+            $("#statusLabel").addClass("text-danger");
+            $("#statusLabel").text("Something went wrong! Please try again.");
+            $("#successModal").modal();
         }
     });
 }
@@ -213,20 +227,20 @@ Admin.subscribe = function () {
                 $("#emailInput").val("");
 
                 if (result == true || result == "True") {
-                    $("#successfullySubscribedLabel").css('display', 'block');
-                    $("#unsuccessfullySubscribedLabel").css('display', 'none');
-                    $("#subscribedModal").modal();
+                    $("#statusLabel").addClass("text-success");
+                    $("#statusLabel").text("You have successfully subscribed to newsletter.");
+                    $("#successModal").modal();
                 }
                 else {
-                    $("#successfullySubscribedLabel").css('display', 'none');
-                    $("#unsuccessfullySubscribedLabel").css('display', 'block');
-                    $("#subscribedModal").modal();
+                    $("#statusLabel").addClass("text-danger");
+                    $("#statusLabel").text("Something went wrong! Please try again.");
+                    $("#successModal").modal();
                 }
             },
             error: function (err) {
-                $("#successfullySubscribedLabel").css('display', 'none');
-                $("#unsuccessfullySubscribedLabel").css('display', 'block');
-                $("#subscribedModal").modal();
+                $("#statusLabel").addClass("text-danger");
+                $("#statusLabel").text("Something went wrong! Please try again.");
+                $("#successModal").modal();
             }
         });
     }
@@ -250,10 +264,21 @@ Admin.deleteSubcribers = function () {
         data: { users: Admin.listOfSubscribers },
         dataType: 'json',
         success: function (result) {
-            alert(result);
+            if (result == true || result == "True") {
+                $("#statusLabel").addClass("text-success");
+                $("#statusLabel").text("You successfully deleted selected subscribers!");
+                $("#successModal").modal();
+            }
+            else {
+                $("#statusLabel").addClass("text-danger");
+                $("#statusLabel").text("Something went wrong! Please try again.");
+                $("#successModal").modal();
+            }
         },
         error: function (err) {
-            alert(err.statusText);
+            $("#statusLabel").addClass("text-danger");
+            $("#statusLabel").text("Something went wrong! Please try again.");
+            $("#successModal").modal();
         }
     });
 }
@@ -272,10 +297,15 @@ Admin.sendMail = function () {
         data: mail,
         dataType: 'json',
         success: function (result) {
-            alert(result);
+
+            $("#statusLabel").addClass("text-success");
+            $("#statusLabel").text("You successfully sent an email to selected subscribers!");
+            $("#successModal").modal();
         },
         error: function (err) {
-            alert(err.statusText);
+            $("#statusLabel").addClass("text-danger");
+            $("#statusLabel").text("Something went wrong! Please try again.");
+            $("#successModal").modal();
         }
     });
 }
@@ -319,14 +349,20 @@ Admin.updatePageContent = function () {
 
             $("#editPageContent").modal('toggle');
             if (result == true || result == "True") {
-                $.notify("You successfully updated the page! Please refresh the page.", "success");
+                $("#statusLabel").addClass("text-success");
+                $("#statusLabel").text("You successfully updated selected page!");
+                $("#successModal").modal();
             }
             else {
-                $.notify("Something went wrong! Please try later.");
+                $("#statusLabel").addClass("text-danger");
+                $("#statusLabel").text("Something went wrong! Please try again.");
+                $("#successModal").modal();
             }
         },
         error: function (err) {
-            $.notify("Something went wrong! Please try later.");
+            $("#statusLabel").addClass("text-danger");
+            $("#statusLabel").text("Something went wrong! Please try again.");
+            $("#successModal").modal();
         }
     });
 }
@@ -397,3 +433,43 @@ $("#addNewPostButton").on('click', function () {
         el.checked = false;
     });
 });
+
+
+Admin.openEnterCategoryModal = function () {
+
+    $("#categoryNameToAdd").val('');
+}
+
+Admin.updateUserCategory = function () {
+
+    var categoryName = $("#categoryNameToAdd").val();
+
+    var updateCategory = {
+        Subject: categoryName,
+        Users: Admin.listOfSubscribers
+    };
+
+    $.ajax({
+        url: '/Admin/UpdateUserCategory',
+        type: "POST",
+        data: updateCategory,
+        dataType: 'json',
+        success: function (result) {
+            if (result == true || result == "True") {
+                $("#statusLabel").addClass("text-success");
+                $("#statusLabel").text("You successfully changed category on selected subscribers!");
+                $("#successModal").modal();
+            }
+            else {
+                $("#statusLabel").addClass("text-danger");
+                $("#statusLabel").text("Something went wrong! Please try again.");
+                $("#successModal").modal();
+            }
+        },
+        error: function (err) {
+            $("#statusLabel").addClass("text-danger");
+            $("#statusLabel").text("Something went wrong! Please try again.");
+            $("#successModal").modal();
+        }
+    });
+}

@@ -1,4 +1,5 @@
 ﻿using AdminAssistant.Blog.Data;
+using AdminAssistant.Blog.Helpers;
 using AdminAssistant.Blog.Models.DomainModel;
 using AdminAssistant.Blog.Services.Interfaces;
 using AdminAssistant.Domain;
@@ -37,7 +38,8 @@ namespace AdminAssistant.Blog.Services.Implementations
                 .Select(x => new UserNewsletterViewModel
                 {
                     Id = x.Id,
-                    Email = x.Email,
+                    Email = Encryption.Decrypt(x.Email, _configuration.GetValue<string>("Newsletter:Credentials:Password"),
+                    _configuration.GetValue<string>("Newsletter:SecretKey")),
                     IsActive = x.IsActive,
                     SubscribeDate = x.Date,
                     SubscribeDateString = x.Date.ToString("dd/MM/yyyy"),
@@ -120,11 +122,13 @@ namespace AdminAssistant.Blog.Services.Implementations
 
                 SmtpServer.Send(mail);
 
+                string encryptedEmail = Encryption.Encrypt(email, _configuration.GetValue<string>("Newsletter:Credentials:Password"), _configuration.GetValue<string>("Newsletter:SecretKey"));
                 _dbContext.Newsletter.Add(new Newsletter
                 {
-                    Email = email,
+                    Email = encryptedEmail,
                     IsActive = true,
-                    Date = DateTime.Now
+                    Date = DateTime.Now,
+                    Category = string.Empty
                 });
 
                 return _dbContext.SaveChanges() == 1;
@@ -146,6 +150,35 @@ namespace AdminAssistant.Blog.Services.Implementations
                     _dbContext.Newsletter.Remove(newsletter);
                     _dbContext.SaveChanges();
                 }
+            }
+        }
+
+        public bool UpdateUserCategory(SendMailViewModel updateCategory)
+        {
+            string categoryName = updateCategory.Subject;
+
+            try
+            {
+                foreach (var user in updateCategory.Users)
+                {
+                    Newsletter newsletter = _dbContext.Newsletter
+                        .FirstOrDefault(x => x.Email == Encryption.Encrypt(user,
+                        _configuration.GetValue<string>("Newsletter:Credentials:Password"),
+                        _configuration.GetValue<string>("Newsletter:SecretKey")));
+
+                    if (newsletter != null)
+                    {
+                        newsletter.Category = categoryName;
+
+                        if (_dbContext.SaveChanges() != 1) return false;
+                    }
+                }
+
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
             }
         }
     }

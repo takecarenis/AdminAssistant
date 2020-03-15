@@ -60,7 +60,7 @@ namespace AdminAssistant.Blog.Controllers
             return View();
         }
 
-        [Route("qntAZtrzSmRE89NcGduQCefrqTr73BC939EzDzwPeHknQ7w2AE")]
+        [Route("Admin/qntAZtrzSmRE89NcGduQCefrqTr73BC939EzDzwPeHknQ7w2AE")]
         public ActionResult Pages()
         {
             List<PageViewModel> pages = _pageService.GetAllPages();

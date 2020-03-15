@@ -95,6 +95,17 @@ namespace AdminAssistant.Blog.Services.Implementations
         {
             try
             {
+                string encryptedEmail = Encryption.Encrypt(email, _configuration.GetValue<string>("Newsletter:Credentials:Password"), _configuration.GetValue<string>("Newsletter:SecretKey"));
+                _dbContext.Newsletter.Add(new Newsletter
+                {
+                    Email = encryptedEmail,
+                    IsActive = true,
+                    Date = DateTime.Now,
+                    Category = string.Empty
+                });
+
+                return _dbContext.SaveChanges() == 1;
+
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient(_configuration.GetValue<string>("Newsletter:SmtpClient"));
 
@@ -121,17 +132,6 @@ namespace AdminAssistant.Blog.Services.Implementations
                 SmtpServer.EnableSsl = false;
 
                 SmtpServer.Send(mail);
-
-                string encryptedEmail = Encryption.Encrypt(email, _configuration.GetValue<string>("Newsletter:Credentials:Password"), _configuration.GetValue<string>("Newsletter:SecretKey"));
-                _dbContext.Newsletter.Add(new Newsletter
-                {
-                    Email = encryptedEmail,
-                    IsActive = true,
-                    Date = DateTime.Now,
-                    Category = string.Empty
-                });
-
-                return _dbContext.SaveChanges() == 1;
             }
             catch (Exception ex)
             {

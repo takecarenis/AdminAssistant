@@ -9,6 +9,7 @@ using System.IO;
 
 namespace AdminAssistant.Blog.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         IPostService _postService;
@@ -28,11 +29,13 @@ namespace AdminAssistant.Blog.Controllers
             _env = env;
         }
 
+        [Route("Admin/e3NHA57XCuMk7S2TnumF38Dy6k6P2hQh9urjzYyVNMpegujKy2")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Route("Admin/YgVjzvtwyYkxdqvYX9ndRuWwcJXDkZPR5TLsrcUK83CsBGkE7S")]
         public ActionResult Posts()
         {
             List<PostViewModel> posts = _postService.GetAllPosts();
@@ -49,6 +52,7 @@ namespace AdminAssistant.Blog.Controllers
             return View(blog);
         }
 
+        [Route("Admin/jtndAHHLCgKd3EbJQy3jbZwXQZTTcnyy7aW58rkdeQrB8GdXAR")]
         public ActionResult Newsletter()
         {
             UserNewsletterViewModel newsletter = new UserNewsletterViewModel();
@@ -56,6 +60,7 @@ namespace AdminAssistant.Blog.Controllers
             return View();
         }
 
+        [Route("qntAZtrzSmRE89NcGduQCefrqTr73BC939EzDzwPeHknQ7w2AE")]
         public ActionResult Pages()
         {
             List<PageViewModel> pages = _pageService.GetAllPages();

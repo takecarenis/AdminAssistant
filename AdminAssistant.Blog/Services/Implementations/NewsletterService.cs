@@ -3,11 +3,14 @@ using AdminAssistant.Blog.Helpers;
 using AdminAssistant.Blog.Models.DomainModel;
 using AdminAssistant.Blog.Services.Interfaces;
 using AdminAssistant.Domain;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace AdminAssistant.Blog.Services.Implementations
@@ -16,11 +19,13 @@ namespace AdminAssistant.Blog.Services.Implementations
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _env;
 
-        public NewsletterService(ApplicationDbContext dbContext, IConfiguration configuration)
+        public NewsletterService(ApplicationDbContext dbContext, IConfiguration configuration, IWebHostEnvironment env)
         {
             _dbContext = dbContext;
             _configuration = configuration;
+            _env = env;
         }
 
         public void DeleteSubscribers(List<string> users)
@@ -94,7 +99,49 @@ namespace AdminAssistant.Blog.Services.Implementations
         public bool Subscribe(string email)
         {
             try
-            {
+            {            
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient(_configuration.GetValue<string>("Newsletter:SmtpClient"));
+
+                string path = Path.Combine(_env.WebRootPath, "img\\", "logo2.png");              
+
+                mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
+                mail.To.Add(email);
+                mail.Subject = "You have subscribed to PrivacyOneStop Newsletter";
+                mail.Body = @"<img style=""margin-left: 20%"" src=""cid:YourPictureId""></body></html>";
+                mail.Body += "<br/><br/>";
+                mail.Body += "Hello dear reader,";
+                mail.Body += "<br/><br/>";
+                mail.Body += "You have now subscribed to the PrivacyOneStop newsletter. You will get updates about our articles, products & services, and you will benefit from the most up-to-date highlights from the privacy world. You will have everything you need to know at the tip of your fingers.";
+                mail.Body += "<br/><br/>";
+                mail.Body += "A useful tip";
+                mail.Body += "<br/><br/>";
+                mail.Body += "You can save the PrivacyOneStop newsletter address newsletter@privacyonestop.com in your e-mail address book. This way you will be certain your newsletter will not be inadvertently treated as ‘spam’.";
+                mail.Body += "<br/><br/>";
+                mail.Body += "Privacy";
+                mail.Body += "<br/><br/>";
+                mail.Body += "If you wish to unsubscribe easily, you can click on the unsubscribe link at the bottom of our marketing emails. Alternatively, you can choose to write to <a href='mailto:privacy@privacyonestop.com'>privacy@privacyonestop.com</a>.";
+                mail.Body += "<br/><br/>";
+                mail.Body += "<h4 style='text-align: center; margin: 0px;'>Click <a href='http://privacyonestop.com/Blog/Unsubscribe?email=" + email + "'>here</a>. to unsubscribe.</h4>";
+                mail.Body += "<h5 style='text-align: center; margin: 0px;'>This email address is not monitored. Please do not reply to this email.</h5>";
+                mail.Body += "<h5 style='text-align: center; margin: 0px;'>You can read our Terms & Conditions here and our Privacy Policy here.</h5>";
+
+                string html = mail.Body;
+                AlternateView altView = AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html);
+                LinkedResource yourPictureRes = new LinkedResource(path, MediaTypeNames.Image.Jpeg);
+                yourPictureRes.ContentId = "YourPictureId";
+                altView.LinkedResources.Add(yourPictureRes);
+                mail.AlternateViews.Add(altView);
+
+                mail.IsBodyHtml = true;
+                SmtpServer.Port = 25;
+                SmtpServer.UseDefaultCredentials = false;
+                SmtpServer.Credentials = new System.Net.NetworkCredential(_configuration.GetValue<string>("Newsletter:Credentials:Username"),
+                    _configuration.GetValue<string>("Newsletter:Credentials:Password"));
+                SmtpServer.EnableSsl = false;
+
+                SmtpServer.Send(mail);
+
                 string encryptedEmail = Encryption.Encrypt(email, _configuration.GetValue<string>("Newsletter:Credentials:Password"), _configuration.GetValue<string>("Newsletter:SecretKey"));
                 _dbContext.Newsletter.Add(new Newsletter
                 {
@@ -105,33 +152,6 @@ namespace AdminAssistant.Blog.Services.Implementations
                 });
 
                 return _dbContext.SaveChanges() == 1;
-
-                MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient(_configuration.GetValue<string>("Newsletter:SmtpClient"));
-
-                mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
-                mail.To.Add(email);
-                mail.Subject = "You have subscribed to PrivacyOneStop Newsletter";
-                mail.Body = "Hello!";
-                mail.Body += "<br/><br/>";
-                mail.Body += "Thank You for Your interest in our service.";
-                mail.Body += "<br/>";
-                mail.Body += "Several times a month, You will receive a newsletter with information about new app releases, major updates and other news form #AdminAdministration#";
-                mail.Body += "<br/><br/>";
-                mail.Body += "If You don't want to receive our occasional emails please unsubscribe <a href='http://privacyonestop.com/Blog/Unsubscribe?email=" + email + "'>here</a>.";
-                mail.Body += "<br/><br/>";
-                mail.Body += "Regards,";
-                mail.Body += "<br/>";
-                mail.Body += "PrivacyOneStop";
-                mail.IsBodyHtml = true;
-
-                SmtpServer.Port = 25;
-                SmtpServer.UseDefaultCredentials = false;
-                SmtpServer.Credentials = new System.Net.NetworkCredential(_configuration.GetValue<string>("Newsletter:Credentials:Username"),
-                    _configuration.GetValue<string>("Newsletter:Credentials:Password"));
-                SmtpServer.EnableSsl = false;
-
-                SmtpServer.Send(mail);
             }
             catch (Exception ex)
             {

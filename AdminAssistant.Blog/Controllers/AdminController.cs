@@ -3,6 +3,7 @@ using AdminAssistant.Blog.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,17 +17,20 @@ namespace AdminAssistant.Blog.Controllers
         INewsletterService _newsletterService;
         IPageService _pageService;
         ISidebarService _sidebarService;
+        private readonly ILogger<AdminController> _logger;
 
         private readonly IWebHostEnvironment _env;
         private static string _currentPhotoPath { get; set; }
 
-        public AdminController(IPostService postService, INewsletterService newsLetterService, IPageService pageService, ISidebarService sidebar, IWebHostEnvironment env)
+        public AdminController(IPostService postService, INewsletterService newsLetterService, 
+            IPageService pageService, ISidebarService sidebar, IWebHostEnvironment env, ILogger<AdminController> logger)
         {
             _postService = postService;
             _newsletterService = newsLetterService;
             _pageService = pageService;
             _sidebarService = sidebar;
             _env = env;
+            _logger = logger;
         }
 
         [Route("Admin/e3NHA57XCuMk7S2TnumF38Dy6k6P2hQh9urjzYyVNMpegujKy2")]
@@ -72,8 +76,10 @@ namespace AdminAssistant.Blog.Controllers
         {
             UserNewsletterViewModel newsletter = new UserNewsletterViewModel();
 
+            _logger.LogInformation("Before GetSubscribbers");
             List<UserNewsletterViewModel> subscribers = _newsletterService.GetPaginated(1, 10);
 
+            _logger.LogInformation("Subscribers Done");
             return subscribers;
         }
 

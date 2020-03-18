@@ -5,6 +5,7 @@ using AdminAssistant.Blog.Services.Interfaces;
 using AdminAssistant.Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,12 +21,14 @@ namespace AdminAssistant.Blog.Services.Implementations
         private readonly ApplicationDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
+        private readonly ILogger<NewsletterService> _logger;
 
-        public NewsletterService(ApplicationDbContext dbContext, IConfiguration configuration, IWebHostEnvironment env)
+        public NewsletterService(ApplicationDbContext dbContext, IConfiguration configuration, IWebHostEnvironment env, ILogger<NewsletterService> logger)
         {
             _dbContext = dbContext;
             _configuration = configuration;
             _env = env;
+            _logger = logger;
         }
 
         public void DeleteSubscribers(List<string> users)
@@ -140,7 +143,10 @@ namespace AdminAssistant.Blog.Services.Implementations
                     _configuration.GetValue<string>("Newsletter:Credentials:Password"));
                 SmtpServer.EnableSsl = false;
 
+                _logger.LogInformation("Before sending");
                 SmtpServer.Send(mail);
+
+                _logger.LogInformation("Email is sent!");
 
                 string encryptedEmail = Encryption.Encrypt(email, _configuration.GetValue<string>("Newsletter:Credentials:Password"), _configuration.GetValue<string>("Newsletter:SecretKey"));
                 _dbContext.Newsletter.Add(new Newsletter
@@ -155,6 +161,7 @@ namespace AdminAssistant.Blog.Services.Implementations
             }
             catch (Exception ex)
             {
+                _logger.LogError("Error: " + ex.Message);
                 return false;
             }
         }

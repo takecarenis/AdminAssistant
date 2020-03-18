@@ -7,6 +7,7 @@ using AdminAssistant.Blog.Models;
 using AdminAssistant.Blog.Models.DomainModel;
 using AdminAssistant.Blog.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AdminAssistant.Blog.Controllers
 {
@@ -14,11 +15,13 @@ namespace AdminAssistant.Blog.Controllers
     {
         IPostService _postService;
         INewsletterService _newsletterService;
+        private readonly ILogger<BlogController> _logger;
 
-        public BlogController(IPostService postService, INewsletterService newsletterService)
+        public BlogController(ILogger<BlogController> logger, IPostService postService, INewsletterService newsletterService)
         {
             _postService = postService;
             _newsletterService = newsletterService;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -74,12 +77,18 @@ namespace AdminAssistant.Blog.Controllers
             {
                 var addr = new MailAddress(email);
 
-                if (addr.Address == email) return _newsletterService.Subscribe(email);
+                if (addr.Address == email) 
+                {
+                    _logger.LogInformation("Calling Subscribe function.");
+                    return _newsletterService.Subscribe(email);
+                }
 
+                _logger.LogInformation("Return false -> Email is invalid.");
                 return false;
             }
-            catch
+            catch(Exception e)
             {
+                _logger.LogError("Error: " + e.Message);
                 return false;
             }
         }

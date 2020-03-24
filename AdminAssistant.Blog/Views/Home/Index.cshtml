@@ -54,7 +54,7 @@
                             <hr />
 
                             <button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink('@post.Id')">Copy Link</button>
-                            <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")/Blog/Post?id=@post.Id" id="copyLinkValue_@post.Id" />
+                            <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}")/Blog/Post?id=@post.Id" id="copyLinkValue_@post.Id" />
 
                             <h3 class="title"><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></h3>
                         }
@@ -88,7 +88,7 @@
                             </div>
                         </div>
                         <button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink('@post.Id')">Copy Link</button>
-                        <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")/Blog/Post?id=@post.Id" id="copyLinkValue_@post.Id" />
+                         <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}")Blog/Post?id=@post.Id" id="copyLinkValue_@post.Id" />
                     </div><!-- single-post -->
                         }
                     }

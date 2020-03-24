@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AdminAssistant.Blog.Services.Implementations
 {
@@ -124,7 +123,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                         Id = p.TagId,
                         Name = p.Tag.Name
                     }).ToList()
-                }).ToList();
+                }).ToList().OrderByDescending(x => x.Date).ToList();
 
             return posts;
         }
@@ -154,7 +153,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                    }).ToList()
                }).ToList();
 
-            posts = posts.Where(x => x.Categories.Select(p => p.Id).Contains(categoryId)).ToList();
+            posts = posts.Where(x => x.Categories.Select(p => p.Id).Contains(categoryId)).ToList().OrderByDescending(x => x.Date).ToList();
 
             return posts;
         }
@@ -182,7 +181,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                        Id = p.TagId,
                        Name = p.Tag.Name
                    }).ToList()
-               }).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+               }).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList().OrderByDescending(x => x.Date).ToList();
 
             return posts;
         }
@@ -215,7 +214,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                         Id = p.TagId,
                         Name = p.Tag.Name
                     }).ToList()
-                }).Skip(filter.Skip).Take(filter.Take).ToList();
+                }).Skip(filter.Skip).Take(filter.Take).ToList().OrderByDescending(x => x.Date).ToList();
 
             return posts;
         }

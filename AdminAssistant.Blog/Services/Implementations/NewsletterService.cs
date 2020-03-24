@@ -21,24 +21,17 @@ namespace AdminAssistant.Blog.Services.Implementations
         private readonly ApplicationDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
-<<<<<<< HEAD
+
         private readonly ILogService _logService;
 
-        public NewsletterService(ApplicationDbContext dbContext, IConfiguration configuration, IWebHostEnvironment env, ILogService logService)
-=======
-        private readonly ILogger<NewsletterService> _logger;
-
-        public NewsletterService(ApplicationDbContext dbContext, IConfiguration configuration, IWebHostEnvironment env, ILogger<NewsletterService> logger)
->>>>>>> 0a8387eb810fcad8f262981bc5ca1104882e79d6
+        public NewsletterService(ApplicationDbContext dbContext, IConfiguration configuration, IWebHostEnvironment env,
+            ILogService logService)
         {
             _dbContext = dbContext;
             _configuration = configuration;
             _env = env;
-<<<<<<< HEAD
+
             _logService = logService;
-=======
-            _logger = logger;
->>>>>>> 0a8387eb810fcad8f262981bc5ca1104882e79d6
         }
 
         public void DeleteSubscribers(List<string> users)
@@ -86,7 +79,7 @@ namespace AdminAssistant.Blog.Services.Implementations
 
                 mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
 
-                foreach(var user in sendMail.Users)
+                foreach (var user in sendMail.Users)
                 {
                     mail.To.Add(user);
                 }
@@ -103,7 +96,7 @@ namespace AdminAssistant.Blog.Services.Implementations
 
                 smtpServer.Send(mail);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 //
             }
@@ -112,11 +105,11 @@ namespace AdminAssistant.Blog.Services.Implementations
         public bool Subscribe(string email)
         {
             try
-            {            
+            {
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient(_configuration.GetValue<string>("Newsletter:SmtpClient"));
 
-                string path = Path.Combine(_env.WebRootPath, "img\\", "logo2.png");              
+                string path = Path.Combine(_env.WebRootPath, "img\\", "logo2.png");
 
                 mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
                 mail.To.Add(email);
@@ -153,10 +146,9 @@ namespace AdminAssistant.Blog.Services.Implementations
                     _configuration.GetValue<string>("Newsletter:Credentials:Password"));
                 SmtpServer.EnableSsl = false;
 
-                _logger.LogInformation("Before sending");
                 SmtpServer.Send(mail);
 
-                _logger.LogInformation("Email is sent!");
+                _logService.Log(LogType.Information, "Email is sent!");
 
                 string encryptedEmail = Encryption.Encrypt(email, _configuration.GetValue<string>("Newsletter:Credentials:Password"), _configuration.GetValue<string>("Newsletter:SecretKey"));
                 _dbContext.Newsletter.Add(new Newsletter
@@ -172,16 +164,12 @@ namespace AdminAssistant.Blog.Services.Implementations
             }
             catch (Exception ex)
             {
-<<<<<<< HEAD
                 _logService.Log(LogType.Error, "Error: " + ex.Message);
-                if(ex.InnerException != null)
+                if (ex.InnerException != null)
                 {
                     _logService.Log(LogType.Error, "Error: " + ex.InnerException.Message);
                 }
-
-=======
-                _logger.LogError("Error: " + ex.Message);
->>>>>>> 0a8387eb810fcad8f262981bc5ca1104882e79d6
+                
                 return false;
             }
         }
@@ -223,7 +211,7 @@ namespace AdminAssistant.Blog.Services.Implementations
 
                 return true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return false;
             }

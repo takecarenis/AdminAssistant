@@ -56,10 +56,7 @@ namespace AdminAssistant.Blog.Data
         public DbSet<PostCategory> PostCategory { get; set; }
         public DbSet<PostTag> PostTags { get; set; }
         public DbSet<Page> Pages { get; set; }
-<<<<<<< HEAD
+
         public DbSet<Log> Logs { get; set; }
-=======
-        public DbSet<Log>
->>>>>>> 0a8387eb810fcad8f262981bc5ca1104882e79d6
     }
 }

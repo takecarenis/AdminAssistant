@@ -1,6 +1,6 @@
 
 /*
-====================================================
+===
 
 * 	[Master Stylesheet]
 	
@@ -9,7 +9,7 @@
 	Author     :  
 	Author URI :  
 
-====================================================
+===
 
 	TOC
 	
@@ -39,7 +39,7 @@
 	7. FOOTER INSTAGRAM STYLING 
 	8. FOOTER
 
-====================================================
+===
 
 /* ---------------------------------
 1. PRIMARY STYLES
@@ -464,7 +464,7 @@ footer .social-icons > li > a{ padding-left: 15px; }
 	font-variant: normal;
 	text-transform: none;
 	line-height: 1;
-	/* Better Font Rendering =========== */
+	/* Better Font Rendering ==== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }

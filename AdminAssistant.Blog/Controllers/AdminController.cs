@@ -10,7 +10,6 @@ using System.IO;
 
 namespace AdminAssistant.Blog.Controllers
 {
-    [Authorize]
     public class AdminController : Controller
     {
         IPostService _postService;
@@ -33,12 +32,14 @@ namespace AdminAssistant.Blog.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         [Route("Admin/e3NHA57XCuMk7S2TnumF38Dy6k6P2hQh9urjzYyVNMpegujKy2")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         [Route("Admin/YgVjzvtwyYkxdqvYX9ndRuWwcJXDkZPR5TLsrcUK83CsBGkE7S")]
         public ActionResult Posts()
         {
@@ -56,6 +57,7 @@ namespace AdminAssistant.Blog.Controllers
             return View(blog);
         }
 
+        [Authorize]
         [Route("Admin/jtndAHHLCgKd3EbJQy3jbZwXQZTTcnyy7aW58rkdeQrB8GdXAR")]
         public ActionResult Newsletter()
         {
@@ -64,6 +66,7 @@ namespace AdminAssistant.Blog.Controllers
             return View();
         }
 
+        [Authorize]
         [Route("Admin/qntAZtrzSmRE89NcGduQCefrqTr73BC939EzDzwPeHknQ7w2AE")]
         public ActionResult Pages()
         {

@@ -17,13 +17,12 @@ namespace AdminAssistant.Blog.Controllers
         INewsletterService _newsletterService;
 
         ILogService _logService;
-        private readonly ILogger<BlogController> _logger;
 
-        public BlogController(ILogger<BlogController> logger, IPostService postService, INewsletterService newsletterService)
+        public BlogController(ILogger<BlogController> logger, IPostService postService, INewsletterService newsletterService, ILogService logService)
         {
             _postService = postService;
             _newsletterService = newsletterService;
-            _logger = logger;
+            _logService = logService;
         }
 
         public IActionResult Index()
@@ -88,15 +87,12 @@ namespace AdminAssistant.Blog.Controllers
 
                 _logService.Log(Domain.LogType.Error, "Email is not valid.");
 
-                _logger.LogInformation("Calling Subscribe function.");
                 return _newsletterService.Subscribe(email);
             }
             catch (Exception e)
             {
-
                 _logService.Log(Domain.LogType.Error, "Error: " + e.Message);
 
-                _logger.LogError("Error: " + e.Message);
                 return false;
             }
         }

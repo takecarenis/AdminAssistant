@@ -114,7 +114,9 @@ namespace AdminAssistant.Blog.Services.Implementations
                 mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
                 mail.To.Add(email);
                 mail.Subject = "You have subscribed to PrivacyOneStop Newsletter";
-                mail.Body = @"<img style=""margin-left: 20%"" src=""cid:YourPictureId""></body></html>";
+                mail.Body = "<div style='text-align: center'>";
+                mail.Body += @"<img src=""cid:YourPictureId""></div>";
+                mail.Body += "<div style='text-align: left'>";
                 mail.Body += "<br/><br/>";
                 mail.Body += "Hello dear reader,";
                 mail.Body += "<br/><br/>";
@@ -128,9 +130,10 @@ namespace AdminAssistant.Blog.Services.Implementations
                 mail.Body += "<br/><br/>";
                 mail.Body += "If you wish to unsubscribe easily, you can click on the unsubscribe link at the bottom of our marketing emails. Alternatively, you can choose to write to <a href='mailto:privacy@privacyonestop.com'>privacy@privacyonestop.com</a>.";
                 mail.Body += "<br/><br/>";
-                mail.Body += "<h4 style='text-align: center; margin: 0px;'>Click <a href='http://privacyonestop.com/Blog/Unsubscribe?email=" + email + "'>here</a>. to unsubscribe.</h4>";
-                mail.Body += "<h5 style='text-align: center; margin: 0px;'>This email address is not monitored. Please do not reply to this email.</h5>";
-                mail.Body += "<h5 style='text-align: center; margin: 0px;'>You can read our Terms & Conditions here and our Privacy Policy here.</h5>";
+                mail.Body += "<h5 style='text-align: center; margin: 0px;'>Click <a href='http://privacyonestop.com/Blog/Unsubscribe?email=" + email + "'>here</a>. to unsubscribe.</h5>";
+                mail.Body += "<h6 style='text-align: center; margin: 0px;'>This email address is not monitored. Please do not reply to this email.</h6>";
+                mail.Body += "<h6 style='text-align: center; margin: 0px;'>You can read our <a href='http://privacyonestop.com/Home/Terms'>Terms & Conditions</a> here and our <a href='http://privacyonestop.com/Home/Privacy'>Privacy Policy here</a>.</h6>";
+                mail.Body += "</div>";
 
                 string html = mail.Body;
                 AlternateView altView = AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html);

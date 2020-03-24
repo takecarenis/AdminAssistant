@@ -21,14 +21,24 @@ namespace AdminAssistant.Blog.Services.Implementations
         private readonly ApplicationDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
+<<<<<<< HEAD
+        private readonly ILogService _logService;
+
+        public NewsletterService(ApplicationDbContext dbContext, IConfiguration configuration, IWebHostEnvironment env, ILogService logService)
+=======
         private readonly ILogger<NewsletterService> _logger;
 
         public NewsletterService(ApplicationDbContext dbContext, IConfiguration configuration, IWebHostEnvironment env, ILogger<NewsletterService> logger)
+>>>>>>> 0a8387eb810fcad8f262981bc5ca1104882e79d6
         {
             _dbContext = dbContext;
             _configuration = configuration;
             _env = env;
+<<<<<<< HEAD
+            _logService = logService;
+=======
             _logger = logger;
+>>>>>>> 0a8387eb810fcad8f262981bc5ca1104882e79d6
         }
 
         public void DeleteSubscribers(List<string> users)
@@ -157,11 +167,21 @@ namespace AdminAssistant.Blog.Services.Implementations
                     Category = string.Empty
                 });
 
+                _logService.Log(LogType.Information, "Everything is okay");
                 return _dbContext.SaveChanges() == 1;
             }
             catch (Exception ex)
             {
+<<<<<<< HEAD
+                _logService.Log(LogType.Error, "Error: " + ex.Message);
+                if(ex.InnerException != null)
+                {
+                    _logService.Log(LogType.Error, "Error: " + ex.InnerException.Message);
+                }
+
+=======
                 _logger.LogError("Error: " + ex.Message);
+>>>>>>> 0a8387eb810fcad8f262981bc5ca1104882e79d6
                 return false;
             }
         }

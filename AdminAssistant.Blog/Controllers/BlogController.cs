@@ -15,6 +15,15 @@ namespace AdminAssistant.Blog.Controllers
     {
         IPostService _postService;
         INewsletterService _newsletterService;
+<<<<<<< HEAD
+        ILogService _logService;
+
+        public BlogController(IPostService postService, INewsletterService newsletterService, ILogService service)
+        {
+            _postService = postService;
+            _newsletterService = newsletterService;
+            _logService = service;
+=======
         private readonly ILogger<BlogController> _logger;
 
         public BlogController(ILogger<BlogController> logger, IPostService postService, INewsletterService newsletterService)
@@ -22,6 +31,7 @@ namespace AdminAssistant.Blog.Controllers
             _postService = postService;
             _newsletterService = newsletterService;
             _logger = logger;
+>>>>>>> 0a8387eb810fcad8f262981bc5ca1104882e79d6
         }
 
         public IActionResult Index()
@@ -79,16 +89,28 @@ namespace AdminAssistant.Blog.Controllers
 
                 if (addr.Address == email) 
                 {
+<<<<<<< HEAD
+                    _logService.Log(Domain.LogType.Information, "Email is valid.");
+                    return _newsletterService.Subscribe(email);
+                }
+
+                _logService.Log(Domain.LogType.Error, "Email is not valid.");
+=======
                     _logger.LogInformation("Calling Subscribe function.");
                     return _newsletterService.Subscribe(email);
                 }
 
                 _logger.LogInformation("Return false -> Email is invalid.");
+>>>>>>> 0a8387eb810fcad8f262981bc5ca1104882e79d6
                 return false;
             }
             catch(Exception e)
             {
+<<<<<<< HEAD
+                _logService.Log(Domain.LogType.Error, "Error: " + e.Message);
+=======
                 _logger.LogError("Error: " + e.Message);
+>>>>>>> 0a8387eb810fcad8f262981bc5ca1104882e79d6
                 return false;
             }
         }

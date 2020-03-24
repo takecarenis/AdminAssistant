@@ -153,39 +153,44 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
+@section Scripts
+{
+    <script type="text/javascript" src="~/lib/datatable/datatable.js"></script>
+    <script type="text/javascript" src="~/lib/datatable/datatable-checkbox.min.js"></script>
+    <script>
+        $(document).ready(function () {
 
-        Admin.initSubscribersTable();
+            Admin.initSubscribersTable();
 
-        $("#example").on('change', "input[type='checkbox']", function (e) {
+            $("#example").on('change', "input[type='checkbox']", function (e) {
 
-            var email = e.currentTarget.parentElement.parentElement.cells[2].innerText;
+                var email = e.currentTarget.parentElement.parentElement.cells[2].innerText;
 
-            if (e.currentTarget.checked) {
+                if (e.currentTarget.checked) {
 
-                Admin.listOfSubscribers.push(email);
-            }
-            else {
+                    Admin.listOfSubscribers.push(email);
+                }
+                else {
 
-                for (var i = 0; i < Admin.listOfSubscribers.length; i++) {
-                    if (Admin.listOfSubscribers[i] === email) {
-                        Admin.listOfSubscribers.splice(i, 1);
-                        i--;
+                    for (var i = 0; i < Admin.listOfSubscribers.length; i++) {
+                        if (Admin.listOfSubscribers[i] === email) {
+                            Admin.listOfSubscribers.splice(i, 1);
+                            i--;
+                        }
                     }
                 }
-            }
+            });
+
+            $("#submitSendEmails").on('click', function () {
+
+                $(".note-icon-code").click();
+                var inputValue = $(".note-codable")[0].value;
+                console.log(inputValue);
+
+                $("#bodyInputValue").val(inputValue);
+
+                Admin.sendMail();
+            });
         });
-
-        $("#submitSendEmails").on('click', function () {
-
-            $(".note-icon-code").click();
-            var inputValue = $(".note-codable")[0].value;
-            console.log(inputValue);
-
-            $("#bodyInputValue").val(inputValue);
-
-            Admin.sendMail();
-        });
-    });
-</script>
+    </script>
+}

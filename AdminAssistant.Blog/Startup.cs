@@ -36,6 +36,7 @@ namespace AdminAssistant.Blog
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient(typeof(ApplicationDbContext));
+            services.AddScoped(typeof(ILogService), typeof(LogService));
             services.AddScoped(typeof(IPostService), typeof(PostService));
             services.AddScoped(typeof(INewsletterService), typeof(NewsletterService));
             services.AddScoped(typeof(IPageService), typeof(PageService));

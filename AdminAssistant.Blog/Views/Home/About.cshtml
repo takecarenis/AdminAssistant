@@ -8,13 +8,16 @@
 @model PageViewModel
 
     <div class="about-container">
-        <img src="~/img/about.png" width="100%" height="100%" style="margin-left: 2%; padding-left: 5%">
         <div class="text-about row" style="text-align: center;">
-            <div class="col-md- col-sm-6 text-width">                
-                @Html.Raw(Model.Text)
-            </div>
-            <div class="col-md-6 col-sm-6" style="background-color: white; opacity: 0%;">
-                <div></div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="text-width">
+                        @Html.Raw(Model.Text)
+                    </div>
+                    <div>
+                        <img src="~/img/about.png" class="img-fluid" style="width: 60%">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -24,6 +27,7 @@
         position: relative;
         text-align: center;
         color: white;
+        height: 1200px;
     }
 
     .text-about {
@@ -42,9 +46,18 @@
         text-align: justify;
     }
 
+      @@media (max-width: 1100px) {
+        .about-container {
+            height: 1000px;
+        }
+    }
+
     @@media (max-width: 796px) {
         .text {
             font-size: 1.5vw;
+        }
+        .about-container {
+            height: 800px;
         }
     }
 
@@ -52,11 +65,17 @@
         .text {
             font-size: 1.8vw;
         }
+         .about-container {
+            height: 800px;
+        }
     }
 
     @@media (max-width: 480px) {
         .text {
             font-size: 2vw;
+        }
+         .about-container {
+            height: 400px;
         }
     }
 
@@ -64,11 +83,17 @@
         .text {
             font-size: 2.2vw;
         }
+           .about-container {
+            height: 400px;
+        }
     }
 
     @@media (max-width: 320px) {
         .text {
             font-size: 2.4vw;
+        }
+           .about-container {
+            height: 400px;
         }
     }
 

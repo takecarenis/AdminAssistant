@@ -7,15 +7,17 @@
 @using AdminAssistant.Blog.Models.DomainModel
 @model PageViewModel
 
-    <div class="about-container">
+    <div class="about-container" style="margin-right: 15px">
         <div class="text-about row" style="text-align: center;">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="text-width">
-                        @Html.Raw(Model.Text)
+                    <div class="col-md-6">
+                        <div class="text-width">
+                            @Html.Raw(Model.Text)
+                        </div>
                     </div>
-                    <div>
-                        <img src="~/img/about.png" class="img-fluid" style="width: 60%">
+                    <div class="col-md-5">
+                        <img src="~/img/about.svg" style="width: 80%"/>
                     </div>
                 </div>
             </div>
@@ -57,7 +59,7 @@
             font-size: 1.5vw;
         }
         .about-container {
-            height: 800px;
+            height: 1200px;
         }
     }
 
@@ -66,7 +68,7 @@
             font-size: 1.8vw;
         }
          .about-container {
-            height: 800px;
+            height: 900px;
         }
     }
 
@@ -75,7 +77,7 @@
             font-size: 2vw;
         }
          .about-container {
-            height: 400px;
+            height: 800px;
         }
     }
 
@@ -84,7 +86,7 @@
             font-size: 2.2vw;
         }
            .about-container {
-            height: 400px;
+            height: 800px;
         }
     }
 
@@ -93,7 +95,7 @@
             font-size: 2.4vw;
         }
            .about-container {
-            height: 400px;
+            height: 700px;
         }
     }
 
@@ -101,7 +103,6 @@
         .text-width {
             color: white;
             flex: 0 0 50%;
-            max-width: 50%;
             font-size: 2.4vw;
         }
     }

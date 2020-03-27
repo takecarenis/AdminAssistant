@@ -31,6 +31,7 @@ namespace AdminAssistant.Blog.Controllers
             List<PostViewModel> posts = _postService.GetPaginated(page);
 
             blog.MainPosts.AddRange(posts);
+            blog.MainPosts.OrderByDescending(x => x.Date).ToList();
             blog.CurrentPageIndex = page;
             blog.Count = _postService.GetPostCount();
 

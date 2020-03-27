@@ -318,7 +318,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                        Id = p.TagId,
                        Name = p.Tag.Name
                    }).ToList()
-               }).ToList();
+               }).ToList().OrderByDescending(x => x.Date).ToList();
 
             return posts;
         }
@@ -348,7 +348,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                    }).ToList()
                }).ToList();
 
-            posts = posts.Where(x => x.Tags.Select(p => p.Id).Contains(tag)).ToList();
+            posts = posts.Where(x => x.Tags.Select(p => p.Id).Contains(tag)).ToList().OrderByDescending(x => x.Date).ToList();
 
             return posts;
         }

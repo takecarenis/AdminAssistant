@@ -69,5 +69,21 @@ namespace AdminAssistant.Blog.Services.Implementations
 
             return tags;
         }
+
+        public bool DeleteTags(List<int> tags)
+        {
+            try
+            {
+                List<Tag> tagFromDb = _dbContext.Tag.Where(x => tags.Contains(x.Id)).ToList();
+
+                _dbContext.Tag.RemoveRange(tagFromDb);
+
+                return _dbContext.SaveChanges() == 1;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

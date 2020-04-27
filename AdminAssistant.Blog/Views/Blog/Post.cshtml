@@ -13,7 +13,7 @@
 
                                 <div class="icons">
                                     <div class="left-area">
-                                        <p class="date"><em>@Model.Date.ToString("MM/dd/yyyy")</em></p>
+                                        <p class="date"><em>@Model.Date.ToString("dd/MM/yyyy")</em></p>
                                     </div>
                                     <ul class="right-area">
                                         @foreach (var category in Model.Categories)
@@ -31,7 +31,7 @@
                                 <h3 class="title"><a href="/Blog/Post?id=@Model.Id"><b class="light-color">@Model.Title</b></a></h3>
                                 <div class="icons">
                                     <div class="left-area">
-                                        <p class="date"><em>@Model.Date.ToString("MM/dd/yyyy")</em></p>
+                                        <p class="date"><em>@Model.Date.ToString("dd/MM/yyyy")</em></p>
                                     </div>
                                     <ul class="right-area">
                                         @foreach (var category in Model.Categories)

@@ -91,6 +91,7 @@ namespace AdminAssistant.Blog.Controllers
             if (post == null) return false;
             post.PictureUrl = _currentPhotoPath;
 
+            _currentPhotoPath = "";
             return _postService.CreatePost(post);
         }
 
@@ -103,6 +104,11 @@ namespace AdminAssistant.Blog.Controllers
         public void DeleteSubscribers(List<string> users)
         {
             _newsletterService.DeleteSubscribers(users);
+        }
+
+        public bool DeleteTags(List<int> tags)
+        {
+            return _sidebarService.DeleteTags(tags);
         }
 
         public void SendEmail(SendMailViewModel mail)
@@ -133,11 +139,11 @@ namespace AdminAssistant.Blog.Controllers
                     int lastPostId = _postService.GetLastPostId();
 
                     string pic = Path.GetFileName(file.FileName);
-                    string path = Path.Combine(_env.WebRootPath, "img\\posts", (lastPostId + 1).ToString() + Path.GetExtension(file.FileName));
+                    string path = Path.Combine(_env.WebRootPath, "img\\posts", (lastPostId + 1).ToString() + ".webp");
 
                     file.CopyTo(new FileStream(path, FileMode.CreateNew));
 
-                    _currentPhotoPath = "\\img\\posts\\" + (lastPostId + 1).ToString() + Path.GetExtension(file.FileName);
+                    _currentPhotoPath = "\\img\\posts\\" + (lastPostId + 1).ToString() + ".webp";
 
                     return true;
                 }

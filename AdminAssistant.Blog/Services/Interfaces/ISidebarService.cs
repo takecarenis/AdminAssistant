@@ -14,5 +14,6 @@ namespace AdminAssistant.Blog.Services.Interfaces
         TagViewModel AddNewTag(string name);
 
         CategoryViewModel AddNewCategory(string name);
+        bool DeleteTags(List<int> tags);
     }
 }

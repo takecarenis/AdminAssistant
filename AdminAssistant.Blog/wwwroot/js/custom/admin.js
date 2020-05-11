@@ -1,8 +1,11 @@
 ﻿Admin = {
     uploadImageStatus: '',
     subscribersTable: '',
+    tagsTable: '',
     listOfSubscribers: [],
-    currentPageName: ''
+    listOfTags: [],
+    currentPageName: '',
+    isEdit: false
 }
 
 Admin.initSubscribersTable = function () {
@@ -20,6 +23,39 @@ Admin.initSubscribersTable = function () {
                     { "data": "subscribeDateString" },
                     { "data": "category" },
                     { "data": "isActive" }
+                ],
+                'columnDefs': [
+                    {
+                        'targets': 0,
+                        'checkboxes': {
+                            'selectRow': true
+                        }
+                    }
+                ],
+                'select': {
+                    'style': 'multi'
+                },
+                'order': [[1, 'asc']]
+            });
+        },
+        error: function (error) {
+            alert(error);
+        }
+    });
+}
+
+Admin.initializeTagsTable = function() {
+    $.ajax({
+        url: "/Admin/GetTags",
+        dataType: 'json',
+        success: function (data) {
+            Admin.tagsTable = $('#tagsTable').DataTable({
+                select: true,
+                data: data,
+                columns: [
+                    { "data": "checked" },
+                    { "data": "id" },
+                    { "data": "name" }
                 ],
                 'columnDefs': [
                     {
@@ -62,18 +98,153 @@ Admin.uploadImage = function () {
             data: fileData,
             success: function (result) {
                 if (result == true || result == "True") {
-                    $.notify("You successfully uploaded photo!", "success");
-                    $("#submitUploadingPhoto").attr("disabled", "disabled");
+
+                    $("#statusLabel").removeClass("text-danger");
+                    $("#statusLabel").addClass("text-success");
+                    $("#statusLabel").text("You successfully uploaded a new photo!");
+                    $("#successModal").modal();
                 }
                 else {
-                    $.notify("Something went wrong! Please try later.");
+                    $("#statusLabel").addClass("text-danger");
+                    $("#statusLabel").text("Something went wrong! Please try again.");
+                    $("#successModal").modal();
                 }
             },
             error: function (err) {
-                $.notify("Something went wrong! Please try later.");
+                $("#statusLabel").addClass("text-danger");
+                $("#statusLabel").text("Something went wrong! Please try again.");
+                $("#successModal").modal();
             }
         });
     }
+}
+
+Admin.finishEditPost = function () {
+
+    var id = $("#modalPostId").val();
+    var date = $("#modalPostDate").val();
+    var title = $("#titleInput").val();
+    var body = $("#bodyInputValue").val();
+    var intro = $("#introInput").val();
+
+    if (title == "") {
+        $("#titleValidation").css("display", "block");
+
+        return;
+    }
+    else {
+        $("#titleValidation").css("display", "none");
+    }
+
+    if (intro == "") {
+        $("#introValidation").css("display", "block");
+
+        return;
+    }
+    else {
+        $("#introValidation").css("display", "none");
+    }
+
+    if (body == "") {
+        $("#bodyValidation").css("display", "block");
+
+        return;
+    }
+    else {
+        $("#bodyValidation").css("display", "none");
+    }
+
+    var checkboxes = document.querySelectorAll('input[name="categories"]:checked'), categories = [];
+    Array.prototype.forEach.call(checkboxes, function (el) {
+        categories.push({
+            Id: el.value,
+            Name: el.title
+        });
+    });
+
+    var checkboxesTags = document.querySelectorAll('input[name="tags"]:checked'), tags = [];
+    Array.prototype.forEach.call(checkboxesTags, function (el) {
+        tags.push({
+            Id: el.value,
+            Name: el.title
+        });
+    });
+
+    var post = {
+        Id: id,
+        Date: date,
+        Title: title,
+        Body: body,
+        Intro: intro,
+        Categories: categories,
+        Tags: tags
+    };
+
+
+    $.ajax({
+        url: '/Admin/EditPost',
+        type: "POST",
+        data: post,
+        success: function (result) {
+
+            if (result == true || result == "True") {
+                $("#statusLabel").addClass("text-success");
+                $("#statusLabel").text("You successfully deleted post! Please refresh the page.");
+                $("#successModal").modal();
+            }
+            else {
+                $("#statusLabel").addClass("text-danger");
+                $("#statusLabel").text("Something went wrong! Please try again.");
+                $("#successModal").modal();
+            }
+        },
+        error: function (err) {
+            $("#statusLabel").addClass("text-danger");
+            $("#statusLabel").text("Something went wrong! Please try again.");
+            $("#successModal").modal();
+        }
+    });
+}
+
+Admin.editPost = function (e) {
+
+    Admin.isEdit = true;
+    var id = parseInt(e.srcElement.id);
+
+    $("#modalPostId").val(id);
+
+    var post = {
+        Id: id
+    }
+
+    $.ajax({
+        url: '/Admin/GetPost',
+        type: "POST",
+        data: post,
+        success: function (result) {
+
+            $("#titleInput").val(result.title);
+            $("#introInput").val(result.intro);
+            $(".note-editable").html(result.body);
+            $("#modalPostDate").val(result.date);
+
+            for (var i = 0; i < result.categories.length; i++) {
+                $("#" + result.categories[i].id).prop('checked', true);
+            }
+
+            for (var i = 0; i < result.tags.length; i++) {
+                $("#" + result.tags[i].id).prop('checked', true);
+            }
+
+            $("#addNewPost").modal();
+        },
+        error: function (err) {
+            $("#statusLabel").addClass("text-danger");
+            $("#statusLabel").text("Something went wrong! Please try again.");
+            $("#successModal").modal();
+        }
+    });
+
 }
 
 Admin.deletePost = function (e) {
@@ -173,6 +344,8 @@ Admin.createNewPost = function () {
         success: function (result) {
 
             if (result == true || result == "True") {
+
+                $("#statusLabel").removeClass("text-danger");
                 $("#statusLabel").addClass("text-success");
                 $("#statusLabel").text("You successfully create a new post! Please refresh the page.");
                 $("#successModal").modal();
@@ -227,20 +400,20 @@ Admin.subscribe = function () {
                 $("#emailInput").val("");
 
                 if (result == true || result == "True") {
-                    $("#statusLabel").addClass("text-success");
-                    $("#statusLabel").text("You have successfully subscribed to newsletter.");
-                    $("#successModal").modal();
+                    $("#successfullySubscribedLabel").css('display', 'block');
+                    $("#unsuccessfullySubscribedLabel").css('display', 'none');
+                    $("#subscribedModal").modal();
                 }
                 else {
-                    $("#statusLabel").addClass("text-danger");
-                    $("#statusLabel").text("Something went wrong! Please try again.");
-                    $("#successModal").modal();
+                    $("#successfullySubscribedLabel").css('display', 'none');
+                    $("#unsuccessfullySubscribedLabel").css('display', 'block');
+                    $("#subscribedModal").modal();
                 }
             },
             error: function (err) {
-                $("#statusLabel").addClass("text-danger");
-                $("#statusLabel").text("Something went wrong! Please try again.");
-                $("#successModal").modal();
+                $("#successfullySubscribedLabel").css('display', 'none');
+                $("#unsuccessfullySubscribedLabel").css('display', 'block');
+                $("#subscribedModal").modal();
             }
         });
     }
@@ -267,6 +440,33 @@ Admin.deleteSubcribers = function () {
             if (result == true || result == "True") {
                 $("#statusLabel").addClass("text-success");
                 $("#statusLabel").text("You successfully deleted selected subscribers!");
+                $("#successModal").modal();
+            }
+            else {
+                $("#statusLabel").addClass("text-danger");
+                $("#statusLabel").text("Something went wrong! Please try again.");
+                $("#successModal").modal();
+            }
+        },
+        error: function (err) {
+            $("#statusLabel").addClass("text-danger");
+            $("#statusLabel").text("Something went wrong! Please try again.");
+            $("#successModal").modal();
+        }
+    });
+}
+
+Admin.deleteTags = function () {
+
+    $.ajax({
+        url: '/Admin/DeleteTags',
+        type: "POST",
+        data: { tags: Admin.listOfTags },
+        dataType: 'json',
+        success: function (result) {
+            if (result == true || result == "True") {
+                $("#statusLabel").addClass("text-success");
+                $("#statusLabel").text("You successfully deleted selected tags!");
                 $("#successModal").modal();
             }
             else {

@@ -23,7 +23,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                 Post newPost = new Post
                 {
                     Body = post.Body,
-                    Date = DateTime.Now,
+                    Date = post.Date,
                     PictureUrl = post.PictureUrl,
                     PostedBy = "Administrator",
                     Title = post.Title,
@@ -67,6 +67,31 @@ namespace AdminAssistant.Blog.Services.Implementations
             {
                 return false;
             }
+        }
+
+        public bool EditPost(PostViewModel post)
+        {
+            bool isDeleted = DeletePost(post.Id);
+
+            if (!isDeleted) return false;
+
+            PostViewModel newPost = new PostViewModel
+            {
+                Body = post.Body,
+                Categories = post.Categories,
+                Date = post.Date,
+                Intro = post.Intro,
+                PictureUrl = post.PictureUrl,
+                PostedBy = post.PostedBy,
+                Tags = post.Tags,
+                Title = post.Title
+            };
+
+            bool isCreated = CreatePost(newPost);
+
+            if (!isCreated) return false;
+
+            return true;
         }
 
         public bool DeletePost(int id)
@@ -234,6 +259,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                 {
                     Id = id,
                     Body = x.Body,
+                    Intro = x.Intro,
                     Date = x.Date,
                     PictureUrl = x.PictureUrl,
                     PostedBy = x.PostedBy,
@@ -351,6 +377,6 @@ namespace AdminAssistant.Blog.Services.Implementations
             posts = posts.Where(x => x.Tags.Select(p => p.Id).Contains(tag)).ToList().OrderByDescending(x => x.Date).ToList();
 
             return posts;
-        }
+        } 
     }
 }

@@ -166,16 +166,26 @@
 
                 var email = e.currentTarget.parentElement.parentElement.cells[2].innerText;
 
-                if (e.currentTarget.checked) {
+                if (email == "Email") {
+                    var data = Admin.subscribersTable.rows().data();
 
-                    Admin.listOfSubscribers.push(email);
+                    for (var i = 0; i < data.length; i++) {
+                        Admin.listOfSubscribers.push(data[i].email);
+                    }
                 }
                 else {
 
-                    for (var i = 0; i < Admin.listOfSubscribers.length; i++) {
-                        if (Admin.listOfSubscribers[i] === email) {
-                            Admin.listOfSubscribers.splice(i, 1);
-                            i--;
+                    if (e.currentTarget.checked) {
+
+                        Admin.listOfSubscribers.push(email);
+                    }
+                    else {
+
+                        for (var i = 0; i < Admin.listOfSubscribers.length; i++) {
+                            if (Admin.listOfSubscribers[i] === email) {
+                                Admin.listOfSubscribers.splice(i, 1);
+                                i--;
+                            }
                         }
                     }
                 }

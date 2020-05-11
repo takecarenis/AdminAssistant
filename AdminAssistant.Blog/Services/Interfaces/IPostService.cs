@@ -22,5 +22,6 @@ namespace AdminAssistant.Blog.Services.Interfaces
         int GetLastPostId();
         List<PostViewModel> Search(string searchTerm);
         List<PostViewModel> GetPostByTag(int tag);
+        bool EditPost(PostViewModel post);
     }
 }

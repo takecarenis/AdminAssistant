@@ -1,5 +1,8 @@
 ﻿using AdminAssistant.Blog.Models.DomainModel;
 using AdminAssistant.Blog.Services.Interfaces;
+using AdminAssistant.Blog.ViewComponents;
+using AdminAssistant.Domain;
+using AdminAssistant.Domain.Blog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +19,7 @@ namespace AdminAssistant.Blog.Controllers
         INewsletterService _newsletterService;
         IPageService _pageService;
         ISidebarService _sidebarService;
+        private readonly ILogService _logService;
         private readonly ILogger<AdminController> _logger;
 
         private readonly IWebHostEnvironment _env;
@@ -67,6 +71,13 @@ namespace AdminAssistant.Blog.Controllers
         }
 
         [Authorize]
+        [Route("Admin/CBC7G34GNHa6M2SCgWLY9feZKKzNb2EQBRLpu8bSPpV5wwpxdZCb4dSxShxxRWQy")]
+        public ActionResult Tags()
+        {
+            return View();
+        }
+
+        [Authorize]
         [Route("Admin/qntAZtrzSmRE89NcGduQCefrqTr73BC939EzDzwPeHknQ7w2AE")]
         public ActionResult Pages()
         {
@@ -86,13 +97,33 @@ namespace AdminAssistant.Blog.Controllers
             return subscribers;
         }
 
+        public List<TagViewModel> GetTags()
+        {
+            return _sidebarService.GetAllTags();
+        }
+
         public bool CreatePost(PostViewModel post)
         {
             if (post == null) return false;
             post.PictureUrl = _currentPhotoPath;
 
             _currentPhotoPath = "";
+            post.Date = DateTime.Now;
             return _postService.CreatePost(post);
+        }
+
+        public bool EditPost(PostViewModel post)
+        {
+            if (post == null) return false;
+            post.PictureUrl = _currentPhotoPath;
+
+            _currentPhotoPath = "";
+            return _postService.EditPost(post);
+        }
+
+        public PostViewModel GetPost(PostViewModel post)
+        {
+            return _postService.GetPost(post.Id);
         }
 
         public bool DeletePost(PostViewModel post)
@@ -101,19 +132,19 @@ namespace AdminAssistant.Blog.Controllers
             return _postService.DeletePost(post.Id);
         }
 
-        public void DeleteSubscribers(List<string> users)
+        public bool DeleteSubscribers(List<string> users)
         {
-            _newsletterService.DeleteSubscribers(users);
+           return _newsletterService.DeleteSubscribers(users);
         }
 
         public bool DeleteTags(List<int> tags)
         {
-            return _sidebarService.DeleteTags(tags);
+           return _sidebarService.DeleteTags(tags);
         }
 
-        public void SendEmail(SendMailViewModel mail)
+        public bool SendEmail(SendMailViewModel mail)
         {
-            _newsletterService.SendEmail(mail);
+           return _newsletterService.SendEmail(mail);
         }
 
         public bool UpdateUserCategory(SendMailViewModel updateCategory)
@@ -136,22 +167,27 @@ namespace AdminAssistant.Blog.Controllers
                 {
                     var file = files[0];
 
-                    int lastPostId = _postService.GetLastPostId();
-
+                    string guid = Guid.NewGuid().ToString();
                     string pic = Path.GetFileName(file.FileName);
-                    string path = Path.Combine(_env.WebRootPath, "img\\posts", (lastPostId + 1).ToString() + ".webp");
+                    string path = Path.Combine(_env.WebRootPath, "img\\posts", guid + ".webp");
 
                     file.CopyTo(new FileStream(path, FileMode.CreateNew));
 
-                    _currentPhotoPath = "\\img\\posts\\" + (lastPostId + 1).ToString() + ".webp";
+                    _currentPhotoPath = "\\img\\posts\\" + guid + ".webp";
 
                     return true;
                 }
 
                 return false;
             }
-            catch(Exception e)
+            catch (Exception ex)
             {
+                _logService.Log(LogType.Error, "Error: " + ex.Message);
+                if (ex.InnerException != null)
+                {
+                    _logService.Log(LogType.Error, "Error: " + ex.InnerException.Message);
+                }
+
                 return false;
             }
         }

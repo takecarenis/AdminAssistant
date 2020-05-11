@@ -11,6 +11,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="The PrivacyOneStop Blog keeps you up to speed with the most relevant news and topics from the data privacy world."/>
     <title>@ViewData["Title"] - PrivacyOneStop</title>
 
     <environment include="Development">
@@ -50,11 +51,9 @@
         <header style="position: initial">
 
             <div class="top-menu">
-
                 <ul class="left-area welcome-area">
                     <li class="hello-blog">Welcome to your PrivacyOneStop</li>
-                </ul><!-- left-area -->
-
+                </ul>
 
                 <div class="left-area src-area" style="float:left">
                     <form action="/Blog/Search">
@@ -62,16 +61,16 @@
                         <button class="src-btn" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </form>
 
-                </div><!-- src-area -->
+                </div>
 
                 <div class="right-area">
                     <partial name="_LoginPartial" />
                 </div>
-            </div><!-- top-menu -->
+            </div>
 
-            <div class="middle-menu center-text"><a href="/Home/Index" class="logo"><img src="~/img/logo2.png" alt="Logo Image"></a></div>
+            <div class="middle-menu center-text" style="height: 40px; margin-top: -40px; padding-bottom: 140px;"><a href="/Home/Index" style="margin-top: -25px;" class="logo"><img src="~/img/logo2.png" alt="Logo Image"></a></div>
 
-            <nav class="bottom-area navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow" style="padding: 0px">
+            <nav class="bottom-area navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow" style="padding: 0px; height: 40px; margin-top: -30px;">
                 <div class="container">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation" style="border-color: white;padding: 5px; margin-left: 5px; margin-top: 5px;margin-bottom: 5px;">
@@ -97,29 +96,6 @@
                     </div>
                 </div>
             </nav>
-
-            @*<div class="bottom-area navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <ul class="main-menu navbar-nav flex-grow-1" id="main-menu">
-                            <li>
-                                <a href="/Home/Index" style="font-size: 20px">Home</a>
-                            </li>
-                            <li>
-                                <a href="/Home/About" style="font-size: 20px">About</a>
-                            </li>
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <li>
-                                    <a href="/Admin/Index" style="font-size: 20px">Admin Page</a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>*@
         </header>
     }
     else
@@ -159,17 +135,21 @@
     <footer style="bottom: -25%">
         <div class="container" style="padding-bottom: 5px">
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="footer-section">
-                        <p class="copyright">PrivacyOneStop&copy; @DateTime.Now.Year. All rights reserved. | Made with by <a href="https://www.linkedin.com/in/stefan-djokic-2a72b3151/" target="_blank">TheCodeMan</a></p>
+                <div class="col-sm-12 text-center" >
+                    <div class="footer-section" style="margin-bottom: 0px">
+                        <p class="copyright text-center" >PrivacyOneStop&copy; @DateTime.Now.Year. All rights reserved. </p>
                     </div><!-- footer-section -->
                 </div><!-- col-lg-4 col-md-6 -->
 
-                <div class="col-sm-6">
+                <div class="col-sm-12 text-center" >
                     <div class="footer-section">
-                        <div class="social-icons">
-                            <img src="~/img/icons/linkedin.png" style="width: 32px;padding-right: 10px" />
-                            <img src="~/img/icons/twitter.png" style="width: 32px;padding-right: 10px" />
+                        <div class="social-icons text-center" style="margin-left: 30px;">
+                            <a href="https://linkedin.com/company/privacyonestop" target="_blank">
+                                <img src="~/img/icons/linkedin.png" style="width: 32px;padding-right: 10px" />
+                            </a>
+                            <a href="https://twitter.com/PrivacyOneStop" target="_blank">
+                                <img src="~/img/icons/twitter.png" style="width: 32px;padding-right: 10px" />
+                            </a>
                         </div>
                     </div><!-- footer-section -->
                 </div><!-- col-lg-4 col-md-6 -->
@@ -220,6 +200,10 @@
             if (window.location.pathname != "/Blog/Post") {
                 localStorage.setItem("backPage", window.location.href);
             }
+
+            $('.carousel').carousel({
+                interval: 40000
+            })
         });
     </script>
 

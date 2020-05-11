@@ -29,14 +29,14 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="title"><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></p>
-                                    <p class="date" style="margin-top: 10px"><em>@post.Date</em></p>
+                                    <p class="date" style="margin-top: 10px"><em>@post.Date.ToString("dd/MM/yyyy")</em></p>
                                 </div>
                                 <div class="col-md-4">
-                                    @*<div class="row">
+                                    <div class="row">
                                             <div class="col-md-12">
-                                                <button class="btn btn-sm btn-info" style="width: 100%" id="@post.Id">Edit</button>
+                                                <button class="btn btn-sm btn-info" onclick="Admin.editPost(event)" style="width: 100%" id="@post.Id">Edit</button>
                                             </div>
-                                        </div>*@
+                                        </div>
                                     <div class="row" style="margin-top: 10px">
                                         <div class="col-md-12">
                                             <button class="btn btn-danger btn-sm" style="width: 100%" id="@post.Id" onclick="Admin.deletePost(event)">Delete</button>
@@ -70,6 +70,8 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
+                                <input type="text" id="modalPostId" hidden />
+                                <input type="text" id="modalPostDate" hidden />
                                 <label for="Title">Title: </label>
                             </div>
                             <div class="col-md-6">
@@ -110,7 +112,7 @@
                             <div class="col-md-12">
                                 @foreach (var category in Model.Categories)
                                 {
-                                    <input type="checkbox" name="categories" value="@category.Id" title="@category.Name" />
+                                    <input type="checkbox" name="categories" id="@category.Id" value="@category.Id" title="@category.Name" />
                                     <label for="categories" style="margin-right: 10px">@category.Name</label>
                                 }
                             </div>
@@ -122,7 +124,7 @@
                             <div class="col-md-12" id="tagsDiv">
                                 @foreach (var tag in Model.Tags)
                                 {
-                                    <input type="checkbox" name="tags" value="@tag.Id" title="@tag.Name" />
+                                    <input type="checkbox" name="tags" id="@tag.Id" value="@tag.Id" title="@tag.Name" />
                                     <label for="tags" style="margin-right: 10px">@tag.Name</label>
                                 }
                                 </div>
@@ -163,7 +165,12 @@
         $("#file").val($("#fileUpload").val());
         $("#submitUploadingPhoto").click();
 
-        Admin.createNewPost();
+        if (Admin.isEdit == true) {
+            Admin.finishEditPost();
+        }
+        else {
+            Admin.createNewPost();
+        }
     })
 
 </script>

@@ -34,13 +34,19 @@ namespace AdminAssistant.Blog.Services.Implementations
             _logService = logService;
         }
 
-        public void DeleteSubscribers(List<string> users)
+        public bool DeleteSubscribers(List<string> users)
         {
-            List<Newsletter> newsletterUsers = _dbContext.Newsletter.Where(x => users.Contains(x.Email)).ToList();
+            foreach(var user in users)
+            {
+                string encryptedEmail = Encryption.Encrypt(user, _configuration.GetValue<string>("Newsletter:Credentials:Password"), _configuration.GetValue<string>("Newsletter:SecretKey"));
 
-            _dbContext.Newsletter.RemoveRange(newsletterUsers);
+                Newsletter newsletter = _dbContext.Newsletter.Where(x => encryptedEmail == x.Email).FirstOrDefault();
 
-            _dbContext.SaveChanges();
+                _dbContext.Newsletter.Remove(newsletter);
+            }
+            
+
+            return _dbContext.SaveChanges() == 1;
         }
 
         public List<UserNewsletterViewModel> GetPaginated(int currentPage, int pageSize = 10)
@@ -67,38 +73,65 @@ namespace AdminAssistant.Blog.Services.Implementations
 
         public bool IsSubscribed(string email)
         {
-            return _dbContext.Newsletter.Any(x => x.Email == email && x.IsActive);
+            string encryptedEmail = Encryption.Encrypt(email, _configuration.GetValue<string>("Newsletter:Credentials:Password"), _configuration.GetValue<string>("Newsletter:SecretKey"));
+            return _dbContext.Newsletter.Any(x => x.Email == encryptedEmail && x.IsActive);
         }
 
-        public void SendEmail(SendMailViewModel sendMail)
+        public bool SendEmail(SendMailViewModel sendMail)
         {
             try
             {
-                MailMessage mail = new MailMessage();
-                SmtpClient smtpServer = new SmtpClient(_configuration.GetValue<string>("Newsletter:SmtpClient"));
-
-                mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
-
                 foreach (var user in sendMail.Users)
                 {
+                    MailMessage mail = new MailMessage();
+                    SmtpClient smtpServer = new SmtpClient(_configuration.GetValue<string>("Newsletter:SmtpClient"));
+                    string path = Path.Combine(_env.WebRootPath, "img\\", "logo2.png");
+
+                    mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
+
                     mail.To.Add(user);
+
+                    mail.Subject = sendMail.Subject;
+                    mail.Body = "<div style='text-align: center'>";
+                    mail.Body += @"<img src=""cid:YourPictureId""></div>";
+                    mail.Body += "<div style='text-align: left'>";
+                    mail.Body += "<br/><br/>";
+                    mail.Body += sendMail.Body;
+                    mail.Body += "<br/><br/>";
+                    mail.Body += "<h5 style='text-align: center; margin: 0px;'>Click <a href='https://privacyonestop.com/Blog/Unsubscribe?email=" + user + "'>here</a>. to unsubscribe.</h5>";
+                    mail.Body += "<h6 style='text-align: center; margin: 0px;'>This email address is not monitored. Please do not reply to this email.</h6>";
+                    mail.Body += "<h6 style='text-align: center; margin: 0px;'>You can read our Terms & Conditions <a href='https://privacyonestop.com/Home/Terms'>here</a> and our Privacy Policy <a href='https://privacyonestop.com/Home/Privacy'>here</a>.</h6>";
+                    mail.Body += "</div>";
+
+                    string html = mail.Body;
+                    AlternateView altView = AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html);
+                    LinkedResource yourPictureRes = new LinkedResource(path, MediaTypeNames.Image.Jpeg);
+                    yourPictureRes.ContentId = "YourPictureId";
+                    altView.LinkedResources.Add(yourPictureRes);
+                    mail.AlternateViews.Add(altView);
+
+                    mail.IsBodyHtml = true;
+
+                    smtpServer.Port = 25;
+                    smtpServer.UseDefaultCredentials = false;
+                    smtpServer.Credentials = new System.Net.NetworkCredential(_configuration.GetValue<string>("Newsletter:Credentials:Username"),
+                        _configuration.GetValue<string>("Newsletter:Credentials:Password"));
+                    smtpServer.EnableSsl = false;
+
+                    smtpServer.Send(mail);
                 }
 
-                mail.Subject = sendMail.Subject;
-                mail.Body = sendMail.Body;
-                mail.IsBodyHtml = true;
-
-                smtpServer.Port = 587;
-                smtpServer.UseDefaultCredentials = false;
-                smtpServer.Credentials = new System.Net.NetworkCredential(_configuration.GetValue<string>("Newsletter:Credentials:Username"),
-                    _configuration.GetValue<string>("Newsletter:Credentials:Password"));
-                smtpServer.EnableSsl = true;
-
-                smtpServer.Send(mail);
+                return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                //
+                _logService.Log(LogType.Error, "Error: " + ex.Message);
+                if (ex.InnerException != null)
+                {
+                    _logService.Log(LogType.Error, "Error: " + ex.InnerException.Message);
+                }
+
+                return false;
             }
         }
 
@@ -106,6 +139,8 @@ namespace AdminAssistant.Blog.Services.Implementations
         {
             try
             {
+                if (IsSubscribed(email)) return true;
+
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient(_configuration.GetValue<string>("Newsletter:SmtpClient"));
 
@@ -118,21 +153,23 @@ namespace AdminAssistant.Blog.Services.Implementations
                 mail.Body += @"<img src=""cid:YourPictureId""></div>";
                 mail.Body += "<div style='text-align: left'>";
                 mail.Body += "<br/><br/>";
-                mail.Body += "Hello dear reader,";
+                mail.Body += "Dear privacy colleague,";
                 mail.Body += "<br/><br/>";
-                mail.Body += "You have now subscribed to the PrivacyOneStop newsletter. You will get updates about our articles, products & services, and you will benefit from the most up-to-date highlights from the privacy world. You will have everything you need to know at the tip of your fingers.";
+                mail.Body += "You are now subscribed to the PrivacyOneStop newsletter. ";
                 mail.Body += "<br/><br/>";
-                mail.Body += "A useful tip";
+                mail.Body += "We will keep you informed about our articles, products, services and news from the privacy world. In short, everything you need to know about privacy will be at your fingertips.";
                 mail.Body += "<br/><br/>";
-                mail.Body += "You can save the PrivacyOneStop newsletter address newsletter@privacyonestop.com in your e-mail address book. This way you will be certain your newsletter will not be inadvertently treated as ‘spam’.";
+                mail.Body += "Useful tip:";
+                mail.Body += "<br/><br/>";
+                mail.Body += "Save PrivacyOneStop email address: newsletter@privacyonestop.com in your email address book. This way you will be certain your newsletter will not be inadvertently treated as ‘spam’.";
                 mail.Body += "<br/><br/>";
                 mail.Body += "Privacy";
                 mail.Body += "<br/><br/>";
                 mail.Body += "If you wish to unsubscribe easily, you can click on the unsubscribe link at the bottom of our marketing emails. Alternatively, you can choose to write to <a href='mailto:privacy@privacyonestop.com'>privacy@privacyonestop.com</a>.";
                 mail.Body += "<br/><br/>";
-                mail.Body += "<h5 style='text-align: center; margin: 0px;'>Click <a href='http://privacyonestop.com/Blog/Unsubscribe?email=" + email + "'>here</a>. to unsubscribe.</h5>";
+                mail.Body += "<h5 style='text-align: center; margin: 0px;'>Click <a href='https://privacyonestop.com/Blog/Unsubscribe?email=" + email + "'>here</a>. to unsubscribe.</h5>";
                 mail.Body += "<h6 style='text-align: center; margin: 0px;'>This email address is not monitored. Please do not reply to this email.</h6>";
-                mail.Body += "<h6 style='text-align: center; margin: 0px;'>You can read our <a href='http://privacyonestop.com/Home/Terms'>Terms & Conditions</a> here and our <a href='http://privacyonestop.com/Home/Privacy'>Privacy Policy here</a>.</h6>";
+                mail.Body += "<h6 style='text-align: center; margin: 0px;'>You can read our Terms & Conditions <a href='https://privacyonestop.com/Home/Terms'>here</a> and our Privacy Policy <a href='https://privacyonestop.com/Home/Privacy'>here</a>.</h6>";
                 mail.Body += "</div>";
 
                 string html = mail.Body;
@@ -181,7 +218,8 @@ namespace AdminAssistant.Blog.Services.Implementations
         {
             if (IsSubscribed(email))
             {
-                Newsletter newsletter = _dbContext.Newsletter.FirstOrDefault(x => x.Email == email);
+                string encryptedEmail = Encryption.Encrypt(email, _configuration.GetValue<string>("Newsletter:Credentials:Password"), _configuration.GetValue<string>("Newsletter:SecretKey"));
+                Newsletter newsletter = _dbContext.Newsletter.FirstOrDefault(x => x.Email == encryptedEmail);
 
                 if (newsletter != null)
                 {

@@ -373,6 +373,27 @@ html.fullscreen-bg #wrapper {
         margin: 0;
     }
 
+    header .logo {
+        height: 80px;
+        float: none;
+        margin-top: 35px;
+    }
+
+        header .logo img {
+            height: 80px;
+            width: auto;
+            margin-top: 35px;
+        }
+
+    header .bottom-area {
+        text-align: center;
+        background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
+    }
+
+    .single-post {
+        margin-top: 20px;
+    }
+
         .navbar-nav > li {
             display: table-cell;
             width: 100%;
@@ -412,6 +433,28 @@ html.fullscreen-bg #wrapper {
                 top: 10px;
                 right: 15px;
             }
+}
+
+@media only screen and (max-width: 1270px) {
+
+    header .logo {
+        height: 80px;
+        float: right;
+    }
+
+        header .logo img {
+            height: 80px;
+            width: auto;
+        }
+
+    header .bottom-area {
+        text-align: center;
+        background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
+    }
+
+    .single-post {
+        margin-top: 20px;
+    }
 }
 
 .navbar-toggle {

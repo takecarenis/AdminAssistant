@@ -2,7 +2,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-    <ul class="navbar-nav" style="padding:10px;">
+    <ul class="navbar-nav">
         @if (SignInManager.IsSignedIn(User))
         {
         <li style="padding-right: 20px">

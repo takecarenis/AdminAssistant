@@ -11,15 +11,23 @@
             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active" style="max-height: 450px">
-                <img src="~/img/slider/1.webp" alt="First slide" >
-            </div>
-            <div class="carousel-item" style="max-height: 450px">
-                <img src="~/img/slider/2.webp"alt="Second slide" >
-            </div>
-            <div class="carousel-item" style="max-height: 450px">
-                <img src="~/img/slider/3.webp" alt="Third slide">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
+                </div>
+                <div class="carousel-inner col-md-10" style="display: flex;padding-right: 0px;padding-left: 0px;">
+                    <div class="carousel-item active max-height">
+                        <img src="~/img/slider/1.webp" alt="First slide" class="img-carousel">
+                    </div>
+                    <div class="carousel-item max-height">
+                        <img src="~/img/slider/2.webp" alt="Second slide" class="img-carousel">
+                    </div>
+                    <div class="carousel-item max-height">
+                        <img src="~/img/slider/3.webp" alt="Third slide" class="img-carousel">
+                    </div>
+                </div>
+                <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
+                </div>
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -34,7 +42,7 @@
 
 
 <section class="section blog-area" style="margin-top: -40px">
-    <div class="container">
+    <div class="container section-container">
         <div class="row">
 
             <div class="col-lg-8 col-md-12">
@@ -91,7 +99,7 @@
                                 <h5>Tags</h5>
                                 @foreach (var tag in post.Tags)
                                 {
-                                    <a href="#" style="        margin-right: 5px;"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
+                                    <a href="#" style="margin-right: 5px;"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
                                 }
                             </div>
                         </div>

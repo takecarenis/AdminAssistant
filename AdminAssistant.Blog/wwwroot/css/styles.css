@@ -45,11 +45,40 @@
 1. PRIMARY STYLES
 --------------------------------- */
 
-html{ font-size: 100%; height: 100%;  overflow-x: hidden; touch-action: manipulation; }
+html {
+	font-size: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	touch-action: manipulation;
+	position: relative;
+	min-height: 100%;
+}
 
-body{ font-size: 15px; font-family: 'Roboto', sans-serif; width: 100%; height: 100%; margin: 0; font-weight: 400;
-	-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; word-wrap: break-word; 
-	color: #000; }
+a {
+	color: #3287B2;
+}
+
+	a:hover, a:focus {
+		color: #3b98c8;
+		text-decoration: none;
+	}
+
+body {
+	font-size: 15px;
+	font-family: 'Roboto', sans-serif;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	font-weight: 400;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	word-wrap: break-word;
+	color: #000;
+	background-color: #F3F5F8;
+	font-family: "Source Sans Pro", sans-serif;
+	font-size: 15px;
+	color: #676a6d;
+}
 
 h1, h2, h3, h4, h5, h6, p, a, ul, span, li, img, inpot, button{ margin: 0; padding: 0; }
 
@@ -66,6 +95,10 @@ h6{ font-size: .9em; letter-spacing: 1px; }
 
 a, button{ display: inline-block; text-decoration: none; color: inherit; transition: all .3s; }
 
+.text-danger {
+	color: #F9354C;
+}
+
 a:focus, a:active, a:hover,
 button:focus, button:active, button:hover,
 a b.light-color:hover{ text-decoration: none; color: #1E377F; }
@@ -81,7 +114,15 @@ button{ outline: 0; border: 0; background: none; cursor: pointer; }
 b.light-color{ color: #444; }
 
 
-
+.btn {
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	-moz-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.2);
+	padding: 6px 22px;
+}
 /* ---------------------------------
 2. COMMONS FOR PAGE DESIGN
 --------------------------------- */
@@ -95,6 +136,17 @@ b.light-color{ color: #444; }
 
 .btn-custom-2:hover{ background: #1E377F; color: #fff; }
 
+.btn-primary {
+	background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
+	border-color: #00a0f0;
+}
+.btn-white {
+	background-color: white;
+}
+
+.btn-group-sm > .btn, .btn-sm {
+	padding: 5px 18px;
+}
 
 .section{ padding: 70px 0 40px; }
 
@@ -183,16 +235,24 @@ header .src-area .src-btn-custom{ position: absolute; top: 0; bottom: 0; right: 
 
 header .middle-menu{ border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;  }
 
-header .logo{ padding: 30px 0; height: 160px; }
+	header .logo {
+		padding: 30px 0;
+		height: 160px;
+		margin-top: -25px;
+	}
 
-header .logo img{ height: 100%; width: auto; }
-
+		header .logo img {
+			height: 100%;
+			width: auto;
+		}
 
 /* BOTTOM AREA */
 
     header .bottom-area {
         text-align: center;
         background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
+		height: 40px;
+		margin-top: -20px;
     }
 
 header .main-menu{ font-weight: 500; }
@@ -252,7 +312,13 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 .menu-nav-icon{ display: none; height: 60px; width: 50px; text-align: center; line-height: 60px; cursor: pointer; 
 	font-size: 1.8em; }
 
-	
+.navbar-nav > li > a {
+	padding: 28px 20px;
+}
+
+.navbar-nav > li > a {
+	padding: 28px 20px;
+}
 
 /* ---------------------------------
 4. SLIDER
@@ -1147,4 +1213,214 @@ footer .social-icons > li > a{ padding-left: 15px; }
 
 .lnr-pointer-left:before {
 	content: "\e8a9";
+}
+
+.social-icons {
+	margin-bottom: 0;
+}
+
+.img-carousel {
+	height: 500px;
+	margin-top: -50px;
+}
+
+.search-welcome-area {
+	display: flex;
+}
+
+.max-height {
+	max-height: 450px;
+}
+
+@media only screen and (min-width: 1900px) {
+
+	.max-height {
+		max-height: 700px;
+	}
+
+	.img-carousel {
+		height: 700px;
+		margin-top: 0px;
+	}
+
+	.container {
+		max-width: 1400px;
+	}
+}
+
+.section-container {
+	overflow-x: hidden;
+}
+
+@media only screen and (min-width: 2300px) {
+
+	.max-height {
+		max-height: 800px;
+	}
+
+	.img-carousel {
+		height: 800px;
+		margin-top: 0px;
+	}
+
+	.container {
+		max-width: 1800px;
+	}
+
+	.section-container {
+		max-width: 1800px;
+	}
+}
+
+@media only screen and (min-width: 2500px) {
+
+	.max-height {
+		max-height: 850px;
+	}
+
+	.img-carousel {
+		height: 850px;
+		margin-top: 0px;
+	}
+
+	.container {
+		max-width: 2000px;
+	}
+
+	.section-container {
+		max-width: 2000px;
+	}
+}
+
+@media only screen and (max-width: 1270px) {
+	header .logo {
+		height: 80px;
+		float: right;
+	}
+
+		header .logo img {
+			height: 120px;
+			width: auto;
+		}
+
+	header .bottom-area {
+		text-align: center;
+		background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
+	}
+
+	.single-post {
+		margin-top: 20px;
+	}
+
+	.img-carousel {
+		height: 450px;
+		margin-top: -50px;
+	}
+}
+
+
+@media only screen and (max-width: 830px) {
+
+	header .logo {
+		height: 80px;
+		float: none;
+	}
+
+		header .logo img {
+			width: auto;
+			margin-top: 35px;
+		}
+
+	header .bottom-area {
+		text-align: center;
+		background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
+	}
+
+	.single-post {
+		margin-top: 20px;
+	}
+
+	.img-carousel {
+		height: 300px;
+	}
+}
+
+
+@media only screen and (max-width: 768px) {
+
+	header .logo {
+		height: 80px;
+		float: none;
+	}
+
+		header .logo img {
+			height: 80px;
+			width: auto;
+			margin-top: 35px;
+		}
+
+	header .bottom-area {
+		text-align: center;
+		background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
+	}
+
+	.single-post {
+		margin-top: 20px;
+	}
+
+	.img-carousel {
+		height: 250px;
+		margin-top: 0px;
+	}
+}
+
+@media only screen and (max-width: 580px) {
+
+	header .logo {
+		height: 80px;
+		float: none;
+	}
+
+		header .logo img {
+			height: 80px;
+			width: auto;
+			margin-top: 35px;
+		}
+
+	header .bottom-area {
+		height: auto;
+		text-align: center;
+		background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%);
+	}
+
+	.single-post {
+		margin-top: 20px;
+	}
+
+	.img-carousel {
+		height: 150px;
+		margin-top: 0px;
+	}
+
+	.hello-blog {
+		margin-left: -20px !important;
+		width: 72% !important;
+	}
+
+	.src-area {
+		float: left !important;
+		margin-left: 60px !important;
+	}
+
+	.src-input {
+		padding-left: 5px !important;
+	}
+
+	search-welcome-area {
+		margin-left: -30px;
+		margin-right: 47px;
+		width: 76%;
+		padding-right: 0px;
+	}
+
 }

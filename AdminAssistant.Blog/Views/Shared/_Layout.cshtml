@@ -32,10 +32,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
 
-    <link href="~/css/layerslider.css" rel="stylesheet">
     <link href="~/css/styles.css" rel="stylesheet">
-    <link href="~/css/responsive.css" rel="stylesheet">
-    <link href="~/css/main.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="~/css/datatable.css">
     <link type="text/css" href="~/css/datatable-checkbox.css" rel="stylesheet" />
 
@@ -48,55 +45,55 @@
 <body style="height: auto">
     @if (!currentUrl.ToString().Contains("Admin"))
     {
-        <header style="position: initial">
+    <header style="position: initial">
 
-            <div class="top-menu">
-                <ul class="left-area welcome-area">
-                    <li class="hello-blog">Welcome to your PrivacyOneStop</li>
-                </ul>
-
-                <div class="left-area src-area" style="float:left">
+        <div class="top-menu">
+            <ul class="left-area welcome-area search-welcome-area" style="display: flex">
+                <li class="hello-blog">Welcome to your PrivacyOneStop</li>
+                <li class="left-area src-area" style="float:left">
                     <form action="/Blog/Search">
                         <input class="src-input" name="searchTerm" type="text" placeholder="Search" id="searchPostsInput">
                         <button class="src-btn" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </form>
 
-                </div>
+                </li>
+            </ul>
 
-                <div class="right-area">
-                    <partial name="_LoginPartial" />
+            <div class="right-area">
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+
+        <div class="middle-menu center-text" style="height: 40px; margin-top: -40px; padding-bottom: 150px;">
+            <a href="/Home/Index" class="logo">
+                <img src="~/img/logo2.png" alt="Logo Image">
+            </a>
+        </div>
+        <nav class="bottom-area navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1" style="display: block">
+                        <li class="nav-item" style="margin-right: 10px;">
+                            <a class="nav-link" href="/Home/Index" style="font-size: 20px; color: white">Home</a>
+                        </li>
+                        <li class="nav-item" style="margin-left: 10px;">
+                            <a class="nav-link" href="/Home/About" style="font-size: 20px; color: white">About</a>
+                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Admin/e3NHA57XCuMk7S2TnumF38Dy6k6P2hQh9urjzYyVNMpegujKy2" style="font-size: 20px; color: white">Admin Page</a>
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
-
-            <div class="middle-menu center-text" style="height: 40px; margin-top: -40px; padding-bottom: 140px;"><a href="/Home/Index" style="margin-top: -25px;" class="logo"><img src="~/img/logo2.png" alt="Logo Image"></a></div>
-
-            <nav class="bottom-area navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow" style="padding: 0px; height: 40px; margin-top: -30px;">
-                <div class="container">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation" style="border-color: white;padding: 5px; margin-left: 5px; margin-top: 5px;margin-bottom: 5px;">
-                        <div style="width: 30px;height: 3px;background-color: white;margin: 6px 0;"></div>
-                        <div style="width: 30px;height: 3px;background-color: white;margin: 6px 0;"></div>
-                        <div style="width: 30px;height: 3px;background-color: white;margin: 6px 0;"></div>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <ul class="main-menu navbar-nav" style="margin: auto">
-                            <li class="nav-item">
-                                <a href="/Home/Index" style="font-size: 20px">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/Home/About" style="font-size: 20px">About</a>
-                            </li>
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <li class="nav-item">
-                                    <a href="/Admin/e3NHA57XCuMk7S2TnumF38Dy6k6P2hQh9urjzYyVNMpegujKy2" style="font-size: 20px">Admin Page</a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
+        </nav>
+    </header>
     }
     else
     {
@@ -202,7 +199,7 @@
             }
 
             $('.carousel').carousel({
-                interval: 40000
+                interval: 4000
             })
         });
     </script>

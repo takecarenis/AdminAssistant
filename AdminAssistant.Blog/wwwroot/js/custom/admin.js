@@ -263,7 +263,7 @@ Admin.deletePost = function (e) {
 
             if (result == true || result == "True") {
                 $("#statusLabel").addClass("text-success");
-                $("#statusLabel").text("You successfully deleted post! Please refresh the page.");
+                $("#statusLabel").text("You successfully edited post! Please refresh the page.");
                 $("#successModal").modal();
             }
             else {

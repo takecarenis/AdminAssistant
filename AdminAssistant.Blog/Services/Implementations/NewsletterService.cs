@@ -87,7 +87,8 @@ namespace AdminAssistant.Blog.Services.Implementations
                     SmtpClient smtpServer = new SmtpClient(_configuration.GetValue<string>("Newsletter:SmtpClient"));
                     string path = Path.Combine(_env.WebRootPath, "img\\", "logo2.png");
 
-                    mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
+                    mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"), "PrivacyOneStop News");
+                    mail.Headers.Add("Message-Id", "<PrivacyOneStop News>");
 
                     mail.To.Add(user);
 
@@ -98,7 +99,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                     mail.Body += "<br/><br/>";
                     mail.Body += sendMail.Body;
                     mail.Body += "<br/><br/>";
-                    mail.Body += "<h5 style='text-align: center; margin: 0px;'>Click <a href='https://privacyonestop.com/Blog/Unsubscribe?email=" + user + "'>here</a>. to unsubscribe.</h5>";
+                    mail.Body += "<h5 style='text-align: center; margin: 0px;'>Click <a href='https://privacyonestop.com/Blog/Unsubscribe?email=" + user + "'>here</a> to unsubscribe.</h5>";
                     mail.Body += "<h6 style='text-align: center; margin: 0px;'>This email address is not monitored. Please do not reply to this email.</h6>";
                     mail.Body += "<h6 style='text-align: center; margin: 0px;'>You can read our Terms & Conditions <a href='https://privacyonestop.com/Home/Terms'>here</a> and our Privacy Policy <a href='https://privacyonestop.com/Home/Privacy'>here</a>.</h6>";
                     mail.Body += "</div>";
@@ -146,7 +147,9 @@ namespace AdminAssistant.Blog.Services.Implementations
 
                 string path = Path.Combine(_env.WebRootPath, "img\\", "logo2.png");
 
-                mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"));
+                mail.From = new MailAddress(_configuration.GetValue<string>("Newsletter:From"), "PrivacyOneStop News");
+                //mail.Headers.Add("Message-Id", "<PrivacyOneStop News>");
+
                 mail.To.Add(email);
                 mail.Subject = "You have subscribed to PrivacyOneStop Newsletter";
                 mail.Body = "<div style='text-align: center'>";
@@ -167,7 +170,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                 mail.Body += "<br/><br/>";
                 mail.Body += "If you wish to unsubscribe easily, you can click on the unsubscribe link at the bottom of our marketing emails. Alternatively, you can choose to write to <a href='mailto:privacy@privacyonestop.com'>privacy@privacyonestop.com</a>.";
                 mail.Body += "<br/><br/>";
-                mail.Body += "<h5 style='text-align: center; margin: 0px;'>Click <a href='https://privacyonestop.com/Blog/Unsubscribe?email=" + email + "'>here</a>. to unsubscribe.</h5>";
+                mail.Body += "<h5 style='text-align: center; margin: 0px;'>Click <a href='https://privacyonestop.com/Blog/Unsubscribe?email=" + email + "'>here</a> to unsubscribe.</h5>";
                 mail.Body += "<h6 style='text-align: center; margin: 0px;'>This email address is not monitored. Please do not reply to this email.</h6>";
                 mail.Body += "<h6 style='text-align: center; margin: 0px;'>You can read our Terms & Conditions <a href='https://privacyonestop.com/Home/Terms'>here</a> and our Privacy Policy <a href='https://privacyonestop.com/Home/Privacy'>here</a>.</h6>";
                 mail.Body += "</div>";

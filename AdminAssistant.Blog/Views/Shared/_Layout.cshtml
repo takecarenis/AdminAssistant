@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="The PrivacyOneStop Blog keeps you up to speed with the most relevant news and topics from the data privacy world."/>
+    <meta name="description" content="The PrivacyOneStop Blog keeps you up to speed with the most relevant news and topics from the data privacy world." />
     <title>@ViewData["Title"] - PrivacyOneStop</title>
 
     <environment include="Development">
@@ -36,6 +36,7 @@
     <link rel="stylesheet" type="text/css" href="~/css/datatable.css">
     <link type="text/css" href="~/css/datatable-checkbox.css" rel="stylesheet" />
 
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="19ef753f-d7d9-4ba5-87ff-934f6dd527a0" data-blockingmode="auto" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="~/lib/datatable/datatable.js"></script>
     <script type="text/javascript" src="~/lib/datatable/datatable-checkbox.min.js"></script>
@@ -129,36 +130,37 @@
     <partial name="_CookieConsentPartial" />
         @RenderBody()
 
-    <footer style="bottom: -25%">
-        <div class="container" style="padding-bottom: 5px">
-            <div class="row">
-                <div class="col-sm-12 text-center" >
-                    <div class="footer-section" style="margin-bottom: 0px">
-                        <p class="copyright text-center" >PrivacyOneStop&copy; @DateTime.Now.Year. All rights reserved. </p>
-                    </div><!-- footer-section -->
-                </div><!-- col-lg-4 col-md-6 -->
+<footer style="bottom: -25%">
+    <script id="CookieDeclaration" src="https://consent.cookiebot.com/19ef753f-d7d9-4ba5-87ff-934f6dd527a0/cd.js" type="text/javascript" async></script>
+    <div class="container" style="padding-bottom: 5px">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <div class="footer-section" style="margin-bottom: 0px">
+                    <p class="copyright text-center">PrivacyOneStop&copy; @DateTime.Now.Year. All rights reserved. </p>
+                </div><!-- footer-section -->
+            </div><!-- col-lg-4 col-md-6 -->
 
-                <div class="col-sm-12 text-center" >
-                    <div class="footer-section">
-                        <div class="social-icons text-center" style="margin-left: 30px;">
-                            <a href="https://linkedin.com/company/privacyonestop" target="_blank">
-                                <img src="~/img/icons/linkedin.png" style="width: 32px;padding-right: 10px" />
-                            </a>
-                            <a href="https://twitter.com/PrivacyOneStop" target="_blank">
-                                <img src="~/img/icons/twitter.png" style="width: 32px;padding-right: 10px" />
-                            </a>
-                        </div>
-                    </div><!-- footer-section -->
-                </div><!-- col-lg-4 col-md-6 -->
-            </div><!-- row -->
-            <div class="row" style="margin-top: -10px;margin-bottom: 20px;">
-                <div class="col-md-12 text-center">
-                    <a href="/Home/Terms" style="color: white; padding-right: 5px">Terms & Conditions</a> |
-                    <a href="/Home/Privacy" style="color: white;padding-left: 5px">Privacy Policy</a>
-                </div>
+            <div class="col-sm-12 text-center">
+                <div class="footer-section">
+                    <div class="social-icons text-center" style="margin-left: 30px;">
+                        <a href="https://linkedin.com/company/privacyonestop" target="_blank">
+                            <img src="~/img/icons/linkedin.png" style="width: 32px;padding-right: 10px" />
+                        </a>
+                        <a href="https://twitter.com/PrivacyOneStop" target="_blank">
+                            <img src="~/img/icons/twitter.png" style="width: 32px;padding-right: 10px" />
+                        </a>
+                    </div>
+                </div><!-- footer-section -->
+            </div><!-- col-lg-4 col-md-6 -->
+        </div><!-- row -->
+        <div class="row" style="margin-top: -10px;margin-bottom: 20px;">
+            <div class="col-md-12 text-center">
+                <a href="/Home/Terms" style="color: white; padding-right: 5px">Terms & Conditions</a> |
+                <a href="/Home/Privacy" style="color: white;padding-left: 5px">Privacy Policy</a>
             </div>
-        </div><!-- container -->
-    </footer>
+        </div>
+    </div><!-- container -->
+</footer>
 
     <environment include="Development">
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>

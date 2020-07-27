@@ -22,6 +22,8 @@ namespace AdminAssistant.Blog.Controllers
             _logger = logger;
             _postService = service;
             _pageService = pageService;
+
+            _postService.ReplaceAllTitles();
         }
 
         public IActionResult Index(int page=1)

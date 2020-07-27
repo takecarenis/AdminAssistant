@@ -86,6 +86,13 @@ namespace AdminAssistant.Blog.Controllers
             return View(pages);
         }
 
+        [Authorize]
+        [Route("Admin/qntAZtrzSmRE89NpGduQCefrqTr73OC939EzDzCPeHk257w2AE")]
+        public ActionResult Benchmarking()
+        {
+            return View();
+        }
+
         public List<UserNewsletterViewModel> GetSubscribers()
         {
             UserNewsletterViewModel newsletter = new UserNewsletterViewModel();

@@ -4,85 +4,22 @@ using AdminAssistant.Blog.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdminAssistant.Blog.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200726121906_AddedTitleFormatedToPost")]
+    partial class AddedTitleFormatedToPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("AdminAssistant.Domain.Blog.Benchmarking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UniqueUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isActive")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Benchmarking");
-                });
-
-            modelBuilder.Entity("AdminAssistant.Domain.Blog.BenchmarkingQuestion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Answer1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Answer2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Answer3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Answer4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Answer5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Answer6")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Answer7")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("BenchmarkingId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Question")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BenchmarkingId");
-
-                    b.ToTable("BenchmarkingQuestions");
-                });
 
             modelBuilder.Entity("AdminAssistant.Domain.Blog.Category", b =>
                 {
@@ -464,13 +401,6 @@ namespace AdminAssistant.Blog.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("AdminAssistant.Domain.Blog.BenchmarkingQuestion", b =>
-                {
-                    b.HasOne("AdminAssistant.Domain.Blog.Benchmarking", null)
-                        .WithMany("Questions")
-                        .HasForeignKey("BenchmarkingId");
                 });
 
             modelBuilder.Entity("AdminAssistant.Domain.Blog.PostCategory", b =>

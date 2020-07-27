@@ -60,15 +60,10 @@ namespace AdminAssistant.Blog.Controllers
             return View(posts);
         }
 
-        public IActionResult Post(int? id)
+        public IActionResult Post(string title)
         {
-            if (id.HasValue && id != 0)
-            {
-                PostViewModel post = _postService.GetPost(id.Value);
-                return View(post);
-            }
-
-            return View();
+            PostViewModel post = _postService.GetPostByTitle(title);
+            return View(post);
         }
 
         [HttpPost]

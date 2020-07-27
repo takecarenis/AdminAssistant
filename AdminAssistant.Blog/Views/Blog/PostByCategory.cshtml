@@ -24,7 +24,7 @@
                         <img src="~/img/slider/2.webp" alt="Second slide" class="img-carousel">
                     </div>
                     <div class="carousel-item max-height">
-                        <img src="~/img/slider/3.webp" alt="Third slide" class="img-carousel">
+                        <img src="~/img/slider/3.svg" alt="Third slide" class="img-carousel">
                     </div>
                 </div>
                 <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
@@ -70,11 +70,11 @@
                                     </div>
                                     <hr />
 
-                                    <h3 class="title"><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></h3>
+                                    <h3 class="title"><a href="/Blog/Post?title=@post.TitleFormated"><b class="light-color">@post.Title</b></a></h3>
                                 }
                                 else
                                 {
-                                    <h3 class="title"><a href="/Blog/Post?id=@post.Id"><b class="light-color">@post.Title</b></a></h3>
+                                    <h3 class="title"><a href="/Blog/Post?title=@post.TitleFormated"><b class="light-color">@post.Title</b></a></h3>
                                     <div class="icons">
                                         <div class="left-area">
                                             <p class="date"><em>@post.Date.ToString("dd/MM/yyy")</em></p>
@@ -91,16 +91,16 @@
 
                                 <p style="margin-top:20px;">@post.Intro</p>
                                 <br />
-                                <a class="btn btn-sm read-more-btn btn-primary" href="/Blog/Post?id=@post.Id"><b>Continue Reading</b></a>
+                                <a class="btn btn-sm read-more-btn btn-primary" href="/Blog/Post?title=@post.TitleFormated"><b>Continue Reading</b></a>
 
                                 <button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink('@post.Id')">Copy Link</button>
-                                <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}")/Blog/Post?id=@post.Id" id="copyLinkValue_@post.Id" />
+                                <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}")/Blog/Post?title=@post.TitleFormated" id="copyLinkValue_@post.Id" />
                                 <div class="icons">
                                     <div class="left-area">
                                         <h5>Tags</h5>
                                         @foreach (var tag in post.Tags)
                                         {
-                                            <a href="#" style="margin-right: 5px;"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
+                                    <a href="/Blog/PostByTag?tag=@tag.Id" style="margin-right: 5px;"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
                                         }
                                     </div>
                                 </div>

@@ -1232,6 +1232,15 @@ footer .social-icons > li > a{ padding-left: 15px; }
 	max-height: 450px;
 }
 
+
+@media only screen and (min-width: 1500px) {
+
+	footer {
+		margin-top: 250px;
+	}
+}
+
+
 @media only screen and (min-width: 1900px) {
 
 	.max-height {
@@ -1246,7 +1255,26 @@ footer .social-icons > li > a{ padding-left: 15px; }
 	.container {
 		max-width: 1400px;
 	}
+
+	footer {
+		margin-top: 400px;
+	}
 }
+
+@media only screen and (min-width: 2100px) {
+
+	footer {
+		margin-top: 450px;
+	}
+}
+
+@media only screen and (min-width: 2200px) {
+
+	footer {
+		margin-top: 500px;
+	}
+}
+
 
 .section-container {
 	overflow-x: hidden;
@@ -1270,6 +1298,10 @@ footer .social-icons > li > a{ padding-left: 15px; }
 	.section-container {
 		max-width: 1800px;
 	}
+
+	footer {
+		margin-top: 650px;
+	}
 }
 
 @media only screen and (min-width: 2500px) {
@@ -1289,6 +1321,17 @@ footer .social-icons > li > a{ padding-left: 15px; }
 
 	.section-container {
 		max-width: 2000px;
+	}
+	footer {
+		margin-top: 750px;
+	}
+
+}
+
+@media only screen and (min-width: 2700px) {
+
+	footer {
+		margin-top: 900px;
 	}
 }
 

@@ -35,7 +35,7 @@ namespace AdminAssistant.Blog
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddTransient(typeof(ApplicationDbContext));
+            services.AddScoped(typeof(ApplicationDbContext));
             services.AddScoped(typeof(ILogService), typeof(LogService));
             services.AddScoped(typeof(IPostService), typeof(PostService));
             services.AddScoped(typeof(INewsletterService), typeof(NewsletterService));
@@ -60,6 +60,8 @@ namespace AdminAssistant.Blog
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 //app.UseHsts();
             }
+
+            //app.SeedData();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

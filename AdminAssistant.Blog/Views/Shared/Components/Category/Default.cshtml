@@ -11,7 +11,7 @@
                 foreach (var category in Model)
                 {
                 <a class="category" href="/Blog/PostByCategory?category=@category.Id">
-                    <input type="button" class="btn btn-primary" id="category_@category.Id" value="@category.Name" style="margin-right: 5px" />
+                    <input type="button" class="btn btn-primary" id="category_@category.Id" value="@(category.Name == "Article" ? "Articles" : category.Name)" style="margin-right: 5px" />
                 </a>
                 }
             }

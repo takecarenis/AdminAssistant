@@ -25,6 +25,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                     Body = post.Body,
                     Date = post.Date,
                     PictureUrl = post.PictureUrl,
+                    TitleFormated = post.Title.Replace(" ", "-"),
                     PostedBy = "Administrator",
                     Title = post.Title,
                     Intro = post.Intro
@@ -84,7 +85,8 @@ namespace AdminAssistant.Blog.Services.Implementations
                 PictureUrl = post.PictureUrl,
                 PostedBy = post.PostedBy,
                 Tags = post.Tags,
-                Title = post.Title
+                Title = post.Title,
+                TitleFormated = post.Title.Replace(" ", "-")
             };
 
             bool isCreated = CreatePost(newPost);
@@ -137,6 +139,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                     PictureUrl = x.PictureUrl,
                     PostedBy = x.PostedBy,
                     Title = x.Title,
+                    TitleFormated = x.TitleFormated == null ? x.Title.Replace(" ", "-") : x.TitleFormated,
                     Intro = x.Intro,
                     Categories = x.PostCategories.Select(p => new CategoryViewModel
                     {
@@ -162,6 +165,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                    Id = x.Id,
                    Body = x.Body,
                    Intro = x.Intro,
+                   TitleFormated = x.TitleFormated == null ? x.Title.Replace(" ", "-") : x.TitleFormated,
                    Date = x.Date,
                    PictureUrl = x.PictureUrl,
                    PostedBy = x.PostedBy,
@@ -183,7 +187,7 @@ namespace AdminAssistant.Blog.Services.Implementations
             return posts;
         }
 
-        public List<PostViewModel> GetPaginated(int currentPage, int pageSize = 3)
+        public List<PostViewModel> GetPaginated(int currentPage, int pageSize = 5)
         {
             List<PostViewModel> posts = _dbContext.Post
                .Include(x => x.PostCategories)
@@ -192,6 +196,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                    Id = x.Id,
                    Body = x.Body,
                    Date = x.Date,
+                   TitleFormated = x.TitleFormated == null ? x.Title.Replace(" ", "-") : x.TitleFormated,
                    PictureUrl = x.PictureUrl,
                    PostedBy = x.PostedBy,
                    Intro = x.Intro,
@@ -206,7 +211,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                        Id = p.TagId,
                        Name = p.Tag.Name
                    }).ToList()
-               }).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList().OrderByDescending(x => x.Date).ToList();
+               }).OrderByDescending(x => x.Date).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList().OrderByDescending(x => x.Date).ToList();
 
             return posts;
         }
@@ -224,6 +229,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                 {
                     Id = x.Id,
                     Body = x.Body,
+                    TitleFormated = x.TitleFormated == null ? x.Title.Replace(" ", "-") : x.TitleFormated,
                     Date = x.Date,
                     PictureUrl = x.PictureUrl,
                     PostedBy = x.PostedBy,
@@ -262,6 +268,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                     Intro = x.Intro,
                     Date = x.Date,
                     PictureUrl = x.PictureUrl,
+                    TitleFormated = x.TitleFormated == null ? x.Title.Replace(" ", "-") : x.TitleFormated,
                     PostedBy = x.PostedBy,
                     Title = x.Title,
                     Categories = x.PostCategories.Select(p => new CategoryViewModel
@@ -279,6 +286,47 @@ namespace AdminAssistant.Blog.Services.Implementations
             return post;
         }
 
+        public PostViewModel GetPostByTitle(string title)
+        {
+            title = title.Replace(" ", "-");
+            PostViewModel post = _dbContext.Post
+                .Include(x => x.PostCategories).Where(x => x.TitleFormated == title || x.Title == title)
+                .Select(x => new PostViewModel
+                {
+                    Id = x.Id,
+                    Body = x.Body,
+                    Intro = x.Intro,
+                    Date = x.Date,
+                    TitleFormated = x.TitleFormated == null ? x.Title.Replace(" ", "-") : x.TitleFormated,
+                    PictureUrl = x.PictureUrl,
+                    PostedBy = x.PostedBy,
+                    Title = x.Title,
+                    Categories = x.PostCategories.Select(p => new CategoryViewModel
+                    {
+                        Id = p.CategoryId,
+                        Name = p.Category.Name
+                    }).ToList(),
+                    Tags = x.PostTags.Select(p => new TagViewModel
+                    {
+                        Id = p.TagId,
+                        Name = p.Tag.Name
+                    }).ToList()
+                }).FirstOrDefault();
+
+            return post;
+        }
+
+        public void ReplaceAllTitles()
+        {
+            var titles = _dbContext.Post.Where(x => x.TitleFormated == null).ToList();
+
+            foreach(var title in titles)
+            {
+                title.TitleFormated = title.Title.Replace(" ", "-");
+                _dbContext.SaveChanges();
+            }
+        }
+
         public PostViewModel UpdatePost(PostViewModel post)
         {
             Post postFromDb = _dbContext.Post.Include(x => x.PostCategories).FirstOrDefault(x => x.Id == post.Id);
@@ -289,6 +337,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                 postFromDb.PictureUrl = post.PictureUrl;
                 postFromDb.PostedBy = post.PostedBy;
                 postFromDb.Title = post.Title;
+                postFromDb.TitleFormated = post.Title.Replace(" ", "-");
                 postFromDb.PostCategories = post.Categories
                     .Select(x => new PostCategory
                     {
@@ -332,6 +381,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                    Date = x.Date,
                    PictureUrl = x.PictureUrl,
                    PostedBy = x.PostedBy,
+                   TitleFormated = x.TitleFormated == null ? x.Title.Replace(" ", "-") : x.TitleFormated,
                    Intro = x.Intro,
                    Title = x.Title,
                    Categories = x.PostCategories.Select(p => new CategoryViewModel
@@ -359,6 +409,7 @@ namespace AdminAssistant.Blog.Services.Implementations
                    Body = x.Body,
                    Intro = x.Intro,
                    Date = x.Date,
+                   TitleFormated = x.TitleFormated == null ? x.Title.Replace(" ", "-") : x.TitleFormated,
                    PictureUrl = x.PictureUrl,
                    PostedBy = x.PostedBy,
                    Title = x.Title,

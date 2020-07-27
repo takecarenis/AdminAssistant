@@ -18,7 +18,6 @@ namespace AdminAssistant.Blog.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<PostCategory>()
                 .HasKey(bc => new { bc.PostId, bc.CategoryId });
 
@@ -58,5 +57,7 @@ namespace AdminAssistant.Blog.Data
         public DbSet<Page> Pages { get; set; }
 
         public DbSet<Log> Logs { get; set; }
+        public DbSet<Benchmarking> Benchmarking { get; set; }
+        public DbSet<BenchmarkingQuestion> BenchmarkingQuestions { get; set; }
     }
 }

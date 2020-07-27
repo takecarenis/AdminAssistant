@@ -36,7 +36,11 @@
     <link rel="stylesheet" type="text/css" href="~/css/datatable.css">
     <link type="text/css" href="~/css/datatable-checkbox.css" rel="stylesheet" />
 
-    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="19ef753f-d7d9-4ba5-87ff-934f6dd527a0" data-blockingmode="auto" type="text/javascript"></script>
+    <script type="text/javascript">
+        var _iub = _iub || [];
+        _iub.csConfiguration = { "cookiePolicyInOtherWindow": true, "consentOnContinuedBrowsing": false, "whitelabel": false, "lang": "en", "siteId": 1968268, "cookiePolicyId": 94171325, "cookiePolicyUrl": "https://privacyonestop.com/Home/Privacy", "banner": { "acceptButtonDisplay": true, "acceptButtonColor": "#92278f", "acceptButtonCaptionColor": "white", "rejectButtonColor": "#0073CE", "rejectButtonCaptionColor": "white", "position": "float-top-center", "textColor": "black", "backgroundColor": "white", "cookiePolicyLinkCaption": "privacy policy", "content": "This website uses cookies. These cookies are necessary for the website to function properly and to provide you with the requested service. Read our %{cookie_policy_link} for more information on how we use cookies." } };
+    </script>
+    <script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="~/lib/datatable/datatable.js"></script>
     <script type="text/javascript" src="~/lib/datatable/datatable-checkbox.min.js"></script>
@@ -131,7 +135,6 @@
         @RenderBody()
 
 <footer style="bottom: -25%">
-    <script id="CookieDeclaration" src="https://consent.cookiebot.com/19ef753f-d7d9-4ba5-87ff-934f6dd527a0/cd.js" type="text/javascript" async></script>
     <div class="container" style="padding-bottom: 5px">
         <div class="row">
             <div class="col-sm-12 text-center">
@@ -192,12 +195,15 @@
     @RenderSection("Scripts", required: false)
 
     <script>
+        if (window.location.pathname != "/Blog/Post") {
+            window.sessionStorage.setItem("backPage", window.location.href);
+        }
         $(document).ready(function () {
             $('#bodyInput').summernote();
             $(".panel-heading button").css("padding", "15px");
 
             if (window.location.pathname != "/Blog/Post") {
-                localStorage.setItem("backPage", window.location.href);
+                window.sessionStorage.setItem("backPage", window.location.href);
             }
 
             $('.carousel').carousel({

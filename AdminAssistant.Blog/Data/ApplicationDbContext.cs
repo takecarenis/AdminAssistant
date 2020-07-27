@@ -57,7 +57,7 @@ namespace AdminAssistant.Blog.Data
         public DbSet<Page> Pages { get; set; }
 
         public DbSet<Log> Logs { get; set; }
-        public DbSet<Benchmarking> Benchmarking { get; set; }
-        public DbSet<BenchmarkingQuestion> BenchmarkingQuestions { get; set; }
+        //public DbSet<Benchmarking> Benchmarking { get; set; }
+        //public DbSet<BenchmarkingQuestion> BenchmarkingQuestions { get; set; }
     }
 }

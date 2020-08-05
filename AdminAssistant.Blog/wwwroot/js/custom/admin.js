@@ -606,7 +606,7 @@ Admin.addNewTag = function() {
 
 Admin.backToPreviousPage = function() {
 
-    window.location = window.sessionStorage.getItem("backPage");
+    window.location = $("#backPage").val();
 }
 
 $("#addNewPostButton").on('click', function () {

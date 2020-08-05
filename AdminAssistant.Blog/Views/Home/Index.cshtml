@@ -5,40 +5,40 @@
 }
 
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
+            </div>
+            <div class="carousel-inner col-md-10" style="display: flex;padding-right: 0px;padding-left: 0px;">
+                <div class="carousel-item active max-height">
+                    <img src="~/img/slider/1.webp" alt="First slide" class="img-carousel">
                 </div>
-                <div class="carousel-inner col-md-10" style="display: flex;padding-right: 0px;padding-left: 0px;">
-                    <div class="carousel-item active max-height">
-                        <img src="~/img/slider/1.webp" alt="First slide" class="img-carousel">
-                    </div>
-                    <div class="carousel-item max-height">
-                        <img src="~/img/slider/2.webp" alt="Second slide" class="img-carousel">
-                    </div>
-                    <div class="carousel-item max-height">
-                        <img src="~/img/slider/3.svg" alt="Third slide" class="img-carousel">
-                    </div>
+                <div class="carousel-item max-height">
+                    <img src="~/img/slider/2.webp" alt="Second slide" class="img-carousel">
                 </div>
-                <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
+                <div class="carousel-item max-height">
+                    <img src="~/img/slider/3.svg" alt="Third slide" class="img-carousel">
                 </div>
             </div>
+            <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
+            </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
 
 
 <section class="section blog-area" style="margin-top: -40px">
@@ -52,59 +52,59 @@
                     {
                         foreach (var post in Model.MainPosts)
                         {
-                    <div class="single-post">
-                        @if (!string.IsNullOrEmpty(post.PictureUrl))
-                        {
-                            <div class="image-wrapper"><img src="@post.PictureUrl" alt="@post.Title"></div>
-
-                            <div class="icons">
-                                <div class="left-area">
-                                    <p class="date"><em>@post.Date.ToString("dd/MM/yyy")</em></p>
-                                </div>
-                                <ul class="right-area">
-                                    @foreach (var category in post.Categories)
-                                    {
-                                        <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
-                                    }
-                                </ul>
-                            </div>
-                            <hr />
-
-                            <h3 class="title"><a href="/Blog/Post?title=@post.TitleFormated"><b class="light-color">@post.Title</b></a></h3>
-                        }
-                        else
-                        {
-                            <h3 class="title"><a href="/Blog/Post?title=@post.TitleFormated"><b class="light-color">@post.Title</b></a></h3>
-                            <div class="icons">
-                                <div class="left-area">
-                                    <p class="date"><em>@post.Date.ToString("dd/MM/yyy")</em></p>
-                                </div>
-                                <ul class="right-area">
-                                    @foreach (var category in post.Categories)
-                                    {
-                                        <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
-                                    }
-                                </ul>
-                            </div>
-                            <hr />
-                        }
-
-                        <p style="margin-top:20px;">@post.Intro</p>
-                        <br />
-                        <a class="btn btn-sm read-more-btn btn-primary" href="/Blog/Post?title=@post.TitleFormated"><b>Continue Reading</b></a>
-                        <button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink('@post.TitleFormated')">Copy Link</button>
-                        <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}")/Blog/Post?title=@post.TitleFormated" id="copyLinkValue_@post.Id" />
-                        <div class="icons">
-                            <div class="left-area">
-                                <h5>Tags</h5>
-                                @foreach (var tag in post.Tags)
+                            <div class="single-post">
+                                @if (!string.IsNullOrEmpty(post.PictureUrl))
                                 {
-                                    <a href="/Blog/PostByTag?tag=@tag.Id" style="margin-right: 5px;"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
-                                }
-                            </div>
-                        </div>
+                                    <div class="image-wrapper"><img src="@post.PictureUrl" alt="@post.Title"></div>
 
-                    </div><!-- single-post -->
+                                    <div class="icons">
+                                        <div class="left-area">
+                                            <p class="date"><em>@post.Date.ToString("dd/MM/yyy")</em></p>
+                                        </div>
+                                        <ul class="right-area">
+                                            @foreach (var category in post.Categories)
+                                            {
+                                                <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <hr />
+
+                                    <h3 class="title"><a href="/Blog/Post?title=@post.TitleFormated"><b class="light-color">@post.Title</b></a></h3>
+                                }
+                                else
+                                {
+                                    <h3 class="title"><a href="/Blog/Post?title=@post.TitleFormated"><b class="light-color">@post.Title</b></a></h3>
+                                    <div class="icons">
+                                        <div class="left-area">
+                                            <p class="date"><em>@post.Date.ToString("dd/MM/yyy")</em></p>
+                                        </div>
+                                        <ul class="right-area">
+                                            @foreach (var category in post.Categories)
+                                            {
+                                                <a href="/Blog/PostByCategory?category=@category.Id" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom: 10px;">@category.Name</a>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <hr />
+                                }
+
+                                <p style="margin-top:20px;">@post.Intro</p>
+                                <br />
+                                <a class="btn btn-sm read-more-btn btn-primary" href="/Blog/Post?title=@post.TitleFormated"><b>Continue Reading</b></a>
+                                <button id="copyLink" class="btn btn-sm btn-dark" onclick="Admin.copyLink('@post.TitleFormated')">Copy Link</button>
+                                <input type="hidden" value="@($"{Context.Request.Scheme}://{Context.Request.Host}")/Blog/Post?title=@post.TitleFormated" id="copyLinkValue_@post.Id" />
+                                <div class="icons">
+                                    <div class="left-area">
+                                        <h5>Tags</h5>
+                                        @foreach (var tag in post.Tags)
+                                        {
+                                            <a href="/Blog/PostByTag?tag=@tag.Id" style="margin-right: 5px;"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div><!-- single-post -->
                         }
                     }
                     else
@@ -127,7 +127,7 @@
                     </div>
                 }
 
-                </div><!-- blog-posts -->
+            </div><!-- blog-posts -->
 
 
             <div class="col-lg-4 col-md-12">
@@ -163,3 +163,12 @@
             text-decoration: none;
         }
 </style>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#backPage").val(window.location.href);
+        })
+    </script>
+}

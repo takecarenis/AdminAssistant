@@ -5,40 +5,40 @@
     ViewData["Title"] = "PostByTag";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
+            </div>
+            <div class="carousel-inner col-md-10" style="display: flex;padding-right: 0px;padding-left: 0px;">
+                <div class="carousel-item active max-height">
+                    <img src="~/img/slider/1.webp" alt="First slide" class="img-carousel">
                 </div>
-                <div class="carousel-inner col-md-10" style="display: flex;padding-right: 0px;padding-left: 0px;">
-                    <div class="carousel-item active max-height">
-                        <img src="~/img/slider/1.webp" alt="First slide" class="img-carousel">
-                    </div>
-                    <div class="carousel-item max-height">
-                        <img src="~/img/slider/2.webp" alt="Second slide" class="img-carousel">
-                    </div>
-                    <div class="carousel-item max-height">
-                        <img src="~/img/slider/3.svg" alt="Third slide" class="img-carousel">
-                    </div>
+                <div class="carousel-item max-height">
+                    <img src="~/img/slider/2.webp" alt="Second slide" class="img-carousel">
                 </div>
-                <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
+                <div class="carousel-item max-height">
+                    <img src="~/img/slider/3.svg" alt="Third slide" class="img-carousel">
                 </div>
             </div>
+            <div class="col-md-1" style="background: linear-gradient(90deg, rgba(174,39,95,1) 0%, rgba(92,45,145,1) 70%); color: white">
+            </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
 
 
 <section class="section blog-area">
@@ -100,7 +100,7 @@
                                         <h5>Tags</h5>
                                         @foreach (var tag in post.Tags)
                                         {
-                                    <a href="/Blog/PostByTag?tag=@tag.Id" style="margin-right: 5px;"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
+                                            <a href="/Blog/PostByTag?tag=@tag.Id" style="margin-right: 5px;"><b style="color: rgba(92,45,145,1)">#@tag.Name</b></a>
                                         }
                                     </div>
                                 </div>
@@ -156,6 +156,7 @@
             $('html, body').animate({
                 scrollTop: $(".blog-area").offset().top
             }, 1000);
+            $("#backPage").val(window.location.href);
         })
     </script>
 }
